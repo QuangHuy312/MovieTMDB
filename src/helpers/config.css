@@ -1,0 +1,7 @@
+.slick-slide div {
+  outline: none !important;
+}
+
+.slick-slide {
+  position: relative !important;
+}
