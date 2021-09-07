@@ -6,23 +6,25 @@ import Home from "./views/Home/Home";
 import MovieUpComing from "../src/views/MovieUpComing/MovieUpComing";
 import MovieTopRated from "../src/views/MovieTopRated/MovieTopRated";
 import MovieNowPlaying from "./views/MovieNowPlaying/MovieNowPlaying";
+import DetailMovie from "./views/DetailMovie/DetailMovie";
 
 const App = () => {
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await axios({
-  //       url: "https://api.themoviedb.org/3/movie/550988?api_key=d6c392186e19bae2e1addaadb1677274&append_to_response=videos ",
-  //       method: "GET",
-  //     });
-  //     console.log(res);
-  //   } catch (error) {}
-  // };
-  // fetchData();
+  const fetchData = async () => {
+    try {
+      const res = await axios({
+        url: "https://api.themoviedb.org/3/movie/372058/reviews?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1",
+        method: "GET",
+      });
+      console.log(res);
+    } catch (error) {}
+  };
+  fetchData();
 
   return (
     <BrowserRouter>
       <Switch>
         <HomeTemplate path="/" exact component={Home} />
+        <HomeTemplate path="/detailmovies/:id" exact component={DetailMovie} />
         <HomeTemplate path="/movies/upcoming" exact component={MovieUpComing} />
         <HomeTemplate path="/movies/toprated" exact component={MovieTopRated} />
         <HomeTemplate

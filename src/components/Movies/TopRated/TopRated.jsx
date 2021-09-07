@@ -22,7 +22,7 @@ const TopRated = ({ arrMovieTopRated }) => {
   return (
     <Fragment>
       <Grid container>
-        <Grid item lg={12} className={viewAllIcon}>
+        <Grid item xs={12} className={viewAllIcon}>
           <Button
             variant="contained"
             color="primary"
@@ -35,7 +35,7 @@ const TopRated = ({ arrMovieTopRated }) => {
         </Grid>
         {arrMovieTopRated?.slice(0, 12)?.map((movie) => {
           return (
-            <Grid item xs={6} sm={4} md={2} key={movie.id}>
+            <Grid item xs={6} sm={4} md={3} lg={2} key={movie.id}>
               <Card className={card}>
                 <div className={contentCard}>
                   <CardMedia
@@ -47,7 +47,7 @@ const TopRated = ({ arrMovieTopRated }) => {
                     variant="h2"
                     component="span"
                     className={arrow}
-                    onClick={() => history.push(`/detail/${movie.id}`)}
+                    onClick={() => history.push(`/detailmovies/${movie.id}`)}
                   >
                     <ArrowRightAltIcon />
                   </Typography>
@@ -60,7 +60,7 @@ const TopRated = ({ arrMovieTopRated }) => {
                     variant="body2"
                     className={title}
                     component="p"
-                    onClick={() => history.push(`/detail/${movie.id}`)}
+                    onClick={() => history.push(`/detailmovies/${movie.id}`)}
                   >
                     {movie.title}
                   </Typography>

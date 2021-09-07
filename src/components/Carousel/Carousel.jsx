@@ -14,21 +14,20 @@ const Carousel = ({ arrMoviePopular }) => {
     (state) => state.MovieManagerReducer
   );
   const [open, setOpen] = useState(false);
-  const result = trailerMoviePopular?.results[0];
-  const key = result?.key;
   const handleClickTrailer = useCallback(
     (id) => {
       setOpen(true);
       dispatch(getKeyTrailerAction(id));
     },
-    [open]
+    [open, dispatch]
   );
 
   var settings = {
     position: "relative",
-    autoplaySpeed: 2000,
+    autoplaySpeed: 1500,
     pauseOnHover: true,
     slidesToShow: 4,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -55,20 +54,6 @@ const Carousel = ({ arrMoviePopular }) => {
       },
     ],
   };
-  const rand = () => {
-    return Math.round(Math.random() * 20) - 10;
-  };
-  const getModalStyle = () => {
-    const top = 50 + rand();
-    const left = 50 + rand();
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  };
-  const [modalStyle] = useState(getModalStyle);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -118,14 +103,16 @@ const Carousel = ({ arrMoviePopular }) => {
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
           >
-            <div style={modalStyle} className={trailer}>
-              <ReactPlayer
-                playing={true}
-                controls={true}
-                width="100%"
-                height="450px"
-                url={`https://www.youtube.com/watch?v=${key}`}
-              />
+            <div className={trailer}>
+              {trailerMoviePopular ? (
+                <ReactPlayer
+                  playing={true}
+                  controls={true}
+                  width="100%"
+                  height="450px"
+                  url={`https://www.youtube.com/watch?v=${trailerMoviePopular[0]?.key}`}
+                />
+              ) : null}
             </div>
           </Modal>
         </Slider>

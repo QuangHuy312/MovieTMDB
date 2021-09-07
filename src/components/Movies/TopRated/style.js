@@ -73,6 +73,8 @@ const useStyle = makeStyles(() => {
       "&:hover": {
         transform: "scale(1.3)",
         border: "2px solid #f9ab00",
+        background: "white",
+        color: "#f9ab00",
       },
     },
   };

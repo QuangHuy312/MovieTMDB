@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => {
   return {
     contentCarousel: {
-      // backgroundImage: `url("https://dmitryvolkov.me/demo/hotflix2.1/main/img/home/home__bg.jpg")`,
-      background: "rgba(0,0,0,0.9)",
+      background: "rgba(0,0,0,0.1)",
       backgroundPosition: "center",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
@@ -75,7 +74,7 @@ const useStyle = makeStyles(() => {
       "& img": {
         width: "100%",
         height: "100%",
-        opacity: 0.2,
+        opacity: 0.4,
       },
     },
 
@@ -83,6 +82,9 @@ const useStyle = makeStyles(() => {
       position: "absolute",
       width: 800,
       border: "none",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%,-50%)",
     },
   };
 });

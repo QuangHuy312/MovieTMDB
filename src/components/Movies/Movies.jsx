@@ -11,10 +11,7 @@ import UpComing from "./UpComing/UpComing";
 import NowPlaying from "./NowPlaying/NowPlaying";
 
 const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
-  const [value, setValue] = useState(2);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = useState(0);
   const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
 
@@ -22,12 +19,12 @@ const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
       <div
         role="tabpanel"
         hidden={value !== index}
-        id={`scrollable-auto-tabpanel-${index}`}
-        aria-labelledby={`scrollable-auto-tab-${index}`}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
         {value === index && (
-          <Box p={2}>
+          <Box p={3}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -40,12 +37,17 @@ const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
     index: PropTypes.any.isRequired,
     value: PropTypes.any.isRequired,
   };
+
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const { content } = useStyle();
   return (
     <Container className={content}>

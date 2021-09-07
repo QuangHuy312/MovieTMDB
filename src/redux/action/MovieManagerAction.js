@@ -5,7 +5,9 @@ import {
   GET_LIST_MOVIE_POPULAR,
   GET_LIST_MOVIE_TOP_RATED,
   GET_LIST_MOVIE_UP_COMING,
+  GET_DETAIL_MOVIE,
   GET_TRAILER_MOVIE_POPULAR,
+  GET_TV_SHOW,
 } from "../types/MovieManagerType";
 
 export const getMoviePolularAction = (page) => {
@@ -52,11 +54,33 @@ export const getMovieUpComingAction = (page) => {
   };
 };
 
+export const getTVShowAction = (page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await movieManager.getTVShow(page);
+      dispatch(createAction(GET_TV_SHOW, data.results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const getKeyTrailerAction = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await movieManager.getKeyTrailerPopular(id);
-      dispatch(createAction(GET_TRAILER_MOVIE_POPULAR, data.videos));
+      dispatch(createAction(GET_TRAILER_MOVIE_POPULAR, data.results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getDetailMovie = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await movieManager.getDetail(id);
+      dispatch(createAction(GET_DETAIL_MOVIE, data));
     } catch (error) {
       console.log(error);
     }

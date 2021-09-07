@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React, { Fragment } from "react";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
-import useStyle from "./style";
+import useStyle from "../TopRated/style";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import clsx from "clsx";
 import { useHistory } from "react-router";
@@ -22,7 +22,7 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
   return (
     <Fragment>
       <Grid container>
-        <Grid item lg={12} className={viewAllIcon}>
+        <Grid item xs={12} className={viewAllIcon}>
           <Button
             variant="contained"
             color="primary"
@@ -35,7 +35,7 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
         </Grid>
         {arrMovieNowPlaying?.slice(0, 12)?.map((movie) => {
           return (
-            <Grid item xs={6} sm={4} md={2} key={movie.id}>
+            <Grid item xs={6} sm={4} md={3} lg={2} key={movie.id}>
               <Card className={card}>
                 <div className={contentCard}>
                   <CardMedia
@@ -47,7 +47,7 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
                     variant="h2"
                     component="span"
                     className={arrow}
-                    onClick={() => history.push(`/detail/${movie.id}`)}
+                    onClick={() => history.push(`/detailmovies/${movie.id}`)}
                   >
                     <ArrowRightAltIcon />
                   </Typography>
@@ -60,7 +60,7 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
                     variant="body2"
                     className={title}
                     component="p"
-                    onClick={() => history.push(`/detail/${movie.id}`)}
+                    onClick={() => history.push(`/detailmovies/${movie.id}`)}
                   >
                     {movie.title}
                   </Typography>

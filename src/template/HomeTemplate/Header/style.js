@@ -9,16 +9,10 @@ const useStyle = makeStyles(() => {
       position: "fixed",
       width: "100%",
       zIndex: 99,
+      transition: "all 0.5s",
     },
 
     scrollNav: {
-      // extend: "navContent",
-      backgroundColor: "#1a191f",
-      padding: 10,
-      borderBottom: "1px solid #5a4c4c",
-      position: "fixed",
-      width: "100%",
-      zIndex: 99,
       backgroundColor: "transparent",
     },
   };

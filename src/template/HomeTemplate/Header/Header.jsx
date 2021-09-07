@@ -3,22 +3,23 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LOGO } from "../../../assets/logo";
 import useStyle from "./style";
+import clsx from "clsx";
 
 const Header = () => {
   const { navContent, scrollNav } = useStyle();
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = (e) => {
-      setScrolled(window.scrollY > 250);
+      setIsScrolled(window.scrollY > 250);
     };
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scrolled]);
-
+  }, [isScrolled]);
+  const scrolled = clsx(navContent, scrollNav);
   return (
-    <header className={scrolled ? navContent : scrollNav}>
+    <header className={isScrolled ? navContent : scrolled}>
       <div className="container flex justify-between h-16 mx-auto">
         <div className="flex">
           <NavLink to="/" className="flex items-center p-2">
@@ -34,7 +35,7 @@ const Header = () => {
           <ul className="items-stretch hidden space-x-3 lg:flex text-white mt-5">
             <li>
               <NavLink
-                to="/home"
+                to="/"
                 className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent"
               >
                 HOME
