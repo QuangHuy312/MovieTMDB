@@ -3,7 +3,6 @@ import {
   GET_LIST_MOVIE_POPULAR,
   GET_LIST_MOVIE_TOP_RATED,
   GET_LIST_MOVIE_UP_COMING,
-  GET_DETAIL_MOVIE,
   GET_TRAILER_MOVIE_POPULAR,
   GET_TV_SHOW,
 } from "../types/MovieManagerType";
@@ -15,7 +14,6 @@ const initialState = {
   arrMovieNowPlaying: [],
   arrMovieUpComing: [],
   arrTVShow: [],
-  detailMovie: {},
 };
 export const MovieManagerReducer = (
   state = initialState,
@@ -46,10 +44,7 @@ export const MovieManagerReducer = (
       state.arrTVShow = payload;
       return { ...state };
     }
-    case GET_DETAIL_MOVIE: {
-      state.detailMovie = payload;
-      return { ...state };
-    }
+
     default:
       return state;
   }

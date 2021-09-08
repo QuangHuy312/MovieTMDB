@@ -32,6 +32,11 @@ const useStyle = makeStyles(() => {
         fontSize: 20,
       },
     },
+    voteCount: {
+      fontSize: 15,
+      paddingLeft: 15,
+      color: "#f9ab00",
+    },
     age: {
       backgroundColor: "red",
       marginRight: 15,
@@ -39,14 +44,9 @@ const useStyle = makeStyles(() => {
     releaseDate: {
       marginLeft: 20,
       color: "#f9ab00",
+      borderLeft: "1px solid white",
     },
-    titleRate: {
-      padding: "10px 0px",
-      fontSize: 35,
-      "@media screen and (max-width:768px)": {
-        fontSize: 20,
-      },
-    },
+
     desc: {
       fontSize: 15,
       "@media screen and (max-width:768px)": {

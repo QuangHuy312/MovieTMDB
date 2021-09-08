@@ -75,14 +75,3 @@ export const getKeyTrailerAction = (id) => {
     }
   };
 };
-
-export const getDetailMovie = (id) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await movieManager.getDetail(id);
-      dispatch(createAction(GET_DETAIL_MOVIE, data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};

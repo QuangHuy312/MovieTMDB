@@ -7,7 +7,6 @@ import TVShow from "../../components/TVShow/TVShow";
 import {
   getMovieNowPlayingAction,
   getMoviePolularAction,
-  getDetailMovie,
   getMovieTopRatedAction,
   getMovieUpComingAction,
   getTVShowAction,
@@ -21,7 +20,6 @@ const Home = () => {
     dispatch(getMovieNowPlayingAction(1));
     dispatch(getMovieUpComingAction(1));
     dispatch(getTVShowAction(1));
-    dispatch(getDetailMovie(497698));
   }, [dispatch]);
 
   const {
@@ -30,8 +28,8 @@ const Home = () => {
     arrMovieNowPlaying,
     arrMovieUpComing,
     arrTVShow,
-    detailMovie,
   } = useSelector((state) => state.MovieManagerReducer);
+
   return (
     <Fragment>
       <Carousel arrMoviePopular={arrMoviePopular} />
@@ -41,7 +39,7 @@ const Home = () => {
         arrMovieUpComing={arrMovieUpComing}
       />
       <TVShow arrTVShow={arrTVShow} />
-      <MovieTop detailMovie={detailMovie} />
+      <MovieTop arrMoviePopular={arrMoviePopular[5]} />
     </Fragment>
   );
 };

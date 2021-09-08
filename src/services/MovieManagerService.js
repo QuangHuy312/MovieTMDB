@@ -28,9 +28,6 @@ export class MovieManagerService extends baseService {
     return this.get(`movie/${id}/videos?api_key=${API_KEY}`);
   };
 
-  getDetail = (id) => {
-    return this.get(`movie/${id}?api_key=${API_KEY}&append_to_response=videos`);
-  };
   getTVShow = (page) => {
     return this.get(
       `tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
