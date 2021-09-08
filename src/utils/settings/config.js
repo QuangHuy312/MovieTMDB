@@ -1,6 +1,6 @@
 const API_URL = "https://api.themoviedb.org/3/";
 const API_KEY = "d6c392186e19bae2e1addaadb1677274";
-const REQUEST_TOKEN = "d28dec9fe52c05a18c33b12b609407ef57387c74";
+const REQUEST_TOKEN = "28bd9e1176762b708cc1edb1fcc119b6c680fd3b";
 const GUEST_SESSION_ID = "9594de89f3a3b6ac6b57f3463c954439";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/";

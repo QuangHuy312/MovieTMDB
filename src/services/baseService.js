@@ -6,20 +6,17 @@ export class baseService {
     return axios({
       method: "GET",
       url: `${API_URL}${url}`,
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("TOKEN"),
-      },
     });
   };
 
-  post = (url, data) => {
+  post = (url, info) => {
     return axios({
-      method: "POST",
       url: `${API_URL}${url}`,
-      data: data,
+      method: "POST",
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("TOKEN"),
+        "Content-Type": "application/json;charset=utf-8",
       },
+      body: JSON.stringify(info),
     });
   };
 }

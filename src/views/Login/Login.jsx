@@ -1,28 +1,56 @@
 import {
+  Button,
   Checkbox,
   Container,
-  FormControl,
   FormControlLabel,
   Grid,
-  InputAdornment,
   TextField,
   Typography,
 } from "@material-ui/core";
-import { AccountCircle } from "@material-ui/icons";
 import React from "react";
 import useStyle from "./style";
-import LockIcon from "@material-ui/icons/Lock";
+import * as yup from "yup";
+import { Form, useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { UserManagerAction } from "../../redux/action/UserManagerAction";
+import { REQUEST_TOKEN } from "../../utils/settings/config";
 
+let schema = yup.object().shape({
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
+});
 const Login = () => {
-  const { backdrop, content, textInput, formControl, contentInput, checkBox } =
-    useStyle();
+  const dispatch = useDispatch();
+  const {
+    backdrop,
+    content,
+    textInput,
+    formControl,
+    contentInput,
+    checkBox,
+    btnLogin,
+    textSignUp,
+  } = useStyle();
+
+  const handleSubmitForm = (e) => {
+    const info = { ...values, request_token: REQUEST_TOKEN };
+    e.preventDefault();
+    if (!isValid) return;
+    dispatch(UserManagerAction(info));
+  };
+  const { values, handleChange, isValid, errors, handleBlur, touched } =
+    useFormik({
+      initialValues: { username: "", password: "" },
+      validationSchema: schema,
+      validateOnMount: true,
+    });
   return (
     <div className={backdrop}>
       <Container>
         <Grid container>
           <Grid item xs={12}>
             <div className={content}>
-              <FormControl className={formControl}>
+              <form className={formControl} onSubmit={handleSubmitForm}>
                 <Typography
                   variant="h4"
                   component="h1"
@@ -33,22 +61,39 @@ const Login = () => {
                 <div className={contentInput}>
                   <TextField
                     className={textInput}
-                    label="username"
+                    label="Username"
                     variant="outlined"
                     InputLabelProps={{
-                      style: { color: "#fff" },
+                      style: { color: "gray", fontSize: 13 },
                     }}
+                    inputProps={{ className: textInput }}
+                    name="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {touched.username && (
+                    <p style={{ color: "red" }}>{errors.username}</p>
+                  )}
                 </div>
                 <div className={contentInput}>
                   <TextField
+                    type="password"
                     className={textInput}
-                    label="password"
+                    label="Password"
                     variant="outlined"
                     InputLabelProps={{
-                      style: { color: "#fff" },
+                      style: { color: "gray", fontSize: 13 },
                     }}
+                    inputProps={{ className: textInput }}
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
+                  {touched.password && (
+                    <p style={{ color: "red" }}>{errors.password}</p>
+                  )}
                 </div>
                 <div className={contentInput}>
                   <FormControlLabel
@@ -67,7 +112,22 @@ const Login = () => {
                     labelPlacement="end"
                   />
                 </div>
-              </FormControl>
+                <Button type="submit" className={btnLogin}>
+                  Login
+                </Button>
+                <Typography variant="body2">
+                  Don't have an account?
+                  <Typography
+                    variant="body"
+                    className={textSignUp}
+                    onClick={() =>
+                      window.open("https://www.themoviedb.org/signup")
+                    }
+                  >
+                    Sign Up
+                  </Typography>
+                </Typography>
+              </form>
             </div>
           </Grid>
         </Grid>

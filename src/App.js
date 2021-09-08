@@ -11,16 +11,23 @@ import DetailTvShow from "./views/DetailTVShow/DetailTvShow";
 import Login from "./views/Login/Login";
 
 const App = () => {
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await axios({
-  //       url: "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=d6c392186e19bae2e1addaadb1677274",
-  //       method: "POST",
-  //     });
-  //     console.log(res);
-  //   } catch (error) {}
-  // };
-  // fetchData();
+  const fetchData = async () => {
+    try {
+      const { data } = await axios({
+        url: "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=d6c392186e19bae2e1addaadb1677274",
+        method: "POST",
+        body: {
+          username: "quanghuyfly1997",
+          password: "Huy03120252",
+          request_token: "784491c78fcd445fe4aea3d8a8980a036e4acdc4",
+        },
+      });
+      console.log(data);
+    } catch (error) {
+      // console.log(error.response);
+    }
+  };
+  fetchData();
 
   return (
     <BrowserRouter>
