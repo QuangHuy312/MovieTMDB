@@ -1,22 +1,41 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Button, Container, Grid, Modal, Typography } from "@material-ui/core";
+import Slider from "@material-ui/core/Slider";
+import Tooltip from "@material-ui/core/Tooltip";
+import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import StarsIcon from "@material-ui/icons/Stars";
+import { Rating } from "@material-ui/lab";
+import { CustomCard } from "@tsamantanis/react-glassmorphism";
+import "@tsamantanis/react-glassmorphism/dist/index.css";
+import { useSnackbar } from "notistack";
+import React, { Fragment, useState } from "react";
+import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailMovie } from "../../../redux/action/MovieManagerAction";
+import {
+  addToFavouriteAction,
+  addToWatchListAction,
+  deleteRatingMovieAction,
+  postRatingMovieAction,
+} from "../../../redux/action/DashBoardManagerAction";
 import {
   IMAGE_URL,
   WIDTH_BACKDROP,
   WIDTH_IMAGE,
 } from "../../../utils/settings/config";
 import useStyle from "./style";
-import "@tsamantanis/react-glassmorphism/dist/index.css";
-import { CustomCard } from "@tsamantanis/react-glassmorphism";
-import { Button, Container, Grid, Modal, Typography } from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { Rating } from "@material-ui/lab";
-import ReactPlayer from "react-player";
 
-const Banner = ({ detailBanner }) => {
+const Banner = ({ detailBanner, id }) => {
+  const dispatch = useDispatch();
+  const { infoUser } = useSelector((state) => state.UserManagerReducer);
+  const accountId = infoUser.id;
   const [open, setOpen] = useState(false);
-
+  const [valueRate, setValueRate] = useState("");
+  const [iconAddClick, setIconAddClick] = useState(false);
+  const [iconFavouriteClick, setIconFavouriteClick] = useState(false);
+  const [iconRatingClick, setIconRatingClick] = useState(false);
+  const sessionId = localStorage.getItem("sessionId");
+  const { enqueueSnackbar } = useSnackbar();
   const handleClose = () => {
     setOpen(false);
   };
@@ -46,8 +65,85 @@ const Banner = ({ detailBanner }) => {
     desc,
     trailer,
     voteCount,
+    btnIcons,
+    btnClickIcons,
   } = useStyle();
   const rating = Math.floor(vote_average / 2);
+  const valueText = (value) => {
+    setValueRate(value);
+  };
+  const handleAddToListIcon = () => {
+    setIconAddClick(!iconAddClick);
+    if (!iconAddClick) {
+      dispatch(
+        addToWatchListAction(
+          accountId,
+          sessionId,
+          id,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          true
+        )
+      );
+    } else {
+      dispatch(
+        addToWatchListAction(
+          accountId,
+          sessionId,
+          id,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          false
+        )
+      );
+    }
+  };
+  const handleRatingIcon = () => {
+    setIconRatingClick(!iconRatingClick);
+    if (!iconRatingClick) {
+      dispatch(
+        postRatingMovieAction(id, sessionId, valueRate, (mes) => {
+          enqueueSnackbar(mes, { variant: "success" });
+        })
+      );
+    } else {
+      dispatch(
+        deleteRatingMovieAction(id, sessionId, (mes) => {
+          enqueueSnackbar(mes, { variant: "success" });
+        })
+      );
+    }
+  };
+  const handleFavouriteIcon = () => {
+    setIconFavouriteClick(!iconFavouriteClick);
+    if (!iconFavouriteClick) {
+      dispatch(
+        addToFavouriteAction(
+          accountId,
+          sessionId,
+          id,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          true
+        )
+      );
+    } else {
+      dispatch(
+        addToFavouriteAction(
+          accountId,
+          sessionId,
+          id,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          false
+        )
+      );
+    }
+  };
   return (
     <Fragment>
       <div
@@ -84,6 +180,22 @@ const Banner = ({ detailBanner }) => {
                   <Typography variant="span" className={releaseDate}>
                     <i> {release_date}</i>
                   </Typography>
+                  <Typography variant="body" style={{ paddingLeft: 20 }}>
+                    <Tooltip title="Add to watch list">
+                      <PlaylistAddIcon
+                        className={iconAddClick ? btnClickIcons : btnIcons}
+                        onClick={handleAddToListIcon}
+                      />
+                    </Tooltip>
+                    <Tooltip title="Mark as favourite">
+                      <FavoriteBorderOutlinedIcon
+                        className={
+                          iconFavouriteClick ? btnClickIcons : btnIcons
+                        }
+                        onClick={handleFavouriteIcon}
+                      />
+                    </Tooltip>
+                  </Typography>
                 </Typography>
                 <div>
                   {genres?.map((genre) => (
@@ -109,7 +221,27 @@ const Banner = ({ detailBanner }) => {
                     {vote_count} vote
                   </Typography>
                 </Typography>
-                <Typography variant="h7" className={desc}>
+
+                <div style={{ marginTop: 15, display: "flex" }}>
+                  <Typography variant="body">Your Rate</Typography>
+                  <Slider
+                    defaultValue={5}
+                    min={1}
+                    max={10}
+                    step={0.5}
+                    valueLabelDisplay="auto"
+                    style={{ width: 150, marginLeft: 20, color: "#f9ab00" }}
+                    getAriaValueText={valueText}
+                  />
+                  <Tooltip title="Send your rating">
+                    <StarsIcon
+                      onClick={handleRatingIcon}
+                      className={iconRatingClick ? btnClickIcons : btnIcons}
+                      fontSize="large"
+                    />
+                  </Tooltip>
+                </div>
+                <Typography variant="h6" className={desc}>
                   {overview}
                 </Typography>
                 <div>

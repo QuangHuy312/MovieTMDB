@@ -49,6 +49,7 @@ const useStyle = makeStyles(() => {
 
     desc: {
       fontSize: 15,
+      marginTop: 30,
       "@media screen and (max-width:768px)": {
         fontSize: 10,
       },
@@ -81,6 +82,21 @@ const useStyle = makeStyles(() => {
       top: "50%",
       left: "50%",
       transform: "translate(-50%,-50%)",
+    },
+    btnIcons: {
+      transition: "all 0.5s",
+      cursor: "pointer",
+      marginLeft: 10,
+      "&:hover": {
+        color: "#f9ab00",
+      },
+    },
+
+    btnClickIcons: {
+      transition: "all 0.5s",
+      cursor: "pointer",
+      marginLeft: 10,
+      color: "#f9ab00",
     },
   };
 });

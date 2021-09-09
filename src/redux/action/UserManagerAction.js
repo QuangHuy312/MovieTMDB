@@ -3,7 +3,7 @@ import { createAction } from "./createAction/createAction";
 
 import { GET_INFO_USER_ID } from "../types/UserManagerType";
 
-export const UserManagerAction = (info, success) => {
+export const UserManagerAction = (info, goback, success, error) => {
   return async (dispatch) => {
     try {
       const requestToken = await dispatch(fetchRequestToken);
@@ -13,13 +13,13 @@ export const UserManagerAction = (info, success) => {
         const sessionId = await dispatch(fetchSessionIdUser(requestToken));
         localStorage.setItem("user", JSON.stringify(infoUser));
         localStorage.setItem("sessionId", sessionId);
-        success();
+        await success("Logged in successfully");
+        goback();
       } else {
-        alert("Username or PassWord is inValid");
+        error("Username or PassWord is inValid");
       }
-    } catch (error) {
-      alert("Username or PassWord is inValid");
-      console.log(error);
+    } catch (err) {
+      error(err.response.data.status_message);
     }
   };
 };

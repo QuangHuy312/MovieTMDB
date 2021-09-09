@@ -30,7 +30,7 @@ const DetailMovie = (props) => {
 
   return (
     <Fragment>
-      <BannerMovie detailBanner={detailBannerMovie} />
+      <BannerMovie detailBanner={detailBannerMovie} id={id} />
       <ContentDetails
         detailPhotos={detailPhotosMovie}
         detailCredit={detailCreditMovie}

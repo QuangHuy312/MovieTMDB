@@ -20,24 +20,24 @@ const App = () => {
       dispatch(fetchSInfoUser(sessionId));
     }
   }, []);
-  const fetchData = async () => {
-    try {
-      const { data } = await axios({
-        url: "https://api.themoviedb.org/3/account/10908886/rated/movies?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&session_id=dd0f26e07f2a4ae57eaac74162e45ac882992b4e&sort_by=created_at.asc&page=1",
-        method: "GET",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        // data: JSON.stringify({
-        //   request_token: "aa5b3b2df4ce178e8a269dddedb43bb684540170",
-        // }),
-      });
-      console.log(data);
-    } catch (error) {
-      // console.log(error.response);
-    }
-  };
-  fetchData();
+  // const fetchData = async () => {
+  //   try {
+  //     const { data } = await axios({
+  //       url: " https://api.themoviedb.org/3/movie/278/rating?api_key=d6c392186e19bae2e1addaadb1677274&guest_session_id=9594de89f3a3b6ac6b57f3463c954439&session_id=ead42a6fe284257b75ce67005df0ebe0c17d78b6",
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       data: JSON.stringify({
+  //         value: 8,
+  //       }),
+  //     });
+  //     console.log(data);
+  //   } catch (error) {
+  //     // console.log(error.response);
+  //   }
+  // };
+  // fetchData();
 
   return (
     <BrowserRouter>

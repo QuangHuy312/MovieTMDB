@@ -8,11 +8,23 @@ import store from "./redux/configStore";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import config from "../src/helpers/config.css";
+import { SnackbarProvider } from "notistack";
+import Slide from "@material-ui/core/Slide";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        TransitionComponent={Slide}
+        autoHideDuration={2000}
+      >
+        <App />
+      </SnackbarProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

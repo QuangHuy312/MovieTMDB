@@ -24,8 +24,7 @@ let schema = yup.object().shape({
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  // let { enqueueSnackbar } = useSnackbar();
-  // console.log(enqueueSnackbar);
+  const { enqueueSnackbar } = useSnackbar();
   const {
     backdrop,
     content,
@@ -36,16 +35,23 @@ const Login = () => {
     btnLogin,
     textSignUp,
   } = useStyle();
-  // const handleClickVariant = (variant) => () => {
-  //   // variant could be success, error, warning, info, or default
-  //   enqueueSnackbar("This is a success message!", { variant });
-  // };
 
   const handleSubmitForm = (e) => {
     const info = { ...values, request_token: REQUEST_TOKEN };
     e.preventDefault();
     if (!isValid) return;
-    dispatch(UserManagerAction(info, () => history.goBack()));
+    dispatch(
+      UserManagerAction(
+        info,
+        () => history.goBack(),
+        (mes) => {
+          enqueueSnackbar(mes, { variant: "success" });
+        },
+        (mes) => {
+          enqueueSnackbar(mes, { variant: "error" });
+        }
+      )
+    );
   };
   const { values, handleChange, isValid, errors, handleBlur, touched } =
     useFormik({

@@ -51,7 +51,7 @@ const Reviews = ({ reviews }) => {
         </div>
         <div>
           <Typography variant="h2" className={rating}>
-            {reviews.author_details.rating}
+            {reviews.author_details.rating || 8}
           </Typography>
         </div>
       </div>

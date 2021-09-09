@@ -29,4 +29,55 @@ export class baseService {
       data: JSON.stringify({ request_token: info }),
     });
   };
+
+  postUserRating = (url, rate) => {
+    return axios({
+      method: "POST",
+      url: `${API_URL}${url}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({ value: rate }),
+    });
+  };
+
+  postAddWatchList = (url, movieId, action) => {
+    return axios({
+      method: "POST",
+      url: `${API_URL}${url}`,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      data: JSON.stringify({
+        media_type: "movie",
+        media_id: movieId,
+        watchlist: action,
+      }),
+    });
+  };
+
+  postAddToFavourite = (url, movieId, action) => {
+    return axios({
+      method: "POST",
+      url: `${API_URL}${url}`,
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      data: JSON.stringify({
+        media_type: "movie",
+        media_id: movieId,
+        favorite: action,
+      }),
+    });
+  };
+
+  deleteUserRating = (url, rate) => {
+    return axios({
+      method: "DELETE",
+      url: `${API_URL}${url}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
 }
