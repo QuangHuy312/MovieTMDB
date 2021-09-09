@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { HomeTemplate } from "./template/HomeTemplate/HomeTemplate";
 import Home from "./views/Home/Home";
@@ -9,18 +9,28 @@ import MovieNowPlaying from "./views/MovieNowPlaying/MovieNowPlaying";
 import DetailMovie from "./views/DetailMovie/DetailMovie";
 import DetailTvShow from "./views/DetailTVShow/DetailTvShow";
 import Login from "./views/Login/Login";
+import { useDispatch } from "react-redux";
+import { fetchSInfoUser } from "./redux/action/UserManagerAction";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const sessionId = localStorage.getItem("sessionId");
+  useEffect(() => {
+    if (sessionId) {
+      dispatch(fetchSInfoUser(sessionId));
+    }
+  }, []);
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=d6c392186e19bae2e1addaadb1677274",
-        method: "POST",
-        body: {
-          username: "quanghuyfly1997",
-          password: "Huy03120252",
-          request_token: "784491c78fcd445fe4aea3d8a8980a036e4acdc4",
-        },
+        url: "https://api.themoviedb.org/3/account/10908886/rated/movies?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&session_id=dd0f26e07f2a4ae57eaac74162e45ac882992b4e&sort_by=created_at.asc&page=1",
+        method: "GET",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        // data: JSON.stringify({
+        //   request_token: "aa5b3b2df4ce178e8a269dddedb43bb684540170",
+        // }),
       });
       console.log(data);
     } catch (error) {

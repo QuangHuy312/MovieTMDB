@@ -3,12 +3,14 @@ import thunk from "redux-thunk";
 import { MovieDetailManagerReducer } from "./reducer/MovieDetailManagerReducer";
 import { MovieManagerReducer } from "./reducer/MovieManagerReducer";
 import { TVShowDetailManagerReducer } from "./reducer/TvShowDetailManagerReducer";
+import { UserManagerReducer } from "./reducer/UserManagerReducer";
 
 const reducer = combineReducers({
   //Reducer children
   MovieManagerReducer,
   MovieDetailManagerReducer,
   TVShowDetailManagerReducer,
+  UserManagerReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));

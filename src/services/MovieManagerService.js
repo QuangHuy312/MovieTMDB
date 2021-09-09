@@ -4,23 +4,23 @@ import { baseService } from "./baseService";
 export class MovieManagerService extends baseService {
   getMoviePopular = (page) => {
     return this.get(
-      `movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`
+      `movie/popular?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
   };
 
   getMovieTopRate = (page) => {
     return this.get(
-      `movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
+      `movie/top_rated?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
   };
   getMovieNowPlaying = (page) => {
     return this.get(
-      `movie/now_playing?api_key=${API_KEY}&language=en-US&page=${page}`
+      `movie/now_playing?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
   };
   getMovieUpComing = (page) => {
     return this.get(
-      `movie/upcoming?api_key=${API_KEY}&language=en-US&page=${page}`
+      `movie/upcoming?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
   };
 
@@ -30,7 +30,7 @@ export class MovieManagerService extends baseService {
 
   getTVShow = (page) => {
     return this.get(
-      `tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
+      `tv/top_rated?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
   };
 }

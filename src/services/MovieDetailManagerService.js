@@ -9,11 +9,11 @@ export class MovieDetailManagerService extends baseService {
     return this.get(`movie/${id}/images?api_key=${API_KEY}`);
   };
   getCreditMovie = (id) => {
-    return this.get(`movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+    return this.get(`movie/${id}/credits?api_key=${API_KEY}&language=vi-VN`);
   };
   getSimilarMovie = (id) => {
     return this.get(
-      `movie/${id}/similar?api_key=${API_KEY}&language=en-US&page=1`
+      `movie/${id}/similar?api_key=${API_KEY}&language=vi-VN&page=1`
     );
   };
   getReviewsMovie = (id) => {

@@ -70,7 +70,7 @@ const ContentDetails = ({
                 ))}
               </>
             ) : (
-              <div> No Comment</div>
+              <div> No Review</div>
             )}
           </TabPanel>
           <TabPanel value={value} index={1}>

@@ -1,13 +1,31 @@
-import { Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { LOGO } from "../../../assets/logo";
-import useStyle from "./style";
+import { Avatar, Button, Container, Typography } from "@material-ui/core";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom";
+import { LOGO, NO_AVATAR } from "../../../assets/logo";
+import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
+import useStyle from "./style";
 
 const Header = () => {
-  const { navContent, scrollNav } = useStyle();
+  const {
+    navContent,
+    scrollNav,
+    content,
+    logoHeader,
+    navLink,
+    listNavbar,
+    avatarUser,
+  } = useStyle();
   const [isScrolled, setIsScrolled] = useState(false);
+  const scrolled = clsx(navContent, scrollNav);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const user = localStorage.getItem("sessionId");
+  const { infoUser } = useSelector((state) => state.UserManagerReducer);
+  const history = useHistory();
+
   useEffect(() => {
     const handleScroll = (e) => {
       setIsScrolled(window.scrollY > 250);
@@ -17,12 +35,23 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isScrolled]);
-  const scrolled = clsx(navContent, scrollNav);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    setAnchorEl(null);
+    localStorage.removeItem("sessionId");
+  };
   return (
     <header className={isScrolled ? navContent : scrolled}>
-      <div className="container flex justify-between h-16 mx-auto">
-        <div className="flex">
-          <NavLink to="/" className="flex items-center p-2">
+      <Container className={content}>
+        <div style={{ display: "flex" }}>
+          <NavLink to="/" className={logoHeader}>
             <img
               src={LOGO}
               alt="logo"
@@ -30,59 +59,77 @@ const Header = () => {
             />
           </NavLink>
         </div>
-
-        <div className="flex">
-          <ul className="items-stretch hidden space-x-3 lg:flex text-white mt-5">
+        <div style={{ display: "flex" }}>
+          <ul className={listNavbar}>
             <li>
-              <NavLink
-                to="/"
-                className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent"
-              >
+              <NavLink to="/" className={navLink}>
                 HOME
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/movie"
-                className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-violet-600 border-violet-600"
-              >
+              <NavLink to="/" className={navLink}>
                 MOVIE
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/tvshow"
-                className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent"
-              >
+              <NavLink to="/" className={navLink}>
                 TV SHOW
               </NavLink>
             </li>
           </ul>
         </div>
-        <div className="items-center flex-shrink-0 hidden lg:flex">
-          <NavLink to="/login">
-            <Button variant="contained" color="primary">
-              Login
-            </Button>
-          </NavLink>
+        <div style={{ display: "flex" }}>
+          {user ? (
+            <>
+              <div>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={
+                    !!infoUser.avatar
+                      ? `${IMAGE_URL}${WIDTH_IMAGE}${infoUser?.avatar?.tmdb?.avatar_path}`
+                      : { NO_AVATAR }
+                  }
+                  onClick={handleClick}
+                  className={avatarUser}
+                />
+              </div>
+              <Typography variant="body2" style={{ alignSelf: "center" }}>
+                Hello
+                <Typography
+                  variant="body"
+                  style={{
+                    color: "#f9ab00",
+                    paddingLeft: 10,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => history.push("/profile")}
+                >
+                  {infoUser.name}
+                </Typography>
+              </Typography>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                style={{ top: 50 }}
+                onClick={handleClose}
+              >
+                <MenuItem onClick={() => history.push("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <NavLink to="/login">
+              <Button variant="contained" color="primary">
+                Login
+              </Button>
+            </NavLink>
+          )}
         </div>
-        <button className="p-4 lg:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6 text-coolGray-800"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
-      </div>
+      </Container>
     </header>
   );
 };

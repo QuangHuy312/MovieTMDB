@@ -9,14 +9,24 @@ export class baseService {
     });
   };
 
-  post = (url, info) => {
+  postToken = (url, info) => {
     return axios({
-      url: `${API_URL}${url}`,
       method: "POST",
+      url: `${API_URL}${url}`,
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(info),
+      data: JSON.stringify(info),
+    });
+  };
+  postSessionId = (url, info) => {
+    return axios({
+      method: "POST",
+      url: `${API_URL}${url}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({ request_token: info }),
     });
   };
 }

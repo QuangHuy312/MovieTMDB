@@ -44,14 +44,12 @@ const MovieTop = ({ arrMoviePopular }) => {
           </Grid>
           <Grid item xs={9} sm={8}>
             <Typography variant="h2" className={titleMovie}>
-              <i> {arrMoviePopular?.title}</i>
+              <i> {arrMoviePopular?.original_title}</i>
             </Typography>
             <Typography variant="body2">
               <Typography variant="span" className={age}>
                 16+
               </Typography>
-              {Math.floor(arrMoviePopular?.runtime / 60)}hr{" "}
-              {arrMoviePopular?.runtime % 60}mins
               <Typography variant="span" className={releaseDate}>
                 <i> {arrMoviePopular?.release_date}</i>
               </Typography>

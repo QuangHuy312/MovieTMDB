@@ -9,16 +9,16 @@ export class TvShowDetailManagerService extends baseService {
     return this.get(`tv/${id}/images?api_key=${API_KEY}`);
   };
   getCreditTvShow = (id) => {
-    return this.get(`tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
+    return this.get(`tv/${id}/credits?api_key=${API_KEY}&language=vi-VN`);
   };
   getSimilarTvShow = (id) => {
     return this.get(
-      `tv/${id}/similar?api_key=${API_KEY}&language=en-US&page=1`
+      `tv/${id}/similar?api_key=${API_KEY}&language=vi-VN&page=1`
     );
   };
   getReviewsTvShow = (id) => {
     return this.get(
-      `tv/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+      `tv/${id}/reviews?api_key=${API_KEY}&language=vi-VN&page=1`
     );
   };
 }

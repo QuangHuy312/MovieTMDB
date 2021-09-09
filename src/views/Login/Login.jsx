@@ -14,6 +14,8 @@ import { Form, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { UserManagerAction } from "../../redux/action/UserManagerAction";
 import { REQUEST_TOKEN } from "../../utils/settings/config";
+import { useSnackbar } from "notistack";
+import { useHistory } from "react-router";
 
 let schema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -21,6 +23,9 @@ let schema = yup.object().shape({
 });
 const Login = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  // let { enqueueSnackbar } = useSnackbar();
+  // console.log(enqueueSnackbar);
   const {
     backdrop,
     content,
@@ -31,12 +36,16 @@ const Login = () => {
     btnLogin,
     textSignUp,
   } = useStyle();
+  // const handleClickVariant = (variant) => () => {
+  //   // variant could be success, error, warning, info, or default
+  //   enqueueSnackbar("This is a success message!", { variant });
+  // };
 
   const handleSubmitForm = (e) => {
     const info = { ...values, request_token: REQUEST_TOKEN };
     e.preventDefault();
     if (!isValid) return;
-    dispatch(UserManagerAction(info));
+    dispatch(UserManagerAction(info, () => history.goBack()));
   };
   const { values, handleChange, isValid, errors, handleBlur, touched } =
     useFormik({
