@@ -154,9 +154,12 @@ const Banner = ({ detailBanner, id }) => {
       >
         <CustomCard
           effectColor="#C780FF" // required
-          blur={15} // default blur value is 10px
+          blur={6} // default blur value is 10px
           borderRadius="none" // default border radius value is 10px
-          style={{ height: "700px" }}
+          style={{
+            height: "700px",
+            backgroundColor: "rgba(10, 10, 10, 0.44)",
+          }}
         >
           <Container className={content}>
             <Grid container spacing={3}>

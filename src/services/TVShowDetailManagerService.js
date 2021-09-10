@@ -21,5 +21,11 @@ export class TvShowDetailManagerService extends baseService {
       `tv/${id}/reviews?api_key=${API_KEY}&language=vi-VN&page=1`
     );
   };
+
+  getRecommendTVShow = (id) => {
+    return this.get(
+      `tv/${id}/recommendations?api_key=${API_KEY}&language=vi-VN&page=1`
+    );
+  };
 }
 export const detailManager = new TvShowDetailManagerService();

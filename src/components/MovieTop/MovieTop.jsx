@@ -24,7 +24,6 @@ const MovieTop = ({ arrMoviePopular }) => {
     poster,
     desc,
     titleRate,
-    trailer,
   } = useStyle();
   return (
     <div className={container}>

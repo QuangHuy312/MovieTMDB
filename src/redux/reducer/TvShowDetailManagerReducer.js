@@ -2,6 +2,7 @@ import {
   GET_BANNER_TV_SHOW,
   GET_CREDIT_TV_SHOW,
   GET_PHOTOS_TV_SHOW,
+  GET_RECOMMEND_TV_SHOW,
   GET_REVIEWS_TV_SHOW,
   GET_SIMILAR_TV_SHOW,
 } from "../types/DetailManagerType";
@@ -12,6 +13,7 @@ const initialState = {
   detailSimilarTVShow: [],
   detailReviewsTVShow: [],
   detailBannerTVShow: {},
+  detailRecommendTVShow: [],
 };
 export const TVShowDetailManagerReducer = (
   state = initialState,
@@ -36,6 +38,10 @@ export const TVShowDetailManagerReducer = (
     }
     case GET_BANNER_TV_SHOW: {
       state.detailBannerTVShow = payload;
+      return { ...state };
+    }
+    case GET_RECOMMEND_TV_SHOW: {
+      state.detailRecommendTVShow = payload;
       return { ...state };
     }
     default:

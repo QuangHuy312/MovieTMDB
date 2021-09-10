@@ -3,6 +3,7 @@ import {
   GET_BANNER_TV_SHOW,
   GET_CREDIT_TV_SHOW,
   GET_PHOTOS_TV_SHOW,
+  GET_RECOMMEND_TV_SHOW,
   GET_REVIEWS_TV_SHOW,
   GET_SIMILAR_TV_SHOW,
 } from "../types/DetailManagerType";
@@ -46,6 +47,17 @@ export const getDetailSimilarTvShowAction = (id) => {
     try {
       const { data } = await detailManager.getSimilarTvShow(id);
       dispatch(createAction(GET_SIMILAR_TV_SHOW, data.results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getDetailRecommendTvShowAction = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await detailManager.getRecommendTVShow(id);
+      dispatch(createAction(GET_RECOMMEND_TV_SHOW, data.results));
     } catch (error) {
       console.log(error);
     }

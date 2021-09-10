@@ -9,7 +9,7 @@ const Credit = ({ detailCredit }) => {
   return (
     <Fragment>
       <Grid container spacing={4}>
-        {detailCredit?.cast?.slice(0, 12)?.map((person) => {
+        {detailCredit?.cast?.slice(0, 30)?.map((person) => {
           return (
             <Grid item xs={12} md={6}>
               <div className={profile}>

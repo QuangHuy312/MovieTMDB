@@ -72,7 +72,7 @@ const Carousel = ({ arrMoviePopular }) => {
         </Slider>
 
         <div className={slideCarousel}>
-          <h1>Movie Popular</h1>
+          <h1>Popular Movie</h1>
           <Slider
             {...settings}
             asNavFor={nav1}

@@ -4,6 +4,7 @@ import {
   GET_BANNER_MOVIE,
   GET_CREDIT_MOVIE,
   GET_PHOTOS_MOVIE,
+  GET_RECOMMEND_MOVIE,
   GET_REVIEWS_MOVIE,
   GET_SIMILAR_MOVIE,
 } from "../types/DetailManagerType";
@@ -46,6 +47,17 @@ export const getDetailSimilarMovieAction = (id) => {
     try {
       const { data } = await detailManager.getSimilarMovie(id);
       dispatch(createAction(GET_SIMILAR_MOVIE, data.results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getDetailRecommendMovieAction = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await detailManager.getRecommendMovie(id);
+      dispatch(createAction(GET_RECOMMEND_MOVIE, data.results));
     } catch (error) {
       console.log(error);
     }

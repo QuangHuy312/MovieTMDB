@@ -41,7 +41,6 @@ const TopRated = ({ arrMovieTopRated }) => {
                   <CardMedia
                     image={`${IMAGE_URL}${WIDTH_IMAGE}${movie.poster_path}`}
                     className={media}
-                    title="Paella dish"
                   />
                   <Typography
                     variant="h2"

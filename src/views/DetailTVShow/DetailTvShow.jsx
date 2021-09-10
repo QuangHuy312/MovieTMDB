@@ -4,6 +4,7 @@ import {
   getDetailBannerTvShowAction,
   getDetailCreditTvShowAction,
   getDetailPhotoTvShowAction,
+  getDetailRecommendTvShowAction,
   getDetailReviewsTvShowAction,
   getDetailSimilarTvShowAction,
 } from "../../redux/action/TvShowDetailManagerAction";
@@ -19,6 +20,7 @@ const DetailTvShow = (props) => {
     dispatch(getDetailCreditTvShowAction(id));
     dispatch(getDetailSimilarTvShowAction(id));
     dispatch(getDetailReviewsTvShowAction(id));
+    dispatch(getDetailRecommendTvShowAction(id));
   }, [id, dispatch]);
 
   const {
@@ -27,15 +29,17 @@ const DetailTvShow = (props) => {
     detailCreditTVShow,
     detailSimilarTVShow,
     detailReviewsTVShow,
+    detailRecommendTVShow,
   } = useSelector((state) => state.TVShowDetailManagerReducer);
   return (
     <Fragment>
-      <BannerMovie detailBanner={detailBannerTVShow} />
+      <BannerMovie detailBanner={detailBannerTVShow} id={id} />
       <ContentDetails
         detailPhotos={detailPhotosTVShow}
         detailCredit={detailCreditTVShow}
         detailSimilar={detailSimilarTVShow}
         detailReviews={detailReviewsTVShow}
+        detailRecommend={detailRecommendTVShow}
       />
     </Fragment>
   );

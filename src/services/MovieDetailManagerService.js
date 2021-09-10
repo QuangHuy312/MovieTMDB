@@ -21,5 +21,11 @@ export class MovieDetailManagerService extends baseService {
       `movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
     );
   };
+
+  getRecommendMovie = (id) => {
+    return this.get(
+      `movie/${id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`
+    );
+  };
 }
 export const detailManager = new MovieDetailManagerService();

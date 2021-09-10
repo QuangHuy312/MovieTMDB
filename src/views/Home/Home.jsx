@@ -39,7 +39,7 @@ const Home = () => {
         arrMovieUpComing={arrMovieUpComing}
       />
       <TVShow arrTVShow={arrTVShow} />
-      <MovieTop arrMoviePopular={arrMoviePopular[5]} />
+      <MovieTop arrMoviePopular={arrMoviePopular[7]} />
     </Fragment>
   );
 };

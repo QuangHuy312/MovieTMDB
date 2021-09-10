@@ -6,6 +6,7 @@ import {
   getDetailBannerMovieAction,
   getDetailCreditMovieAction,
   getDetailPhotoMovieAction,
+  getDetailRecommendMovieAction,
   getDetailReviewsMovieAction,
   getDetailSimilarMovieAction,
 } from "../../redux/action/MovieDetailManagerAction";
@@ -19,6 +20,7 @@ const DetailMovie = (props) => {
     dispatch(getDetailCreditMovieAction(id));
     dispatch(getDetailSimilarMovieAction(id));
     dispatch(getDetailReviewsMovieAction(id));
+    dispatch(getDetailRecommendMovieAction(id));
   }, [id, dispatch]);
   const {
     detailPhotosMovie,
@@ -26,6 +28,7 @@ const DetailMovie = (props) => {
     detailSimilarMovie,
     detailReviewsMovie,
     detailBannerMovie,
+    detailRecommendMovie,
   } = useSelector((state) => state.MovieDetailManagerReducer);
 
   return (
@@ -36,6 +39,7 @@ const DetailMovie = (props) => {
         detailCredit={detailCreditMovie}
         detailSimilar={detailSimilarMovie}
         detailReviews={detailReviewsMovie}
+        detailRecommend={detailRecommendMovie}
       />
     </Fragment>
   );

@@ -11,6 +11,7 @@ import DetailTvShow from "./views/DetailTVShow/DetailTvShow";
 import Login from "./views/Login/Login";
 import { useDispatch } from "react-redux";
 import { fetchSInfoUser } from "./redux/action/UserManagerAction";
+import NotFound from "./views/NotFound/NotFound";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,24 +21,24 @@ const App = () => {
       dispatch(fetchSInfoUser(sessionId));
     }
   }, []);
-  // const fetchData = async () => {
-  //   try {
-  //     const { data } = await axios({
-  //       url: " https://api.themoviedb.org/3/movie/278/rating?api_key=d6c392186e19bae2e1addaadb1677274&guest_session_id=9594de89f3a3b6ac6b57f3463c954439&session_id=ead42a6fe284257b75ce67005df0ebe0c17d78b6",
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       data: JSON.stringify({
-  //         value: 8,
-  //       }),
-  //     });
-  //     console.log(data);
-  //   } catch (error) {
-  //     // console.log(error.response);
-  //   }
-  // };
-  // fetchData();
+  const fetchData = async () => {
+    try {
+      const { data } = await axios({
+        url: "   https://api.themoviedb.org/3/movie/278/recommendations?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1",
+        method: "GET",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        // data: JSON.stringify({
+        //   value: 8,
+        // }),
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  fetchData();
 
   return (
     <BrowserRouter>
@@ -52,6 +53,7 @@ const App = () => {
           exact
           component={MovieNowPlaying}
         />
+        <HomeTemplate path="/" component={NotFound} />
         <Route path="/login" exact component={Login} />
       </Switch>
     </BrowserRouter>

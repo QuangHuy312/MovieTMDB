@@ -2,6 +2,7 @@ import {
   GET_BANNER_MOVIE,
   GET_CREDIT_MOVIE,
   GET_PHOTOS_MOVIE,
+  GET_RECOMMEND_MOVIE,
   GET_REVIEWS_MOVIE,
   GET_SIMILAR_MOVIE,
 } from "../types/DetailManagerType";
@@ -12,6 +13,7 @@ const initialState = {
   detailSimilarMovie: [],
   detailReviewsMovie: [],
   detailBannerMovie: {},
+  detailRecommendMovie: [],
 };
 export const MovieDetailManagerReducer = (
   state = initialState,
@@ -36,6 +38,10 @@ export const MovieDetailManagerReducer = (
     }
     case GET_REVIEWS_MOVIE: {
       state.detailReviewsMovie = payload;
+      return { ...state };
+    }
+    case GET_RECOMMEND_MOVIE: {
+      state.detailRecommendMovie = payload;
       return { ...state };
     }
     default:
