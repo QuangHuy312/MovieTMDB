@@ -5,14 +5,15 @@ import {
   Container,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-import Slider from "react-slick";
-import useStyle from "./style";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
-import { IMAGE_URL, WIDTH_IMAGE } from "../../utils/settings/config";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import clsx from "clsx";
+import React from "react";
 import { useHistory } from "react-router";
+import Slider from "react-slick";
+import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
+import useStyle from "./style";
+import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 
 const TVShow = ({ arrTVShow }) => {
   const history = useHistory();
@@ -67,20 +68,31 @@ const TVShow = ({ arrTVShow }) => {
   const {
     content,
     arrowImage,
-    media,
     contentMedia,
     arrowContentPrev,
     arrowContentNext,
     card,
     hoverContent,
     hoverButton,
+    title,
   } = useStyle();
   const arrowContent = clsx(arrowContentPrev, arrowContentNext);
   return (
     <Container className={content}>
-      <Typography variant="h4" component="h1">
+      <Typography variant="h4" component="h1" className={title}>
         TV SHOW
       </Typography>
+      <div style={{ textAlign: "right" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<SubdirectoryArrowRightOutlinedIcon />}
+          style={{ borderRadius: 10 }}
+          onClick={() => history.push("/tvshow/all")}
+        >
+          View All
+        </Button>
+      </div>
       <Slider {...settings} style={{ padding: 40 }}>
         {arrTVShow?.slice(0, 15)?.map((tvshow) => {
           return (

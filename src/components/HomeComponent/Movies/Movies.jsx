@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import useStyle from "./style";
-import TopRated from "./TopRated/TopRated";
 import UpComing from "./UpComing/UpComing";
+import TopRated from "./TopRated/TopRated";
 import NowPlaying from "./NowPlaying/NowPlaying";
 
 const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {

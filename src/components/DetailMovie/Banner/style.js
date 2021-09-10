@@ -18,6 +18,7 @@ const useStyle = makeStyles(() => {
     poster: {
       height: "100%",
       objectFit: "cover",
+      borderRadius: 10,
       "@media only screen and (max-width:768px)": {
         height: "auto",
       },

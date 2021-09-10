@@ -136,7 +136,10 @@ const Footer = () => {
               color: "#877474",
             }}
           >
-            © Copyright 2021. All Rights Reserved.
+            © Copyright 2021. Create by{" "}
+            <Typography variant="body" style={{ color: "#f9ab00" }}>
+              Quang Huy
+            </Typography>
           </Typography>
         </div>
       </Container>

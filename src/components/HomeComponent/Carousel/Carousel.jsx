@@ -6,7 +6,7 @@ import {
   IMAGE_URL,
   WIDTH_BACKDROP,
   WIDTH_IMAGE,
-} from "../../utils/settings/config";
+} from "../../../utils/settings/config";
 import useStyle from "./style";
 
 const Carousel = ({ arrMoviePopular }) => {

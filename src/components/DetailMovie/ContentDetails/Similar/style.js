@@ -20,10 +20,16 @@ const useStyle = makeStyles(() => {
     },
 
     contentCard: {
-      opacity: 0.8,
+      overflow: "hidden",
       "&:hover": {
-        opacity: 0.5,
         cursor: "pointer",
+        "& $media": {
+          transition: "all 0.9s",
+          transform: "scale(1.2)",
+        },
+        "& $media:before": {
+          display: "block",
+        },
         "& $iconArrow": {
           opacity: 1,
         },
@@ -35,6 +41,16 @@ const useStyle = makeStyles(() => {
       backgroundPosition: "center",
       backgroundSize: "cover",
       transition: "all 0.5s",
+      "&:before": {
+        content: '""',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        display: "none",
+        backgroundColor: "rgba(0,0,0,0.7)",
+      },
     },
     title: {
       boder: "none",

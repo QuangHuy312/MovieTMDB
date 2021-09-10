@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Carousel from "../../components/Carousel/Carousel";
-import Movies from "../../components/Movies/Movies";
-import MovieTop from "../../components/MovieTop/MovieTop";
-import TVShow from "../../components/TVShow/TVShow";
+import Carousel from "../../components/HomeComponent/Carousel/Carousel";
+import Movies from "../../components/HomeComponent/Movies/Movies";
+import MovieTop from "../../components/HomeComponent/MovieTop/MovieTop";
+import TVShow from "../../components/HomeComponent/TVShow/TVShow";
+// import TVShow from "../../components/HomeComponent/TVShow/TVShow";
 import {
   getMovieNowPlayingAction,
   getMoviePolularAction,

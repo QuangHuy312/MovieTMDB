@@ -12,6 +12,7 @@ import Login from "./views/Login/Login";
 import { useDispatch } from "react-redux";
 import { fetchSInfoUser } from "./redux/action/UserManagerAction";
 import NotFound from "./views/NotFound/NotFound";
+import TVShows from "../src/views/TVShows/TVShows.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const App = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "   https://api.themoviedb.org/3/movie/278/recommendations?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1",
+        url: "https://api.themoviedb.org/3/search/keyword?api_key=d6c392186e19bae2e1addaadb1677274&query=black&page=1",
         method: "GET",
         // headers: {
         //   "Content-Type": "application/json",
@@ -53,6 +54,7 @@ const App = () => {
           exact
           component={MovieNowPlaying}
         />
+        <HomeTemplate path="/tvshow/all" exact component={TVShows} />
         <HomeTemplate path="/" component={NotFound} />
         <Route path="/login" exact component={Login} />
       </Switch>

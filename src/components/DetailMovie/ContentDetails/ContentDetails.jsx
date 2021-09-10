@@ -88,8 +88,11 @@ const ContentDetails = ({
           </Grid>
         </Grid>
       </Container>
+
       <div>
-        <Recommend detailRecommend={detailRecommend} />
+        {detailRecommend.length > 0 ? (
+          <Recommend detailRecommend={detailRecommend} />
+        ) : null}
       </div>
     </Fragment>
   );

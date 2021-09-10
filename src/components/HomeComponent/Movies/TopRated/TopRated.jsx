@@ -7,14 +7,14 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { Fragment } from "react";
-import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
-import useStyle from "../TopRated/style";
+import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
+import useStyle from "./style";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import clsx from "clsx";
 import { useHistory } from "react-router";
 import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 
-const NowPlaying = ({ arrMovieNowPlaying }) => {
+const TopRated = ({ arrMovieTopRated }) => {
   const { viewAllIcon, media, card, title, rated, iconArrow, contentCard } =
     useStyle();
   const arrow = clsx(rated, iconArrow);
@@ -28,12 +28,12 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
             color="primary"
             endIcon={<SubdirectoryArrowRightOutlinedIcon />}
             style={{ borderRadius: 10 }}
-            onClick={() => history.push("/movies/nowplaying")}
+            onClick={() => history.push("/movies/toprated")}
           >
             View All
           </Button>
         </Grid>
-        {arrMovieNowPlaying?.slice(0, 12)?.map((movie) => {
+        {arrMovieTopRated?.slice(0, 12)?.map((movie) => {
           return (
             <Grid item xs={6} sm={4} md={3} lg={2} key={movie.id}>
               <Card className={card}>
@@ -41,7 +41,6 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
                   <CardMedia
                     image={`${IMAGE_URL}${WIDTH_IMAGE}${movie.poster_path}`}
                     className={media}
-                    title="Paella dish"
                   />
                   <Typography
                     variant="h2"
@@ -74,4 +73,4 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
   );
 };
 
-export default NowPlaying;
+export default TopRated;

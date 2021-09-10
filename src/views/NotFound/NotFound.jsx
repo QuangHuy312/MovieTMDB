@@ -19,7 +19,7 @@ const NotFound = () => {
         color="primary"
         onClick={() => history.push("/")}
       >
-        Home
+        Go Back
       </Button>
     </div>
   );

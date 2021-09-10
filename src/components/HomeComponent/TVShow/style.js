@@ -6,6 +6,12 @@ const useStyle = makeStyles(() => {
       paddingTop: 40,
       position: "relative",
     },
+    title: {
+      fontSize: 30,
+      "@media screen and (max-width:768px)": {
+        fontSize: 20,
+      },
+    },
     card: {
       backgroundColor: "transparent",
     },
@@ -48,23 +54,40 @@ const useStyle = makeStyles(() => {
       },
     },
     arrowContentNext: {
+      width: 20,
       position: "absolute",
-      top: "-3%",
-      right: "7%",
+      top: "-9%",
+      right: "14%",
       cursor: "pointer",
+      "@media screen and (max-width:992px)": {
+        right: "19%",
+      },
+      "@media screen and (max-width:780px)": {
+        right: "23%",
+      },
+      "@media screen and (max-width:600px)": {
+        right: "28%",
+      },
+      "@media screen and (max-width:470px)": {
+        right: "37%",
+      },
     },
 
     arrowContentPrev: {
-      left: "87%",
+      left: "80%",
       right: 0,
       "@media screen and (max-width:992px)": {
-        left: "85%",
+        left: "73%",
       },
       "@media screen and (max-width:780px)": {
-        left: "81%",
+        left: "66%",
       },
       "@media screen and (max-width:600px)": {
-        left: "78%",
+        left: "57%",
+      },
+
+      "@media screen and (max-width:470px)": {
+        left: "48%",
       },
     },
     arrowImage: {

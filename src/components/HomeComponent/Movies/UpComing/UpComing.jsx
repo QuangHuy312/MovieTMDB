@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { Fragment } from "react";
-import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
+import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 // import useStyle from "./style";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import clsx from "clsx";
