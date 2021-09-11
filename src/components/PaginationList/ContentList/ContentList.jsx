@@ -3,21 +3,57 @@ import {
   Container,
   FormControl,
   Grid,
+  Input,
   MenuItem,
   Typography,
 } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
-import React, { Fragment } from "react";
-import useStyle from "./style";
 import Slider from "@material-ui/core/Slider";
 import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getGenresMovieListAction,
+  getMovieListAction,
+  getMovieListFilteredAction,
+} from "../../../redux/action/MovieManagerAction";
 import List from "./List/List";
+import useStyle from "./style";
 
-const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
+const ContentList = () => {
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  console.log(page);
+  const { arrMovieList, arrGenresMovieList, arrMovieListFilterd } = useSelector(
+    (state) => state.MovieManagerReducer
+  );
+
+  useEffect(() => {
+    if (page > 1) {
+      handleClickFilter();
+    }
+    dispatch(getMovieListAction(page));
+    dispatch(getGenresMovieListAction);
+  }, [page, dispatch]);
+
   const [genre, setGenre] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [rating, setRating] = React.useState([5, 10]);
-  const [year, setYear] = React.useState([2017, 2021]);
+  const [year, setYear] = React.useState([2017]);
+
+  const rateGte = rating.join("").slice(0, 1);
+  const rateLte = rating.join("").slice(1, 3);
+
+  //Api yêu cầu gửi tên viết tắt , vd Japanese =ja ....
+  const language = country.slice(-2);
+
+  // Api yêu cầu gửi mã id của genre , check với mảng Genres tìm ra id
+  const findId = arrGenresMovieList?.find((genreList) => {
+    if (genreList.name === genre) {
+      return genreList.id;
+    }
+  });
+  const genreId = findId?.id;
   const handleChangeYear = (event, newValue) => {
     setYear(newValue);
   };
@@ -31,8 +67,20 @@ const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
   const handleChangeCountry = (event) => {
     setCountry(event.target.value);
   };
-  // console.log(rating.join(","));
-  const { formControl, select, btnFilter } = useStyle();
+  const handleClickFilter = () => {
+    dispatch(
+      getMovieListFilteredAction(
+        page,
+        year,
+        rateGte,
+        rateLte,
+        genreId,
+        language
+      )
+    );
+  };
+
+  const { formControl, select, btnFilter, input } = useStyle();
 
   return (
     <Fragment>
@@ -75,11 +123,12 @@ const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
             <FormControl className={formControl}>
               <Select
                 displayEmpty
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="demo-customized-select-label"
+                id="demo-customized-select"
                 value={country}
                 onChange={handleChangeCountry}
                 className={select}
+                input={<Input className={input} />}
                 renderValue={(selected) => {
                   if (selected.length === 0) {
                     return <em>English</em>;
@@ -87,12 +136,12 @@ const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
                   return selected;
                 }}
               >
-                <MenuItem value="Action">English</MenuItem>
-                <MenuItem value="Korean">Korean</MenuItem>
-                <MenuItem value="Japanese">Japanese</MenuItem>
-                <MenuItem value="Vietnamese">Vietnamese</MenuItem>
-                <MenuItem value="Mystery">Thai</MenuItem>
-                <MenuItem value="Thriller">German</MenuItem>
+                <MenuItem value="EngLish-en">English</MenuItem>
+                <MenuItem value="Korean-ko">Korean</MenuItem>
+                <MenuItem value="Japanese-ja">Japanese</MenuItem>
+                <MenuItem value="Vietnamese-vi">Vietnamese</MenuItem>
+                <MenuItem value="ThaiLan-th">Thai</MenuItem>
+                <MenuItem value="Germany-de">German</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -114,7 +163,7 @@ const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
               <Slider
                 min={1}
                 max={10}
-                step={0.5}
+                step={1}
                 value={rating}
                 onChange={handleChangeRating}
                 valueLabelDisplay="auto"
@@ -133,7 +182,7 @@ const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
                 variant="body"
                 style={{ color: "#f9ab00", fontSize: 14, paddingLeft: 10 }}
               >
-                {year.slice(0, 1)}-{year.slice(1, 2)}
+                {year.slice(0, 1)}
               </Typography>
             </Typography>
             <div style={{ width: 150 }}>
@@ -156,19 +205,31 @@ const ContentList = ({ page, arrMovieList, arrGenresMovieList }) => {
               color="primary"
               endIcon={<SubdirectoryArrowRightOutlinedIcon />}
               className={btnFilter}
+              onClick={handleClickFilter}
             >
               APPLY FILTER
             </Button>
           </Grid>
         </Grid>
       </Container>
-      <Fragment>
-        <List
-          arrMovieList={arrMovieList}
-          pageDefault={page}
-          arrGenresMovieList={arrGenresMovieList}
-        />
-      </Fragment>
+
+      {arrMovieListFilterd?.results?.length > 0 ? (
+        <Fragment>
+          <List
+            arrMovieList={arrMovieListFilterd}
+            setPage={setPage}
+            arrGenresMovieList={arrGenresMovieList}
+          />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <List
+            arrMovieList={arrMovieList}
+            setPage={setPage}
+            arrGenresMovieList={arrGenresMovieList}
+          />
+        </Fragment>
+      )}
     </Fragment>
   );
 };

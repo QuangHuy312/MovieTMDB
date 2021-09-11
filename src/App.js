@@ -23,7 +23,7 @@ const App = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.themoviedb.org/3/discover/movie?api_key=d6c392186e19bae2e1addaadb1677274&page=1",
+        url: "https://api.themoviedb.org/3/discover/movie?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1&year=2021&vote_average.gte=3&vote_average.lte=7&with_genres=28&with_original_language=en",
         method: "GET",
         // headers: {
         //   "Content-Type": "application/json",

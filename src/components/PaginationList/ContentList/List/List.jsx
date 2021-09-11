@@ -9,35 +9,16 @@ import {
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import { Pagination } from "@material-ui/lab";
 import clsx from "clsx";
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
 
-const List = ({ arrMovieList, pageDefault, arrGenresMovieList }) => {
+const List = ({ arrMovieList, setPage, arrGenresMovieList }) => {
   const { content, media, card, title, rated, iconArrow, contentCard } =
     useStyle();
   const arrow = clsx(rated, iconArrow);
   const history = useHistory();
-
-  const handleRenderGenre = useCallback(
-    (genresId) => {
-      for (let idx in arrGenresMovieList) {
-        for (let i in genresId) {
-          console.log(genresId[i]);
-          if (arrGenresMovieList[idx].id === genresId[i]) {
-            return <span>{arrGenresMovieList[idx].name}</span>;
-          }
-        }
-      }
-    },
-    [arrGenresMovieList]
-  );
-
-  useEffect(() => {
-    handleRenderGenre();
-  }, [handleRenderGenre]);
-
   return (
     <div className={content}>
       <Container>
@@ -84,12 +65,31 @@ const List = ({ arrMovieList, pageDefault, arrGenresMovieList }) => {
                         )
                       </Typography>
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      style={{ paddingTop: 10, color: "#f9ab00" }}
+                    <div
+                      style={{
+                        paddingTop: 10,
+                        color: "#f9ab00",
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1.7fr",
+                      }}
                     >
-                      {handleRenderGenre(movie?.genre_ids)}
-                    </Typography>
+                      {movie?.genre_ids?.map((genre) => {
+                        return arrGenresMovieList?.map((listGenre) => {
+                          if (genre === listGenre.id) {
+                            return (
+                              <span
+                                style={{
+                                  fontSize: 12,
+                                  paddingBottom: 5,
+                                }}
+                              >
+                                {listGenre.name}
+                              </span>
+                            );
+                          }
+                        });
+                      })}
+                    </div>
                   </CardContent>
                 </Card>
               </Grid>
@@ -104,6 +104,7 @@ const List = ({ arrMovieList, pageDefault, arrGenresMovieList }) => {
           shape="rounded"
           color="primary"
           onChange={(e) => {
+            setPage(e.target.textContent);
             history.push({
               pathname: `/movies/list/page/${e.target.textContent}`,
             });

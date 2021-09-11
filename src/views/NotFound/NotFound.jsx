@@ -17,7 +17,7 @@ const NotFound = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => history.push("/")}
+        onClick={() => history.goBack()}
       >
         Go Back
       </Button>

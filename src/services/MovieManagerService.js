@@ -41,6 +41,22 @@ export class MovieManagerService extends baseService {
   getGenresMovieList = () => {
     return this.get(`genre/movie/list?api_key=${API_KEY}&language=en-US`);
   };
+
+  getMovieListFiltered = (
+    page,
+    year = "",
+    rategte = "",
+    ratelte = "",
+    genre = "",
+    language = ""
+  ) => {
+    if (year || rategte || ratelte || genre || language) {
+      return this.get(
+        `discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&year=${year}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
+      );
+    }
+    return;
+  };
 }
 
 export const movieManager = new MovieManagerService();

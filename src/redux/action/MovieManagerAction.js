@@ -9,6 +9,7 @@ import {
   GET_TV_SHOW,
   GET_MOVIE_LIST,
   GET_GENRES_MOVIE_LIST,
+  GET_MOVIE_LIST_FILTERED,
 } from "../types/MovieManagerType";
 
 export const getMoviePolularAction = (page) => {
@@ -82,6 +83,32 @@ export const getMovieListAction = (page) => {
     try {
       const { data } = await movieManager.getMovieList(page);
       dispatch(createAction(GET_MOVIE_LIST, data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getMovieListFilteredAction = (
+  page,
+  year = "",
+  rategte = "",
+  ratelte = "",
+  genre = "",
+  language = ""
+) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await movieManager.getMovieListFiltered(
+        page,
+        year,
+        rategte,
+        ratelte,
+        genre,
+        language
+      );
+      dispatch(createAction(GET_MOVIE_LIST_FILTERED, data));
+      console.log(data);
     } catch (error) {
       console.log(error);
     }

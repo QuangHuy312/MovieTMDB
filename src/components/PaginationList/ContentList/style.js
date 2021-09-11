@@ -7,8 +7,6 @@ const useStyle = makeStyles(() => {
     },
     select: {
       color: "#f9ab00",
-      //   minHeight: "50px !important",
-      //   marginTop: "30px !important",
     },
     btnFilter: {
       borderRadius: 15,

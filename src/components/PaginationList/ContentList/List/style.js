@@ -10,7 +10,7 @@ const useStyle = makeStyles(() => {
       backgroundColor: "transparent",
       overflow: "hidden",
       maxWidth: 350,
-      height: 350,
+      height: 370,
       marginLeft: 30,
       marginBottom: 35,
       boxShadow: "none",

@@ -26,3 +26,6 @@
 .MuiPaginationItem-outlinedPrimary.Mui-selected {
   border: 1px solid #f9ab00 !important;
 }
+.MuiListItem-button:hover {
+  color: #f9ab00;
+}

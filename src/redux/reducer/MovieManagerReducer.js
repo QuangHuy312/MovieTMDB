@@ -5,6 +5,7 @@ import {
   GET_LIST_MOVIE_TOP_RATED,
   GET_LIST_MOVIE_UP_COMING,
   GET_MOVIE_LIST,
+  GET_MOVIE_LIST_FILTERED,
   GET_TRAILER_MOVIE_POPULAR,
   GET_TV_SHOW,
 } from "../types/MovieManagerType";
@@ -18,6 +19,7 @@ const initialState = {
   arrTVShow: [],
   arrMovieList: null,
   arrGenresMovieList: [],
+  arrMovieListFilterd: [],
 };
 export const MovieManagerReducer = (
   state = initialState,
@@ -55,6 +57,10 @@ export const MovieManagerReducer = (
     }
     case GET_GENRES_MOVIE_LIST: {
       state.arrGenresMovieList = payload;
+      return { ...state };
+    }
+    case GET_MOVIE_LIST_FILTERED: {
+      state.arrMovieListFilterd = payload;
       return { ...state };
     }
 
