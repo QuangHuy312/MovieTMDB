@@ -33,6 +33,14 @@ export class MovieManagerService extends baseService {
       `tv/top_rated?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
   };
+
+  getMovieList = (page) => {
+    return this.get(`discover/movie?api_key=${API_KEY}&page=${page}`);
+  };
+
+  getGenresMovieList = () => {
+    return this.get(`genre/movie/list?api_key=${API_KEY}&language=en-US`);
+  };
 }
 
 export const movieManager = new MovieManagerService();

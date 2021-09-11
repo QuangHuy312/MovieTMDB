@@ -28,7 +28,7 @@ const TopRated = ({ arrMovieTopRated }) => {
             color="primary"
             endIcon={<SubdirectoryArrowRightOutlinedIcon />}
             style={{ borderRadius: 10 }}
-            onClick={() => history.push("/movies/toprated")}
+            onClick={() => history.push("/movies/list")}
           >
             View All
           </Button>

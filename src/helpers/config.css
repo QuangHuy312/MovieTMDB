@@ -15,3 +15,14 @@
 .slick-next:before {
   content: "" !important;
 }
+
+.MuiSelect-icon {
+  color: white !important;
+}
+.MuiPaginationItem-root {
+  color: white !important;
+}
+
+.MuiPaginationItem-outlinedPrimary.Mui-selected {
+  border: 1px solid #f9ab00 !important;
+}

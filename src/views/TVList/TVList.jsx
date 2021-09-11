@@ -1,7 +1,7 @@
 import React from "react";
 
-const TVShows = () => {
+const TVList = () => {
   return <div>TV Show</div>;
 };
 
-export default TVShows;
+export default TVList;

@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => {
   return {
     banner: {
-      backgroundImage: "url(http://picsum.photos/200)",
+      backgroundImage:
+        "url(https://dmitryvolkov.me/demo/hotflix2.1/main/img/section/section.jpg)",
       backgroundSize: "cover",
       backgroundPosition: "center",
       height: 300,

@@ -1,18 +1,16 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { fetchSInfoUser } from "./redux/action/UserManagerAction";
 import { HomeTemplate } from "./template/HomeTemplate/HomeTemplate";
-import Home from "./views/Home/Home";
-import MovieUpComing from "../src/views/MovieUpComing/MovieUpComing";
-import MovieTopRated from "../src/views/MovieTopRated/MovieTopRated";
-import MovieNowPlaying from "./views/MovieNowPlaying/MovieNowPlaying";
 import DetailMovie from "./views/DetailMovie/DetailMovie";
 import DetailTvShow from "./views/DetailTVShow/DetailTvShow";
+import Home from "./views/Home/Home";
 import Login from "./views/Login/Login";
-import { useDispatch } from "react-redux";
-import { fetchSInfoUser } from "./redux/action/UserManagerAction";
+import MovieList from "./views/MovieList/MovieList";
 import NotFound from "./views/NotFound/NotFound";
-import TVShows from "../src/views/TVShows/TVShows.jsx";
+import TVList from "./views/TVList/TVList.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,11 +19,11 @@ const App = () => {
     if (sessionId) {
       dispatch(fetchSInfoUser(sessionId));
     }
-  }, []);
+  }, [dispatch, sessionId]);
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.themoviedb.org/3/search/keyword?api_key=d6c392186e19bae2e1addaadb1677274&query=black&page=1",
+        url: "https://api.themoviedb.org/3/discover/movie?api_key=d6c392186e19bae2e1addaadb1677274&page=1",
         method: "GET",
         // headers: {
         //   "Content-Type": "application/json",
@@ -47,16 +45,15 @@ const App = () => {
         <HomeTemplate path="/" exact component={Home} />
         <HomeTemplate path="/detailmovies/:id" exact component={DetailMovie} />
         <HomeTemplate path="/detailTVshow/:id" exact component={DetailTvShow} />
-        <HomeTemplate path="/movies/upcoming" exact component={MovieUpComing} />
-        <HomeTemplate path="/movies/toprated" exact component={MovieTopRated} />
+        <HomeTemplate path="/movies/list" exact component={MovieList} />
         <HomeTemplate
-          path="/movies/nowplaying"
+          path="/movies/list/page/:number"
           exact
-          component={MovieNowPlaying}
+          component={MovieList}
         />
-        <HomeTemplate path="/tvshow/all" exact component={TVShows} />
-        <HomeTemplate path="/" component={NotFound} />
+        <HomeTemplate path="/tvshow/list" exact component={TVList} />
         <Route path="/login" exact component={Login} />
+        <HomeTemplate path="/" component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

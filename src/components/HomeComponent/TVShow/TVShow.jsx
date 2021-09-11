@@ -88,7 +88,7 @@ const TVShow = ({ arrTVShow }) => {
           color="primary"
           endIcon={<SubdirectoryArrowRightOutlinedIcon />}
           style={{ borderRadius: 10 }}
-          onClick={() => history.push("/tvshow/all")}
+          onClick={() => history.push("/tvshow/list")}
         >
           View All
         </Button>

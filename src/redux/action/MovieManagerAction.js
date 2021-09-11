@@ -5,9 +5,10 @@ import {
   GET_LIST_MOVIE_POPULAR,
   GET_LIST_MOVIE_TOP_RATED,
   GET_LIST_MOVIE_UP_COMING,
-  GET_DETAIL_MOVIE,
   GET_TRAILER_MOVIE_POPULAR,
   GET_TV_SHOW,
+  GET_MOVIE_LIST,
+  GET_GENRES_MOVIE_LIST,
 } from "../types/MovieManagerType";
 
 export const getMoviePolularAction = (page) => {
@@ -74,4 +75,24 @@ export const getKeyTrailerAction = (id) => {
       console.log(error);
     }
   };
+};
+
+export const getMovieListAction = (page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await movieManager.getMovieList(page);
+      dispatch(createAction(GET_MOVIE_LIST, data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getGenresMovieListAction = async (dispatch) => {
+  try {
+    const { data } = await movieManager.getGenresMovieList();
+    dispatch(createAction(GET_GENRES_MOVIE_LIST, data.genres));
+  } catch (error) {
+    console.log(error);
+  }
 };

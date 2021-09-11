@@ -167,6 +167,7 @@ const Banner = ({ detailBanner, id }) => {
                 <img
                   src={`${IMAGE_URL}${WIDTH_IMAGE}${poster_path}`}
                   className={poster}
+                  alt="poster"
                 />
               </Grid>
               <Grid item xs={9} sm={8}>
