@@ -17,10 +17,14 @@ const useStyle = makeStyles(() => {
     },
     poster: {
       height: "100%",
-      objectFit: "cover",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
       borderRadius: 10,
       "@media only screen and (max-width:768px)": {
-        height: "auto",
+        height: "60%",
+      },
+      "@media only screen and (max-width:500px)": {
+        height: "30%",
       },
     },
     titleMovie: {
@@ -53,6 +57,7 @@ const useStyle = makeStyles(() => {
       marginTop: 30,
       "@media screen and (max-width:768px)": {
         fontSize: 10,
+        marginTop: 0,
       },
     },
     genresMovie: {

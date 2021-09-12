@@ -28,7 +28,7 @@ const Home = () => {
     arrMovieTopRated,
     arrMovieNowPlaying,
     arrMovieUpComing,
-    arrTVShow,
+    arrTVShowTopRated,
   } = useSelector((state) => state.MovieManagerReducer);
 
   return (
@@ -39,8 +39,8 @@ const Home = () => {
         arrMovieNowPlaying={arrMovieNowPlaying}
         arrMovieUpComing={arrMovieUpComing}
       />
-      <TVShow arrTVShow={arrTVShow} />
-      <MovieTop arrMoviePopular={arrMoviePopular[7]} />
+      <TVShow arrTVShowTopRated={arrTVShowTopRated} />
+      <MovieTop arrMoviePopular={arrMoviePopular[1]} />
     </Fragment>
   );
 };

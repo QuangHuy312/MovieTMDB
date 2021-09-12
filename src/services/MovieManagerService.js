@@ -44,15 +44,57 @@ export class MovieManagerService extends baseService {
 
   getMovieListFiltered = (
     page,
-    year = "",
+    releaseDateGte = "",
+    releaseDateLte = "",
     rategte = "",
     ratelte = "",
     genre = "",
     language = ""
   ) => {
-    if (year || rategte || ratelte || genre || language) {
+    if (
+      releaseDateGte ||
+      releaseDateLte ||
+      rategte ||
+      ratelte ||
+      genre ||
+      language
+    ) {
       return this.get(
-        `discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&year=${year}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
+        `discover/movie?api_key=${API_KEY}&language=en-US&sort_by=release_date.asc&page=${page}&release_date.gte=${releaseDateGte}&release_date.lte=${releaseDateLte}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
+      );
+    }
+    return;
+  };
+
+  getTVShowList = (page) => {
+    return this.get(
+      `discover/tv?api_key=${API_KEY}&language=en-US&page=${page}`
+    );
+  };
+
+  getGenresTVShowList = () => {
+    return this.get(`genre/tv/list?api_key=${API_KEY}&language=en-US`);
+  };
+
+  getTVShowListFiltered = (
+    page,
+    fisrtAirDateGte = "",
+    firstAirDateLte = "",
+    rategte = "",
+    ratelte = "",
+    genre = "",
+    language = ""
+  ) => {
+    if (
+      fisrtAirDateGte ||
+      firstAirDateLte ||
+      rategte ||
+      ratelte ||
+      genre ||
+      language
+    ) {
+      return this.get(
+        `discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&first_air_date.gte=${fisrtAirDateGte}&first_air_date.lte=${firstAirDateLte}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
       );
     }
     return;

@@ -37,6 +37,7 @@ const MovieTop = ({ arrMoviePopular }) => {
         <Grid container spacing={3}>
           <Grid item xs={3} sm={4}>
             <img
+              alt="poster"
               src={`${IMAGE_URL}${WIDTH_IMAGE}${arrMoviePopular?.poster_path}`}
               className={poster}
             />

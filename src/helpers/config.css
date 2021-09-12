@@ -29,3 +29,11 @@
 .MuiListItem-button:hover {
   color: #f9ab00;
 }
+.MuiInput-underline:before {
+  border-bottom: 1px solid #5e5e56 !important;
+  color: white !important;
+}
+
+.MuiInputBase-input {
+  color: #f9ab00 !important;
+}

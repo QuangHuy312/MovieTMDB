@@ -1,4 +1,11 @@
-import { Button, Container, Grid, Modal, Typography } from "@material-ui/core";
+import {
+  Button,
+  CardMedia,
+  Container,
+  Grid,
+  Modal,
+  Typography,
+} from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
 import Tooltip from "@material-ui/core/Tooltip";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -12,6 +19,7 @@ import { useSnackbar } from "notistack";
 import React, { Fragment, useState } from "react";
 import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
+import { NO_POSTER } from "../../../assets/logo";
 import {
   addToFavouriteAction,
   addToWatchListAction,
@@ -51,6 +59,7 @@ const Banner = ({ detailBanner, id }) => {
     vote_average,
     vote_count,
     episode_run_time,
+    name,
   } = detailBanner;
 
   const {
@@ -164,15 +173,19 @@ const Banner = ({ detailBanner, id }) => {
           <Container className={content}>
             <Grid container spacing={3}>
               <Grid item xs={3} sm={4}>
-                <img
-                  src={`${IMAGE_URL}${WIDTH_IMAGE}${poster_path}`}
+                <CardMedia
+                  image={
+                    poster_path
+                      ? `${IMAGE_URL}${WIDTH_IMAGE}${poster_path}`
+                      : NO_POSTER
+                  }
                   className={poster}
                   alt="poster"
                 />
               </Grid>
               <Grid item xs={9} sm={8}>
                 <Typography variant="h2" className={titleMovie}>
-                  <i> {title}</i>
+                  <i> {title || name}</i>
                 </Typography>
                 <Typography variant="body2">
                   <Typography variant="span" className={age}>
@@ -227,7 +240,7 @@ const Banner = ({ detailBanner, id }) => {
                 </Typography>
 
                 <div style={{ marginTop: 15, display: "flex" }}>
-                  <Typography variant="body">Your Rate</Typography>
+                  <Typography variant="body2">Your Rate</Typography>
                   <Slider
                     defaultValue={5}
                     min={1}

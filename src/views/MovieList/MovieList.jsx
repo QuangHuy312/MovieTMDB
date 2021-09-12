@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import Banner from "../../components/PaginationList/Banner/Banner";
-import ContentList from "../../components/PaginationList/ContentList/ContentList";
+import ContentListMovie from "../../../src/components/PaginationList/ContentList/Movie/ContentListMovie";
 
-const MovieList = () => {
+const MovieList = (props) => {
   return (
     <Fragment>
       <Banner />
-      <ContentList />
+      <ContentListMovie />
     </Fragment>
   );
 };

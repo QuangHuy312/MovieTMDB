@@ -23,7 +23,7 @@ const App = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.themoviedb.org/3/discover/movie?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1&year=2021&vote_average.gte=3&vote_average.lte=7&with_genres=28&with_original_language=en",
+        url: "https://api.themoviedb.org/3/discover/tv?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1&vote_average.gte=0&vote_average.lte=1",
         method: "GET",
         // headers: {
         //   "Content-Type": "application/json",
@@ -46,11 +46,6 @@ const App = () => {
         <HomeTemplate path="/detailmovies/:id" exact component={DetailMovie} />
         <HomeTemplate path="/detailTVshow/:id" exact component={DetailTvShow} />
         <HomeTemplate path="/movies/list" exact component={MovieList} />
-        <HomeTemplate
-          path="/movies/list/page/:number"
-          exact
-          component={MovieList}
-        />
         <HomeTemplate path="/tvshow/list" exact component={TVList} />
         <Route path="/login" exact component={Login} />
         <HomeTemplate path="/" component={NotFound} />

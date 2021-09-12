@@ -15,6 +15,15 @@ const useStyle = makeStyles(() => {
       "&:hover": {
         backgroundColor: "#f9ab00",
       },
+      "@media screen and (max-width:992px)": {
+        marginTop: 20,
+      },
+    },
+    contentDate: {
+      "@media screen and (max-width:390px)": {
+        display: "flex",
+        marginTop: 20,
+      },
     },
   };
 });

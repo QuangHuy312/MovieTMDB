@@ -15,7 +15,7 @@ import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
 import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 
-const TVShow = ({ arrTVShow }) => {
+const TVShow = ({ arrTVShowTopRated }) => {
   const history = useHistory();
   function SampleNextArrow(props) {
     const { onClick } = props;
@@ -94,7 +94,7 @@ const TVShow = ({ arrTVShow }) => {
         </Button>
       </div>
       <Slider {...settings} style={{ padding: 40 }}>
-        {arrTVShow?.slice(0, 15)?.map((tvshow) => {
+        {arrTVShowTopRated?.slice(0, 15)?.map((tvshow) => {
           return (
             <Card className={card}>
               <CardMedia

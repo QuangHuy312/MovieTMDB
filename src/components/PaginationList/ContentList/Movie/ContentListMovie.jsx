@@ -10,20 +10,22 @@ import {
 import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
 import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+import moment from "moment";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGenresMovieListAction,
   getMovieListAction,
   getMovieListFilteredAction,
-} from "../../../redux/action/MovieManagerAction";
-import List from "./List/List";
+} from "../../../../redux/action/MovieManagerAction";
+import List from "../List/List";
 import useStyle from "./style";
 
-const ContentList = () => {
+const ContentListMovie = () => {
+  const [clickFilter, setClickFilter] = useState(false);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  console.log(page);
   const { arrMovieList, arrGenresMovieList, arrMovieListFilterd } = useSelector(
     (state) => state.MovieManagerReducer
   );
@@ -39,10 +41,9 @@ const ContentList = () => {
   const [genre, setGenre] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [rating, setRating] = React.useState([5, 10]);
-  const [year, setYear] = React.useState([2017]);
 
-  const rateGte = rating.join("").slice(0, 1);
-  const rateLte = rating.join("").slice(1, 3);
+  const rateGte = rating?.join("").slice(0, 1);
+  const rateLte = rating?.join("").slice(1, 3);
 
   //Api yêu cầu gửi tên viết tắt , vd Japanese =ja ....
   const language = country.slice(-2);
@@ -54,8 +55,23 @@ const ContentList = () => {
     }
   });
   const genreId = findId?.id;
-  const handleChangeYear = (event, newValue) => {
-    setYear(newValue);
+
+  const newDate = new Date();
+  const [selectedFromDate, setSelectedFromDate] =
+    React.useState(" 12 / 09 / 2017");
+
+  const handleFromDateChange = (date) => {
+    setSelectedFromDate(date);
+  };
+
+  const [selectedToDate, setSelectedToDate] = React.useState(
+    moment(newDate).format("DD/MM/YYYY")
+  );
+  const releaseDateGte = moment(selectedFromDate).format("YYYY-MM-DD");
+  const releaseDateLte = moment(selectedToDate).format("YYYY-MM-DD");
+
+  const handleToDateChange = (date) => {
+    setSelectedToDate(date);
   };
 
   const handleChangeRating = (event, newValue) => {
@@ -68,10 +84,12 @@ const ContentList = () => {
     setCountry(event.target.value);
   };
   const handleClickFilter = () => {
+    setClickFilter(true);
     dispatch(
       getMovieListFilteredAction(
         page,
-        year,
+        releaseDateGte,
+        releaseDateLte,
         rateGte,
         rateLte,
         genreId,
@@ -80,13 +98,13 @@ const ContentList = () => {
     );
   };
 
-  const { formControl, select, btnFilter, input } = useStyle();
+  const { formControl, select, btnFilter, input, contentDate } = useStyle();
 
   return (
     <Fragment>
       <Container style={{ padding: "40px 0px" }}>
-        <Grid container style={{ paddingBottom: 15 }}>
-          <Grid item xs={2}>
+        <Grid container style={{ padding: 25 }}>
+          <Grid item xs={12} sm={3} md={2}>
             <Typography variant="body2" style={{ fontSize: 10 }}>
               GENRE :
             </Typography>
@@ -116,7 +134,7 @@ const ContentList = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid xs={12} sm={3} md={2}>
             <Typography variant="body2" style={{ fontSize: 10 }}>
               LANGUAGE :
             </Typography>
@@ -146,12 +164,12 @@ const ContentList = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid xs={12} sm={4} md={2}>
             <Typography variant="body2" style={{ fontSize: 10 }}>
               RATING :
             </Typography>
             <Typography variant="body" style={{ fontSize: 12 }}>
-              Your Rate:
+              User Rating:
               <Typography
                 variant="body"
                 style={{ color: "#f9ab00", fontSize: 14, paddingLeft: 10 }}
@@ -172,34 +190,39 @@ const ContentList = () => {
               />
             </div>
           </Grid>
-          <Grid item xs={2}>
-            <Typography variant="body2" style={{ fontSize: 10 }}>
-              YEAR :
-            </Typography>
-            <Typography variant="body" style={{ fontSize: 12 }}>
-              Find by year:
-              <Typography
-                variant="body"
-                style={{ color: "#f9ab00", fontSize: 14, paddingLeft: 10 }}
-              >
-                {year.slice(0, 1)}
-              </Typography>
-            </Typography>
-            <div style={{ width: 150 }}>
-              <Slider
-                min={2000}
-                max={2021}
-                step={1}
-                value={year}
-                onChange={handleChangeYear}
-                valueLabelDisplay="auto"
-                aria-labelledby="range-slider"
-                style={{ color: "#f9ab00" }}
-              />
-            </div>
+          <Grid xs={12} sm={12} md={6} lg={4} className={contentDate}>
+            <Typography variant="body">From</Typography>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="DD/MM/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              value={selectedFromDate}
+              onChange={handleFromDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              style={{ width: 150 }}
+            />
+
+            <Typography variant="body">To</Typography>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="DD/MM/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              value={selectedToDate}
+              onChange={handleToDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              style={{ width: 150 }}
+            />
           </Grid>
 
-          <Grid xs={4} style={{ textAlign: "right" }}>
+          <Grid xs={12} sm={6} md={2} style={{ textAlign: "right" }}>
             <Button
               variant="contained"
               color="primary"
@@ -213,20 +236,20 @@ const ContentList = () => {
         </Grid>
       </Container>
 
-      {arrMovieListFilterd?.results?.length > 0 ? (
+      {clickFilter ? (
         <Fragment>
           <List
-            arrMovieList={arrMovieListFilterd}
+            arrList={arrMovieListFilterd}
             setPage={setPage}
-            arrGenresMovieList={arrGenresMovieList}
+            arrGenresList={arrGenresMovieList}
           />
         </Fragment>
       ) : (
         <Fragment>
           <List
-            arrMovieList={arrMovieList}
+            arrList={arrMovieList}
             setPage={setPage}
-            arrGenresMovieList={arrGenresMovieList}
+            arrGenresList={arrGenresMovieList}
           />
         </Fragment>
       )}
@@ -234,4 +257,4 @@ const ContentList = () => {
   );
 };
 
-export default ContentList;
+export default ContentListMovie;

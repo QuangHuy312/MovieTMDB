@@ -10,6 +10,9 @@ import {
   GET_MOVIE_LIST,
   GET_GENRES_MOVIE_LIST,
   GET_MOVIE_LIST_FILTERED,
+  GET_TV_SHOW_LIST,
+  GET_GENRES_TV_SHOW_LIST,
+  GET_TV_SHOW_LIST_FILTERED,
 } from "../types/MovieManagerType";
 
 export const getMoviePolularAction = (page) => {
@@ -91,7 +94,8 @@ export const getMovieListAction = (page) => {
 
 export const getMovieListFilteredAction = (
   page,
-  year = "",
+  releaseDateGte = "",
+  releaseDateLte = "",
   rategte = "",
   ratelte = "",
   genre = "",
@@ -101,14 +105,14 @@ export const getMovieListFilteredAction = (
     try {
       const { data } = await movieManager.getMovieListFiltered(
         page,
-        year,
+        releaseDateGte,
+        releaseDateLte,
         rategte,
         ratelte,
         genre,
         language
       );
       dispatch(createAction(GET_MOVIE_LIST_FILTERED, data));
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -122,4 +126,51 @@ export const getGenresMovieListAction = async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getGenresTVShowListAction = async (dispatch) => {
+  try {
+    const { data } = await movieManager.getGenresTVShowList();
+    dispatch(createAction(GET_GENRES_TV_SHOW_LIST, data.genres));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTVShowListAction = (page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await movieManager.getTVShowList(page);
+      dispatch(createAction(GET_TV_SHOW_LIST, data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getTVShowListFilteredAction = (
+  page,
+  fisrtAirDateGte = "",
+  firstAirDateLte = "",
+  rategte = "",
+  ratelte = "",
+  genre = "",
+  language = ""
+) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await movieManager.getTVShowListFiltered(
+        page,
+        fisrtAirDateGte,
+        firstAirDateLte,
+        rategte,
+        ratelte,
+        genre,
+        language
+      );
+      dispatch(createAction(GET_TV_SHOW_LIST_FILTERED, data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
