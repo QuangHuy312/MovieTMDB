@@ -65,6 +65,15 @@ const useStyle = makeStyles(() => {
       color: "#f9ab00",
       cursor: "pointer",
     },
+
+    btnGoBack: {
+      borderRadius: 10,
+      marginTop: 20,
+      transition: "all 0.5s",
+      "&:hover": {
+        color: "#f9ab00",
+      },
+    },
   };
 });
 export default useStyle;

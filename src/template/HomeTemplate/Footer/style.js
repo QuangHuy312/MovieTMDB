@@ -14,13 +14,17 @@ const useStyle = makeStyles(() => {
       },
     },
     list: {
-      marginRight: 20,
+      margin: 0,
+      padding: 0,
       "& li": {
-        marginTop: 10,
+        marginTop: 15,
         color: "#877474",
-        transition: "all 0.5s",
-        "&:hover": {
-          color: "#f9ab00",
+        "& a": {
+          transition: "all 0.5s",
+          color: "gray",
+          "&:hover": {
+            color: "#f9ab00",
+          },
         },
       },
     },
@@ -29,6 +33,7 @@ const useStyle = makeStyles(() => {
       "& a": {
         marginRight: 15,
         transition: "all 0.5s",
+        color: "white",
         "&:hover": {
           color: "#f9ab00",
         },

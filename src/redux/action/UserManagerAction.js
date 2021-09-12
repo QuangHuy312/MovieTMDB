@@ -11,10 +11,10 @@ export const UserManagerAction = (info, goback, success, error) => {
       const { data } = await userService.fetchUserLogin(infoUser);
       if (data.success) {
         const sessionId = await dispatch(fetchSessionIdUser(requestToken));
-        localStorage.setItem("user", JSON.stringify(infoUser));
         localStorage.setItem("sessionId", sessionId);
         await success("Logged in successfully");
         goback();
+        await dispatch(fetchSInfoUser(sessionId));
       } else {
         error("Username or PassWord is inValid");
       }

@@ -20,9 +20,12 @@ const useStyle = makeStyles(() => {
       },
     },
     contentDate: {
+      display: "flex",
       "@media screen and (max-width:390px)": {
-        display: "flex",
         marginTop: 20,
+      },
+      "& .MuiSvgIcon-root": {
+        color: "white ",
       },
     },
   };

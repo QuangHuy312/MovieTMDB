@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardContent,
   CardMedia,
@@ -11,7 +12,7 @@ import { Pagination } from "@material-ui/lab";
 import clsx from "clsx";
 import React, { Fragment } from "react";
 import { useHistory } from "react-router";
-import { NO_AVATAR, NO_POSTER } from "../../../../assets/logo";
+import { NO_ITEMS, NO_POSTER } from "../../../../assets/logo";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
 
@@ -138,12 +139,24 @@ const List = ({ arrList, setPage, arrGenresList }) => {
           </div>
         </div>
       ) : (
-        <Typography
-          variant="body2"
-          style={{ padding: 20, textAlign: "center" }}
+        <div
+          style={{
+            padding: 40,
+            textAlign: "center",
+            borderTop: "1px solid #5a4c4c",
+          }}
         >
-          Not found
-        </Typography>
+          <img src={NO_ITEMS} alt="noItem" width="400px" height="300px" />
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => history.goBack()}
+            >
+              Go Back
+            </Button>
+          </div>
+        </div>
       )}
     </Fragment>
   );

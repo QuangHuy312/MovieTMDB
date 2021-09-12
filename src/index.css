@@ -12,7 +12,3 @@ body {
 :root {
   --textColor: #ec7532;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

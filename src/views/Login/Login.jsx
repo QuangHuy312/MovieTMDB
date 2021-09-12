@@ -34,6 +34,7 @@ const Login = () => {
     checkBox,
     btnLogin,
     textSignUp,
+    btnGoBack,
   } = useStyle();
 
   const handleSubmitForm = (e) => {
@@ -142,6 +143,15 @@ const Login = () => {
                     Sign Up
                   </Typography>
                 </Typography>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={btnGoBack}
+                  onClick={() => history.goBack()}
+                >
+                  Go Back
+                </Button>
               </form>
             </div>
           </Grid>

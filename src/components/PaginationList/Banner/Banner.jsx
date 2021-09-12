@@ -20,8 +20,11 @@ const Banner = () => {
                 <HomeIcon style={{ marginRight: 5 }} />
                 Home
               </NavLink>
-              <ArrowForwardIosIcon style={{ margin: 4, padding: 4 }} />
-              <Typography variant="h8" style={{ color: "#f9ab00" }}>
+              <ArrowForwardIosIcon style={{ margin: 7, padding: 4 }} />
+              <Typography
+                variant="h8"
+                style={{ color: "#f9ab00", fontSize: 20, paddingTop: 5 }}
+              >
                 Catalog
               </Typography>
             </div>

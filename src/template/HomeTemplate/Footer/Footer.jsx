@@ -6,6 +6,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import YouTubeIcon from "@material-ui/icons/YouTube";
+import { NavLink } from "react-router-dom";
 const Footer = () => {
   const { content, title, list, contact } = useStyle();
   return (
@@ -20,38 +21,38 @@ const Footer = () => {
               <Grid item xs={6}>
                 <ul className={list}>
                   <li>
-                    <a href="#">Action</a>
+                    <NavLink to="/">Action</NavLink>
                   </li>
                   <li>
-                    <a href="#">Adventure</a>
+                    <NavLink to="/">Adventure</NavLink>
                   </li>
                   <li>
-                    <a href="#">Animation</a>
+                    <NavLink to="/">Animation</NavLink>
                   </li>
                   <li>
-                    <a href="#">Comedy</a>
+                    <NavLink to="/">Comedy</NavLink>
                   </li>
                   <li>
-                    <a href="#">Crime</a>
+                    <NavLink to="/">Crime</NavLink>
                   </li>
                 </ul>
               </Grid>
               <Grid item xs={6}>
                 <ul className={list}>
                   <li>
-                    <a href="#">Drama</a>
+                    <NavLink to="/">Drama</NavLink>
                   </li>
                   <li>
-                    <a href="#">Fantacy</a>
+                    <NavLink to="/">Fantacy</NavLink>
                   </li>
                   <li>
-                    <a href="#">Horror</a>
+                    <NavLink to="/">Horror</NavLink>
                   </li>
                   <li>
-                    <a href="#">Mystrey</a>
+                    <NavLink to="/">Mystrey</NavLink>
                   </li>
                   <li>
-                    <a href="#">Romance</a>
+                    <NavLink to="/">Romance</NavLink>
                   </li>
                 </ul>
               </Grid>
@@ -65,38 +66,38 @@ const Footer = () => {
               <Grid item xs={6}>
                 <ul className={list}>
                   <li>
-                    <a href="#">Valentine Day</a>
+                    <NavLink to="/">Valentine Day</NavLink>
                   </li>
                   <li>
-                    <a href="#">Comedies</a>
+                    <NavLink to="/">Comedies</NavLink>
                   </li>
                   <li>
-                    <a href="#">Scary TV Series</a>
+                    <NavLink to="/">Scary TV Series</NavLink>
                   </li>
                   <li>
-                    <a href="#">Best 2021 Documentaries</a>
+                    <NavLink to="/">Best 2021 Documentaries</NavLink>
                   </li>
                   <li>
-                    <a href="#">Crime TV</a>
+                    <NavLink to="/">Crime TV</NavLink>
                   </li>
                 </ul>
               </Grid>
               <Grid item xs={6}>
                 <ul className={list}>
                   <li>
-                    <a href="#">Reality TV Shows</a>
+                    <NavLink to="/">Reality TV Shows</NavLink>
                   </li>
                   <li>
-                    <a href="#">Cartoon</a>
+                    <NavLink to="/">Cartoon</NavLink>
                   </li>
                   <li>
-                    <a href="#">TV News</a>
+                    <NavLink to="/">TV News</NavLink>
                   </li>
                   <li>
-                    <a href="#">Fantacy</a>
+                    <NavLink to="/">Fantacy</NavLink>
                   </li>
                   <li>
-                    <a href="#">Romance</a>
+                    <NavLink to="/">Romance</NavLink>
                   </li>
                 </ul>
               </Grid>
@@ -108,21 +109,21 @@ const Footer = () => {
             </Typography>
             <Grid container>
               <Grid item className={contact}>
-                <a href="#">
+                <NavLink to="/">
                   <FacebookIcon />
-                </a>
+                </NavLink>
 
-                <a href="#">
+                <NavLink to="/">
                   <TwitterIcon />
-                </a>
+                </NavLink>
 
-                <a href="#">
+                <NavLink to="/">
                   <InstagramIcon />
-                </a>
+                </NavLink>
 
-                <a href="#">
+                <NavLink to="/">
                   <YouTubeIcon />
-                </a>
+                </NavLink>
               </Grid>
             </Grid>
           </Grid>

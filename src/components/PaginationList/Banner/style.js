@@ -15,7 +15,8 @@ const useStyle = makeStyles(() => {
     },
     iconHome: {
       transition: "all 0.5s",
-      fontSize: 16,
+      fontSize: 21,
+      color: "white",
       "&:hover": {
         color: "#f9ab00",
       },

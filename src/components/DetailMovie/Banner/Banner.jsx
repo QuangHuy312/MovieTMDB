@@ -19,6 +19,7 @@ import { useSnackbar } from "notistack";
 import React, { Fragment, useState } from "react";
 import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { NO_POSTER } from "../../../assets/logo";
 import {
   addToFavouriteAction,
@@ -34,6 +35,7 @@ import {
 import useStyle from "./style";
 
 const Banner = ({ detailBanner, id }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   const accountId = infoUser.id;
@@ -82,6 +84,9 @@ const Banner = ({ detailBanner, id }) => {
     setValueRate(value);
   };
   const handleAddToListIcon = () => {
+    if (!sessionId) {
+      history.push("/login");
+    }
     setIconAddClick(!iconAddClick);
     if (!iconAddClick) {
       dispatch(
@@ -110,6 +115,9 @@ const Banner = ({ detailBanner, id }) => {
     }
   };
   const handleRatingIcon = () => {
+    if (!sessionId) {
+      history.push("/login");
+    }
     setIconRatingClick(!iconRatingClick);
     if (!iconRatingClick) {
       dispatch(
@@ -126,6 +134,9 @@ const Banner = ({ detailBanner, id }) => {
     }
   };
   const handleFavouriteIcon = () => {
+    if (!sessionId) {
+      history.push("/login");
+    }
     setIconFavouriteClick(!iconFavouriteClick);
     if (!iconFavouriteClick) {
       dispatch(

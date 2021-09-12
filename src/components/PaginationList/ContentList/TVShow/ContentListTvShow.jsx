@@ -15,9 +15,7 @@ import moment from "moment";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getGenresMovieListAction,
   getGenresTVShowListAction,
-  getMovieListFilteredAction,
   getTVShowListAction,
   getTVShowListFilteredAction,
 } from "../../../../redux/action/MovieManagerAction";
@@ -192,35 +190,39 @@ const ContentListTvShow = () => {
             </div>
           </Grid>
           <Grid xs={12} sm={12} md={6} lg={4} className={contentDate}>
-            <Typography variant="body">From</Typography>
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="DD/MM/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              value={selectedFromDate}
-              onChange={handleFromDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-              style={{ width: 150 }}
-            />
+            <div style={{ width: "40%" }}>
+              <Typography variant="body2">From</Typography>
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="DD/MM/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                value={selectedFromDate}
+                onChange={handleFromDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+                style={{ width: 150, margin: 0 }}
+              />
+            </div>
 
-            <Typography variant="body">To</Typography>
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="DD/MM/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              value={selectedToDate}
-              onChange={handleToDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-              style={{ width: 150 }}
-            />
+            <div style={{ width: "45%" }}>
+              <Typography variant="body2">To</Typography>
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="DD/MM/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                value={selectedToDate}
+                onChange={handleToDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+                style={{ width: 150, margin: 0 }}
+              />
+            </div>
           </Grid>
 
           <Grid xs={12} sm={6} md={2} style={{ textAlign: "right" }}>

@@ -40,6 +40,7 @@ const useStyle = makeStyles(() => {
       padding: "0px 20px",
       border: "transparent",
       transition: "all 0.5s",
+      color: "white",
       "&:hover": {
         color: "#f9ab00",
       },
