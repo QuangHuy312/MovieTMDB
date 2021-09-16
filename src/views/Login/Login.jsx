@@ -7,15 +7,15 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { useFormik } from "formik";
+import { useSnackbar } from "notistack";
 import React from "react";
-import useStyle from "./style";
-import * as yup from "yup";
-import { Form, useFormik } from "formik";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import * as yup from "yup";
 import { UserManagerAction } from "../../redux/action/UserManagerAction";
 import { REQUEST_TOKEN } from "../../utils/settings/config";
-import { useSnackbar } from "notistack";
-import { useHistory } from "react-router";
+import useStyle from "./style";
 
 let schema = yup.object().shape({
   username: yup.string().required("Username is required"),

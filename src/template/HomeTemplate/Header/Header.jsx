@@ -5,7 +5,9 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import { LOGO, NO_AVATAR } from "../../../assets/logo";
+import LOGO from "../../../assets/hdvietsub-logo.png";
+import NO_AVATAR from "../../../assets/img_no_avatar.png";
+
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
 
@@ -47,16 +49,13 @@ const Header = () => {
     setAnchorEl(null);
     localStorage.removeItem("sessionId");
   };
+
   return (
     <header className={isScrolled ? navContent : scrolled}>
       <Container className={content}>
         <div style={{ display: "flex" }}>
           <NavLink to="/" className={logoHeader}>
-            <img
-              src={LOGO}
-              alt="logo"
-              className="w-full bg-transparent h-full"
-            />
+            <img src={LOGO} alt="logo" />
           </NavLink>
         </div>
         <div style={{ display: "flex" }}>
@@ -85,9 +84,9 @@ const Header = () => {
                 <Avatar
                   alt="Remy Sharp"
                   src={
-                    !!infoUser.avatar
+                    !!infoUser.avatar?.tmdb
                       ? `${IMAGE_URL}${WIDTH_IMAGE}${infoUser?.avatar?.tmdb?.avatar_path}`
-                      : { NO_AVATAR }
+                      : NO_AVATAR
                   }
                   onClick={handleClick}
                   className={avatarUser}
@@ -102,9 +101,9 @@ const Header = () => {
                     paddingLeft: 10,
                     cursor: "pointer",
                   }}
-                  onClick={() => history.push("/profile")}
+                  onClick={() => history.push(`/${infoUser.username}`)}
                 >
-                  {infoUser.name}
+                  {infoUser.name || infoUser.username}
                 </Typography>
               </Typography>
               <Menu
@@ -115,7 +114,7 @@ const Header = () => {
                 style={{ top: 50 }}
                 onClick={handleClose}
               >
-                <MenuItem onClick={() => history.push("/profile")}>
+                <MenuItem onClick={() => history.push(`/${infoUser.username}`)}>
                   Profile
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>

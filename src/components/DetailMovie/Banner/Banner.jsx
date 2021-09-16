@@ -20,12 +20,14 @@ import React, { Fragment, useState } from "react";
 import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { NO_POSTER } from "../../../assets/logo";
+import NO_POSTER from "../../../assets/img_no_poster.jpg";
 import {
   addToFavouriteAction,
   addToWatchListAction,
   deleteRatingMovieAction,
+  deleteRatingTVAction,
   postRatingMovieAction,
+  postRatingTVAction,
 } from "../../../redux/action/DashBoardManagerAction";
 import {
   IMAGE_URL,
@@ -119,18 +121,34 @@ const Banner = ({ detailBanner, id }) => {
       history.push("/login");
     }
     setIconRatingClick(!iconRatingClick);
-    if (!iconRatingClick) {
-      dispatch(
-        postRatingMovieAction(id, sessionId, valueRate, (mes) => {
-          enqueueSnackbar(mes, { variant: "success" });
-        })
-      );
-    } else {
-      dispatch(
-        deleteRatingMovieAction(id, sessionId, (mes) => {
-          enqueueSnackbar(mes, { variant: "success" });
-        })
-      );
+    if (history.location.pathname === `/detailmovies/${id}`) {
+      if (!iconRatingClick) {
+        dispatch(
+          postRatingMovieAction(id, sessionId, valueRate, (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          })
+        );
+      } else {
+        dispatch(
+          deleteRatingMovieAction(id, sessionId, (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          })
+        );
+      }
+    } else if (history.location.pathname === `/detailtvshow/${id}`) {
+      if (!iconRatingClick) {
+        dispatch(
+          postRatingTVAction(id, sessionId, valueRate, (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          })
+        );
+      } else {
+        dispatch(
+          deleteRatingTVAction(id, sessionId, (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          })
+        );
+      }
     }
   };
   const handleFavouriteIcon = () => {

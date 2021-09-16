@@ -1,7 +1,6 @@
 import { userService } from "../../services/UserManagerService";
-import { createAction } from "./createAction/createAction";
-
 import { GET_INFO_USER_ID } from "../types/UserManagerType";
+import { createAction } from "./createAction/createAction";
 
 export const UserManagerAction = (info, goback, success, error) => {
   return async (dispatch) => {
@@ -25,7 +24,7 @@ export const UserManagerAction = (info, goback, success, error) => {
 };
 
 export const fetchSessionIdUser = (token) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       const { data } = await userService.fetchSessionId(token);
       return data.session_id;

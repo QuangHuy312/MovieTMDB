@@ -1,11 +1,6 @@
-import {
-  Button,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
-import { NO_AVATAR } from "../../../../assets/logo";
+import NO_AVATAR from "../../../../assets/img_no_avatar.png";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
 
@@ -13,14 +8,14 @@ const Reviews = ({ reviews }) => {
   const { imgUser, content, createTime, rating, btnShowText } = useStyle();
   const [comment, setComment] = useState(false);
   return (
-    <>
+    <Fragment>
       <div className={content}>
         <div style={{ display: "flex" }}>
           <img
             src={`${IMAGE_URL}${WIDTH_IMAGE}${reviews.author_details.avatar_path}`}
             alt="avatar"
             className={imgUser}
-            onError={(e) => (e.target.src = `${NO_AVATAR}`)}
+            onError={(e) => (e.target.src = NO_AVATAR)}
           />
           <div style={{ paddingLeft: 15 }}>
             <div>
@@ -55,7 +50,7 @@ const Reviews = ({ reviews }) => {
           </Typography>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

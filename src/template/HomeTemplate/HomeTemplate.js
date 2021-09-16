@@ -13,11 +13,11 @@ export const HomeTemplate = (props) => {
       {...restProps}
       render={(routeProps) => {
         return (
-          <Fragment>
+          <div style={{ backgroundColor: "#1a191f", color: "#fff" }}>
             <Header />
             <RouteComponent {...routeProps} />
             <Footer />
-          </Fragment>
+          </div>
         );
       }}
     />

@@ -29,14 +29,6 @@ const ContentListTvShow = () => {
   const { arrTVShowList, arrGenresTVShowList, arrTVShowListFilterd } =
     useSelector((state) => state.MovieManagerReducer);
 
-  useEffect(() => {
-    if (page > 1) {
-      handleClickFilter();
-    }
-    dispatch(getTVShowListAction(page));
-    dispatch(getGenresTVShowListAction);
-  }, [page, dispatch]);
-
   const [genre, setGenre] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [rating, setRating] = React.useState([5, 10]);
@@ -64,11 +56,38 @@ const ContentListTvShow = () => {
   };
 
   const [selectedToDate, setSelectedToDate] = React.useState(
-    moment(newDate).format("DD/MM/YYYY")
+    moment(newDate).format("MM/DD/YYYY")
   );
   const fisrtAirDateGte = moment(selectedFromDate).format("YYYY-MM-DD");
   const firstAirDateLte = moment(selectedToDate).format("YYYY-MM-DD");
 
+  useEffect(() => {
+    dispatch(getTVShowListAction(page));
+    dispatch(getGenresTVShowListAction);
+    if (clickFilter) {
+      dispatch(
+        getTVShowListFilteredAction(
+          page,
+          fisrtAirDateGte,
+          firstAirDateLte,
+          rateGte,
+          rateLte,
+          genreId,
+          language
+        )
+      );
+    }
+  }, [
+    page,
+    dispatch,
+    fisrtAirDateGte,
+    firstAirDateLte,
+    rateGte,
+    rateLte,
+    genreId,
+    language,
+    clickFilter,
+  ]);
   const handleToDateChange = (date) => {
     setSelectedToDate(date);
   };
@@ -84,17 +103,6 @@ const ContentListTvShow = () => {
   };
   const handleClickFilter = () => {
     setClickFilter(true);
-    dispatch(
-      getTVShowListFilteredAction(
-        page,
-        fisrtAirDateGte,
-        firstAirDateLte,
-        rateGte,
-        rateLte,
-        genreId,
-        language
-      )
-    );
   };
 
   const { formControl, select, btnFilter, input, contentDate } = useStyle();

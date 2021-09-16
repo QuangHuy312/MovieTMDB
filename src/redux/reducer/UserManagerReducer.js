@@ -9,6 +9,7 @@ export const UserManagerReducer = (state = initialState, { type, payload }) => {
       state.infoUser = payload;
       return { ...state };
     }
+
     default:
       return state;
   }

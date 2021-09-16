@@ -8,7 +8,7 @@ const Photos = ({ detailPhotos }) => {
   const { imagePhotos } = useStyle();
   return (
     <Grid container spacing={3} style={{ paddingTop: 30 }}>
-      {backdrops?.map((poster) => {
+      {backdrops?.slice(0, 24)?.map((poster) => {
         return (
           <Grid item xs={4}>
             <img

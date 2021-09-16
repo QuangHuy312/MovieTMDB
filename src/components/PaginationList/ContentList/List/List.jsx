@@ -12,19 +12,19 @@ import { Pagination } from "@material-ui/lab";
 import clsx from "clsx";
 import React, { Fragment } from "react";
 import { useHistory } from "react-router";
-import { NO_ITEMS, NO_POSTER } from "../../../../assets/logo";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
+import NOT_ITEM from "../../../../assets/img_no_item.png";
+import NOT_POSTER from "../../../../assets/img_no_poster.jpg";
 
 const List = ({ arrList, setPage, arrGenresList }) => {
   const { content, media, card, title, rated, iconArrow, contentCard } =
     useStyle();
   const arrow = clsx(rated, iconArrow);
   const history = useHistory();
-  console.log(history.location.pathname);
   return (
     <Fragment>
-      {arrList?.results?.length > 0 ? (
+      {arrList?.results?.length !== 0 ? (
         <div className={content}>
           <Container>
             <Grid container>
@@ -37,7 +37,7 @@ const List = ({ arrList, setPage, arrGenresList }) => {
                           image={
                             movie.poster_path
                               ? `${IMAGE_URL}${WIDTH_IMAGE}${movie.poster_path}`
-                              : NO_POSTER
+                              : NOT_POSTER
                           }
                           className={media}
                         />
@@ -146,7 +146,7 @@ const List = ({ arrList, setPage, arrGenresList }) => {
             borderTop: "1px solid #5a4c4c",
           }}
         >
-          <img src={NO_ITEMS} alt="noItem" width="400px" height="300px" />
+          <img src={NOT_ITEM} alt="noItem" width="400px" height="300px" />
           <div>
             <Button
               variant="contained"

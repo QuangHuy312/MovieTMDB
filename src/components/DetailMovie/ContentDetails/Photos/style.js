@@ -5,6 +5,7 @@ const useStyle = makeStyles(() => {
       borderRadius: 15,
       height: 200,
       objectFit: "cover",
+      width: "100%",
     },
   };
 });

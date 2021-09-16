@@ -67,11 +67,11 @@ const ContentDetails = ({
             </Tabs>
             <TabPanel value={value} index={0}>
               {detailReviews?.length > 0 ? (
-                <>
+                <div>
                   {detailReviews?.map((reviews) => (
                     <Reviews reviews={reviews} />
                   ))}
-                </>
+                </div>
               ) : (
                 <div> No Review</div>
               )}

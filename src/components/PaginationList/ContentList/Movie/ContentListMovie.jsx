@@ -12,7 +12,7 @@ import Slider from "@material-ui/core/Slider";
 import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import moment from "moment";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGenresMovieListAction,
@@ -29,15 +29,7 @@ const ContentListMovie = () => {
   const { arrMovieList, arrGenresMovieList, arrMovieListFilterd } = useSelector(
     (state) => state.MovieManagerReducer
   );
-
-  useEffect(() => {
-    if (page > 1) {
-      handleClickFilter();
-    }
-    dispatch(getMovieListAction(page));
-    dispatch(getGenresMovieListAction);
-  }, [page, dispatch]);
-
+  console.log(clickFilter);
   const [genre, setGenre] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [rating, setRating] = React.useState([5, 10]);
@@ -56,20 +48,45 @@ const ContentListMovie = () => {
   });
   const genreId = findId?.id;
 
-  const newDate = new Date();
+  const newDate = moment(new Date()).format("MM/DD/YYYY");
   const [selectedFromDate, setSelectedFromDate] =
-    React.useState(" 12 / 09 / 2017");
+    React.useState(" 09 /  15/ 2017");
 
   const handleFromDateChange = (date) => {
     setSelectedFromDate(date);
   };
 
-  const [selectedToDate, setSelectedToDate] = React.useState(
-    moment(newDate).format("DD/MM/YYYY")
-  );
+  const [selectedToDate, setSelectedToDate] = React.useState(newDate);
   const releaseDateGte = moment(selectedFromDate).format("YYYY-MM-DD");
   const releaseDateLte = moment(selectedToDate).format("YYYY-MM-DD");
 
+  useEffect(() => {
+    dispatch(getMovieListAction(page));
+    dispatch(getGenresMovieListAction);
+    if (clickFilter) {
+      dispatch(
+        getMovieListFilteredAction(
+          page,
+          releaseDateGte,
+          releaseDateLte,
+          rateGte,
+          rateLte,
+          genreId,
+          language
+        )
+      );
+    }
+  }, [
+    page,
+    dispatch,
+    releaseDateGte,
+    releaseDateLte,
+    rateGte,
+    rateLte,
+    genreId,
+    language,
+    clickFilter,
+  ]);
   const handleToDateChange = (date) => {
     setSelectedToDate(date);
   };
@@ -83,20 +100,10 @@ const ContentListMovie = () => {
   const handleChangeCountry = (event) => {
     setCountry(event.target.value);
   };
-  const handleClickFilter = () => {
+
+  const handleClickFilter = useCallback(() => {
     setClickFilter(true);
-    dispatch(
-      getMovieListFilteredAction(
-        page,
-        releaseDateGte,
-        releaseDateLte,
-        rateGte,
-        rateLte,
-        genreId,
-        language
-      )
-    );
-  };
+  }, []);
 
   const { formControl, select, btnFilter, input, contentDate } = useStyle();
 

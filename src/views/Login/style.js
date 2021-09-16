@@ -8,7 +8,7 @@ const useStyle = makeStyles(() => {
       backgroundPosition: "center",
       height: "100vh",
       width: "100%",
-      opacity: 0.8,
+      color: "white",
     },
     content: {
       display: "flex",
