@@ -1,5 +1,5 @@
 import { userService } from "../../services/UserManagerService";
-import { GET_INFO_USER_ID } from "../types/UserManagerType";
+import { GET_GUEST_SESSION, GET_INFO_USER_ID } from "../types/UserManagerType";
 import { createAction } from "./createAction/createAction";
 
 export const UserManagerAction = (info, goback, success, error) => {
@@ -52,4 +52,13 @@ export const fetchSInfoUser = (token) => {
       console.log(error);
     }
   };
+};
+
+export const fetchGuestSession = async (dispatch) => {
+  try {
+    const { data } = await userService.fetchGuestSession();
+    dispatch(createAction(GET_GUEST_SESSION, data.guest_session_id));
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -23,5 +23,9 @@ export class UserManagerService extends baseService {
   fetchInfoUser = (id) => {
     return this.get(`account?api_key=${API_KEY}&session_id=${id}`);
   };
+
+  fetchGuestSession = () => {
+    return this.get(`authentication/guest_session/new?api_key=${API_KEY}`);
+  };
 }
 export const userService = new UserManagerService();

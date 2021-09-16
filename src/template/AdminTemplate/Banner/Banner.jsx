@@ -8,22 +8,20 @@ import NO_AVATAR from "../../../assets/img_no_avatar.png";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
 
-const Banner = ({ infoUser, arrTotalRatedTVShow, arrTotalRatedMovies }) => {
-  const percentMovie = arrTotalRatedMovies?.reduce((total, item) => {
+const Banner = ({ infoUser, arrListRatedTV, arrListRatedMovie }) => {
+  const percentMovie = arrListRatedMovie?.reduce((total, item) => {
     return (total += item.rating);
   }, 0);
 
   const percentageMovie = Math.floor(
-    (percentMovie * 10) / arrTotalRatedMovies.length
+    (percentMovie * 10) / arrListRatedMovie.length
   );
 
-  const percentTV = arrTotalRatedTVShow?.reduce((total, item) => {
+  const percentTV = arrListRatedTV?.reduce((total, item) => {
     return (total += item.rating);
   }, 0);
 
-  const percentageTV = Math.floor(
-    (percentTV * 10) / arrTotalRatedTVShow.length
-  );
+  const percentageTV = Math.floor((percentTV * 10) / arrListRatedTV.length);
   const { content, backdrop, avatar, about, userName, text, contentWrapper } =
     useStyle({
       backgroundImage: `url(${banner})`,

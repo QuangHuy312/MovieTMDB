@@ -25,6 +25,7 @@ ReactDOM.render(
           }}
           TransitionComponent={Slide}
           autoHideDuration={2000}
+          disableWindowBlurListener={true}
         >
           <App />
         </SnackbarProvider>

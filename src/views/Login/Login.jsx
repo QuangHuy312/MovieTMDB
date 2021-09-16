@@ -14,7 +14,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import * as yup from "yup";
 import { UserManagerAction } from "../../redux/action/UserManagerAction";
-import { REQUEST_TOKEN } from "../../utils/settings/config";
 import useStyle from "./style";
 
 let schema = yup.object().shape({
@@ -38,12 +37,11 @@ const Login = () => {
   } = useStyle();
 
   const handleSubmitForm = (e) => {
-    const info = { ...values, request_token: REQUEST_TOKEN };
     e.preventDefault();
     if (!isValid) return;
     dispatch(
       UserManagerAction(
-        info,
+        values,
         () => history.goBack(),
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });

@@ -39,7 +39,9 @@ import useStyle from "./style";
 const Banner = ({ detailBanner, id }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { infoUser } = useSelector((state) => state.UserManagerReducer);
+  const { infoUser, guestSessionId } = useSelector(
+    (state) => state.UserManagerReducer
+  );
   const accountId = infoUser.id;
   const [open, setOpen] = useState(false);
   const [valueRate, setValueRate] = useState("");
@@ -124,13 +126,19 @@ const Banner = ({ detailBanner, id }) => {
     if (history.location.pathname === `/detailmovies/${id}`) {
       if (!iconRatingClick) {
         dispatch(
-          postRatingMovieAction(id, sessionId, valueRate, (mes) => {
-            enqueueSnackbar(mes, { variant: "success" });
-          })
+          postRatingMovieAction(
+            id,
+            sessionId,
+            valueRate,
+            guestSessionId,
+            (mes) => {
+              enqueueSnackbar(mes, { variant: "success" });
+            }
+          )
         );
       } else {
         dispatch(
-          deleteRatingMovieAction(id, sessionId, (mes) => {
+          deleteRatingMovieAction(id, sessionId, guestSessionId, (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           })
         );
@@ -138,13 +146,19 @@ const Banner = ({ detailBanner, id }) => {
     } else if (history.location.pathname === `/detailtvshow/${id}`) {
       if (!iconRatingClick) {
         dispatch(
-          postRatingTVAction(id, sessionId, valueRate, (mes) => {
-            enqueueSnackbar(mes, { variant: "success" });
-          })
+          postRatingTVAction(
+            id,
+            sessionId,
+            valueRate,
+            guestSessionId,
+            (mes) => {
+              enqueueSnackbar(mes, { variant: "success" });
+            }
+          )
         );
       } else {
         dispatch(
-          deleteRatingTVAction(id, sessionId, (mes) => {
+          deleteRatingTVAction(id, sessionId, guestSessionId, (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           })
         );

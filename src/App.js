@@ -2,7 +2,10 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { fetchSInfoUser } from "./redux/action/UserManagerAction";
+import {
+  fetchGuestSession,
+  fetchSInfoUser,
+} from "./redux/action/UserManagerAction";
 import Admintemplate from "./template/AdminTemplate/Admintemplate";
 import { HomeTemplate } from "./template/HomeTemplate/HomeTemplate";
 import DetailMovie from "./views/DetailMovie/DetailMovie";
@@ -21,13 +24,14 @@ const App = () => {
   useEffect(() => {
     if (sessionId) {
       dispatch(fetchSInfoUser(sessionId));
+      dispatch(fetchGuestSession);
     }
   }, [dispatch, sessionId]);
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.themoviedb.org/3/account/10908886/rated/movies?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&session_id=b6d189809bdbb2e3273a3a8008b56470616788ac&sort_by=created_at.asc&page=1,1000",
+        url: "https://api.themoviedb.org/3/account/10908886/lists?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&session_id=647c4e177f30ebf59a4172d03501fec0b4ae94c1&page=1",
         method: "GET",
         // headers: {
         //   "Content-Type": "application/json",

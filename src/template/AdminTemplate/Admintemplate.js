@@ -2,8 +2,10 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 import {
-  getRatedMovies,
-  getRatedTVShow,
+  getCreatedListAction,
+  getFavoriteMovieListAction,
+  getRatedMovieListAction,
+  getRatedTVShowListAction,
 } from "../../redux/action/DashBoardManagerAction";
 import Footer from "../HomeTemplate/Footer/Footer";
 import Banner from "./Banner/Banner";
@@ -13,7 +15,7 @@ const Admintemplate = (props) => {
   const { component: RouteComponent, ...restProps } = props;
   const sessionId = localStorage.getItem("sessionId");
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
-  const { arrTotalRatedTVShow, arrTotalRatedMovies } = useSelector(
+  const { arrListRatedTV, arrListRatedMovie } = useSelector(
     (state) => state.DashBoardManagerReducer
   );
   const id = infoUser.id;
@@ -21,8 +23,10 @@ const Admintemplate = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(getRatedMovies(id, sessionId, 1));
-    dispatch(getRatedTVShow(id, sessionId, 1));
+    dispatch(getRatedMovieListAction(id, sessionId, 1));
+    dispatch(getRatedTVShowListAction(id, sessionId, 1));
+    dispatch(getFavoriteMovieListAction(id, sessionId, 1));
+    dispatch(getCreatedListAction(id, sessionId));
   }, [dispatch, id, sessionId]);
   return (
     <Route
@@ -34,8 +38,8 @@ const Admintemplate = (props) => {
               <Header />
               <Banner
                 infoUser={infoUser}
-                arrTotalRatedTVShow={arrTotalRatedTVShow}
-                arrTotalRatedMovies={arrTotalRatedMovies}
+                arrListRatedTV={arrListRatedTV}
+                arrListRatedMovie={arrListRatedMovie}
               />
               <RouteComponent {...routeProps} />
               <div style={{ backgroundColor: "#032541", color: "#fff" }}>

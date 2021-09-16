@@ -1,1 +1,2 @@
 export const GET_INFO_USER_ID = "GET_INFO_USER_ID";
+export const GET_GUEST_SESSION = "GET_GUEST_SESSION";

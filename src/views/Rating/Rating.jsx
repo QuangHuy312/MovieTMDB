@@ -3,11 +3,11 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Movies from "../../components/ListRated/Movies/Movies";
-import TVShow from "../../components/ListRated/TVShow/TVShow";
+import Movies from "../../components/AdminComponent/ListRated/Movies/Movies";
+import TVShow from "../../components/AdminComponent/ListRated/TVShow/TVShow";
 
 const Rating = () => {
-  const { arrTotalRatedMovies, arrTotalRatedTVShow } = useSelector(
+  const { arrListRatedMovie, arrListRatedTV, arrCreatedList } = useSelector(
     (state) => state.DashBoardManagerReducer
   );
   const useStyle = makeStyles(() => {
@@ -18,9 +18,6 @@ const Rating = () => {
           minWidth: 50,
           marginLeft: 30,
         },
-        // "& .PrivateTabIndicator-colorSecondary-28": {
-        //   backgroundColor: "transparent",
-        // },
         "& .Mui-selected": {
           "& .MuiTab-wrapper": {
             borderBottom: "4px solid blue",
@@ -90,7 +87,7 @@ const Rating = () => {
                   variant="body"
                   style={{ color: "#656ce5", fontSize: 13, paddingLeft: 5 }}
                 >
-                  {arrTotalRatedMovies.length}
+                  {arrListRatedMovie.length}
                 </Typography>
               </Typography>
             }
@@ -99,12 +96,12 @@ const Rating = () => {
           <Tab
             label={
               <Typography variant="body2">
-                Movie
+                TV
                 <Typography
                   variant="body"
                   style={{ color: "#656ce5", fontSize: 13, paddingLeft: 5 }}
                 >
-                  {arrTotalRatedTVShow.length}
+                  {arrListRatedTV.length}
                 </Typography>
               </Typography>
             }
@@ -113,10 +110,13 @@ const Rating = () => {
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
-        <Movies arrTotalRatedMovies={arrTotalRatedMovies} />
+        <Movies
+          arrListRatedMovie={arrListRatedMovie}
+          arrCreatedList={arrCreatedList}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TVShow arrTotalRatedTVShow={arrTotalRatedTVShow} />
+        <TVShow arrListRatedTV={arrListRatedTV} />
       </TabPanel>
     </Container>
   );
