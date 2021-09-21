@@ -34,15 +34,16 @@ const App = () => {
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   const fetchData = async () => {
     try {
-      const { data } = await axios({
-        url: `https://api.themoviedb.org/3/search/multi?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&query=avan&page=1&include_adult=false`,
-        method: "GET",
-      });
+      // const { data } = await axios({
+      //   url: `https://api.themoviedb.org/3/list/7108056?api_key=d6c392186e19bae2e1addaadb1677274&session_id=68eb9fbc047cdfa30d69c70d5a9bfbe17bfd8425        `,
+      //   method: "DELETE",
+      // });
       // console.log(data);
-      const newArr = data.results.filter(
-        (item) => item.media_type !== "person"
-      );
-      console.log(newArr);
+      // const newArr = data.results.filter(
+      //   (item) => item.media_type !== "person"
+      // );
+      // console.log(newArr);
+      // console.log(data);
     } catch (error) {
       console.log(error.response);
     }

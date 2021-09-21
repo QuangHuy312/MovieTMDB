@@ -7,11 +7,17 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Autocomplete } from "@material-ui/lab";
+import { useConfirm } from "material-ui-confirm";
 import moment from "moment";
+import { useSnackbar } from "notistack";
 import React, { Fragment, useEffect, useState } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import NO_ITEM from "../../../../assets/img_no_item.png";
+import NO_POSTER from "../../../../assets/img_no_poster.jpg";
 import { createAction } from "../../../../redux/action/createAction/createAction";
 import {
   addMovieToListAction,
@@ -22,12 +28,6 @@ import {
 import { DETELE_LIST_SEARCH } from "../../../../redux/types/DashBoardManagerType";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
-import NO_POSTER from "../../../../assets/img_no_poster.jpg";
-import NO_ITEM from "../../../../assets/img_no_item.png";
-import { useSnackbar } from "notistack";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import { useConfirm } from "material-ui-confirm";
-import { useHistory } from "react-router";
 
 const AddItems = ({ infoUser, match, sessionId }) => {
   const {
@@ -48,12 +48,8 @@ const AddItems = ({ infoUser, match, sessionId }) => {
   const confirm = useConfirm();
   const history = useHistory();
   const id = match.params.id;
-  const { arrCreatedList, arrListSearch, arrDetailsList } = useSelector(
+  const { arrListSearch, arrDetailsList } = useSelector(
     (state) => state.DashBoardManagerReducer
-  );
-  const currentList = arrCreatedList?.find((item) => item.id == id);
-  const arrFilterListSearch = arrListSearch?.filter(
-    (item) => item.media_type !== "person"
   );
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -76,25 +72,24 @@ const AddItems = ({ infoUser, match, sessionId }) => {
       })
     );
   };
-  const handleClickRemoveItem = (movieId, name) => {
+  const handleClickRemoveItem = (type, movieId, name) => {
     confirm({
       description: `By clicking OK, item ${name} will be deleted from list.`,
     })
       .then(() =>
         dispatch(
-          deleteMovieFromListAction(id, sessionId, movieId, (mes) => {
+          deleteMovieFromListAction(id, sessionId, type, movieId, (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           })
         )
       )
       .catch(() => console.log("deletion canclled"));
   };
-  console.log(history.location);
   return (
     <Container className={content}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <Typography variant="h4">{currentList?.name}</Typography>
+          <Typography variant="h4">{arrDetailsList?.name}</Typography>
           <div className={title}>
             <Typography variant="h5">Edit</Typography>
           </div>
@@ -125,7 +120,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
 
           <Autocomplete
             id="combo-box-demo"
-            options={arrFilterListSearch?.length > 0 ? arrFilterListSearch : []}
+            options={arrListSearch?.length > 0 ? arrListSearch : []}
             getOptionLabel={(option) => option.title}
             style={{ width: "100%", marginTop: 40 }}
             inputValue={valueSearch}
@@ -215,8 +210,11 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                     }}
                   >
                     <div>
-                      <Typography variant="body" style={{ fontWeight: "bold" }}>
-                        {index + 1}
+                      <Typography
+                        variant="body"
+                        style={{ fontWeight: "bold", paddingRight: 10 }}
+                      >
+                        {index + 1}.
                       </Typography>
                       <Typography
                         variant="body"
@@ -243,6 +241,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                         style={{ cursor: "pointer" }}
                         onClick={() =>
                           handleClickRemoveItem(
+                            item.media_type,
                             item.id,
                             item.name || item.title
                           )

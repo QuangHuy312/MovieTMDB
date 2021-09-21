@@ -3,8 +3,10 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => {
   return {
     content: {
-      paddingTop: 40,
-      paddingBottom: 20,
+      padding: "40px 0",
+      "& .MuiCard-root": {
+        overflow: "initial",
+      },
     },
     title: {
       display: "flex",
@@ -29,12 +31,27 @@ const useStyle = makeStyles(() => {
 
     textCard: {
       position: "absolute",
-      top: "50%",
+      top: "45%",
       left: "50%",
-      transform: "translate(-50%,-50%)",
+      transform: "translate(-50%,-45%)",
       width: "100%",
       textAlign: "center",
       color: "#fff",
+    },
+    iconDelete: {
+      position: "absolute",
+      top: -15,
+      right: -15,
+      width: 40,
+      height: 40,
+      borderRadius: "50%",
+      border: "1px solid red",
+      backgroundColor: "#fff",
+      textAlign: "center",
+      color: "red",
+      zIndex: 99,
+      boxShadow: "2px 23px 197px -5px rgba(183,6,6,1)",
+      cursor: "pointer",
     },
   };
 });

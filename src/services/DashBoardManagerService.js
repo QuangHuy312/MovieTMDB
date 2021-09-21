@@ -25,6 +25,11 @@ export class DashBoardManagerService extends baseService {
       `account/${accountId}/lists?api_key=${API_KEY}&language=en-US&session_id=${sessionId}`
     );
   };
+  deleteCreatedList = (listId, sessionId) => {
+    return this.delete(
+      `list/${listId}?api_key=${API_KEY}&session_id=${sessionId}`
+    );
+  };
 
   addMovieToList = (listId, sessionId, movieId) => {
     return this.postInfoMovie(
@@ -44,16 +49,17 @@ export class DashBoardManagerService extends baseService {
     );
   };
 
-  searchMovie = (val) => {
+  searchMovie = (val, page) => {
     return this.get(
-      `search/movie?api_key=${API_KEY}&language=en-US&query=${val}&page=1`
+      `search/multi?api_key=${API_KEY}&language=en-US&query=${val}&page=${page}`
     );
   };
 
-  deleteMovieFromList = (listId, sessionId, movieId) => {
+  deleteMovieFromList = (listId, sessionId, type, movieId) => {
     return this.postInfoMovie(
       `list/${listId}/remove_item?api_key=${API_KEY}&session_id=${sessionId}`,
-      movieId
+      movieId,
+      type
     );
   };
 }

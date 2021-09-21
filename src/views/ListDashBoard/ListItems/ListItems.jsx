@@ -15,6 +15,7 @@ import { useHistory } from "react-router";
 import { getDetailsListAction } from "../../../redux/action/DashBoardManagerAction";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
+import NO_POSTER from "../../../assets/img_no_poster.jpg";
 
 const ListItems = ({ match, infoUser }) => {
   const idList = match.params.id;
@@ -94,7 +95,11 @@ const ListItems = ({ match, infoUser }) => {
                 <Card className={card}>
                   <div className={contentCard}>
                     <CardMedia
-                      image={`${IMAGE_URL}${WIDTH_IMAGE}${items.poster_path}`}
+                      image={
+                        items.poster_path
+                          ? `${IMAGE_URL}${WIDTH_IMAGE}${items.poster_path}`
+                          : NO_POSTER
+                      }
                       className={media}
                     />
                     <Typography

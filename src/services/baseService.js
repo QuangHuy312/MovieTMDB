@@ -9,6 +9,16 @@ export class baseService {
     });
   };
 
+  delete = (url) => {
+    return axios({
+      method: "DELETE",
+      url: `${API_URL}${url}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   postToken = (url, info) => {
     return axios({
       method: "POST",
@@ -41,7 +51,7 @@ export class baseService {
     });
   };
 
-  postInfoMovie = (url, movieId, action) => {
+  postInfoMovie = (url, movieId, type, action) => {
     return axios({
       method: "POST",
       url: `${API_URL}${url}`,
@@ -49,7 +59,7 @@ export class baseService {
         "Content-Type": "application/json;charset=utf-8",
       },
       data: JSON.stringify({
-        media_type: "movie",
+        media_type: type,
         media_id: movieId,
         watchlist: action,
       }),
@@ -68,16 +78,6 @@ export class baseService {
         media_id: movieId,
         favorite: action,
       }),
-    });
-  };
-
-  deleteUserRating = (url, rate) => {
-    return axios({
-      method: "DELETE",
-      url: `${API_URL}${url}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
   };
 }

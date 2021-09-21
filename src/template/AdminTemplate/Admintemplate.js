@@ -25,11 +25,10 @@ const Admintemplate = (props) => {
     dispatch(getRatedMovieListAction(id, sessionId, 1));
     dispatch(getRatedTVShowListAction(id, sessionId, 1));
     dispatch(getFavoriteMovieListAction(id, sessionId, 1));
-    dispatch(getCreatedListAction(id, sessionId));
   }, [dispatch, id, sessionId]);
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   return (
     <Route
       {...restProps}

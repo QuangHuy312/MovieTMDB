@@ -36,7 +36,7 @@ export class UserManagerService extends baseService {
   };
 
   deleteRatingMovie = (movieId, sessionId, guestSessionId) => {
-    return this.deleteUserRating(
+    return this.delete(
       `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
     );
   };
@@ -49,7 +49,7 @@ export class UserManagerService extends baseService {
   };
 
   deleteRatingTV = (movieId, sessionId, guestSessionId) => {
-    return this.deleteUserRating(
+    return this.delete(
       `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
     );
   };
