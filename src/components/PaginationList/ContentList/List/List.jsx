@@ -12,10 +12,10 @@ import { Pagination } from "@material-ui/lab";
 import clsx from "clsx";
 import React, { Fragment } from "react";
 import { useHistory } from "react-router";
-import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
-import useStyle from "./style";
 import NOT_ITEM from "../../../../assets/img_no_item.png";
 import NOT_POSTER from "../../../../assets/img_no_poster.jpg";
+import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
+import useStyle from "./style";
 
 const List = ({ arrList, setPage, arrGenresList }) => {
   const { content, media, card, title, rated, iconArrow, contentCard } =

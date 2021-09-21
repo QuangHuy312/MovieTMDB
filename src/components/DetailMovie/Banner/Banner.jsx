@@ -28,7 +28,7 @@ import {
   deleteRatingTVAction,
   postRatingMovieAction,
   postRatingTVAction,
-} from "../../../redux/action/DashBoardManagerAction";
+} from "../../../redux/action/UserManagerAction";
 import {
   IMAGE_URL,
   WIDTH_BACKDROP,

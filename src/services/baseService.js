@@ -41,7 +41,7 @@ export class baseService {
     });
   };
 
-  postAddWatchList = (url, movieId, action) => {
+  postInfoMovie = (url, movieId, action) => {
     return axios({
       method: "POST",
       url: `${API_URL}${url}`,

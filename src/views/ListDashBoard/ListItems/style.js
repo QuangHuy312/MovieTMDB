@@ -1,13 +1,23 @@
 import { makeStyles } from "@material-ui/styles";
-
 const useStyle = makeStyles(() => {
   return {
+    content: {
+      paddingTop: 40,
+      paddingBottom: 20,
+    },
+    info: {
+      color: "#19bae5",
+      textAlign: "center",
+      "& h6": {
+        fontWeight: "bold",
+      },
+    },
+
     card: {
       backgroundColor: "transparent",
       overflow: "hidden",
       maxWidth: 350,
       height: 330,
-
       boxShadow: "none",
       position: "relative",
     },
@@ -35,7 +45,7 @@ const useStyle = makeStyles(() => {
     },
     media: {
       height: 270,
-      borderRadius: 10,
+      borderRadius: 7,
       backgroundPosition: "center",
       backgroundSize: "cover",
       transition: "all 0.5s",
@@ -52,7 +62,7 @@ const useStyle = makeStyles(() => {
     },
     title: {
       boder: "none",
-      color: "white",
+      color: "#000",
       transition: "all 0.5s",
       "&:hover": {
         cursor: "pointer",
@@ -94,5 +104,4 @@ const useStyle = makeStyles(() => {
     },
   };
 });
-
 export default useStyle;

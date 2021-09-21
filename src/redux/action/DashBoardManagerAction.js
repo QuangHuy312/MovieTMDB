@@ -1,148 +1,15 @@
 import { dashBoardService } from "../../services/DashBoardManagerService";
 import {
+  DETELE_LIST_SEARCH,
   GET_CREATED_LIST,
+  GET_DETAILS_LIST,
   GET_LIST_FAVORITE_MOVIE,
   GET_LIST_RATED_MOVIE,
   GET_LIST_RATED_TV,
+  GET_LIST_SEARCH,
 } from "../types/DashBoardManagerType";
 import { createAction } from "./createAction/createAction";
 
-export const postRatingMovieAction = (
-  movieId,
-  sessionId,
-  rate,
-  guestSessionId,
-  success,
-  idUser
-) => {
-  return async (dispatch) => {
-    try {
-      await dashBoardService.userRatingMovie(
-        movieId,
-        sessionId,
-        rate,
-        guestSessionId
-      );
-      success("Your rating has been saved");
-
-      await dispatch(getRatedMovieListAction(idUser, sessionId, 1));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-export const deleteRatingMovieAction = (
-  movieId,
-  sessionId,
-  guestSessionId,
-
-  success,
-  idUser
-) => {
-  return async (dispatch) => {
-    try {
-      await dashBoardService.deleteRatingMovie(
-        movieId,
-        sessionId,
-        guestSessionId
-      );
-      success("Delete is successfully");
-      await dispatch(getRatedMovieListAction(idUser, sessionId, 1));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const postRatingTVAction = (
-  movieId,
-  sessionId,
-  rate,
-  guestSessionId,
-  success
-) => {
-  return async () => {
-    try {
-      await dashBoardService.userRatingTV(
-        movieId,
-        sessionId,
-        rate,
-        guestSessionId
-      );
-      success("Your rating has been saved");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const deleteRatingTVAction = (
-  movieId,
-  sessionId,
-  guestSessionId,
-  success
-) => {
-  return async () => {
-    try {
-      await dashBoardService.deleteRatingTV(movieId, sessionId, guestSessionId);
-      success("Delete is successfully");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const addToWatchListAction = (
-  accountId,
-  sessionId,
-  movieId,
-  success,
-  action
-) => {
-  return async () => {
-    try {
-      await dashBoardService.addToWatchList(
-        accountId,
-        sessionId,
-        movieId,
-        action
-      );
-      if (action) {
-        success("Added to Watchlist");
-      } else {
-        success("Delete is successfully");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const addToFavouriteAction = (
-  accountId,
-  sessionId,
-  movieId,
-  success,
-  action
-) => {
-  return async () => {
-    try {
-      await dashBoardService.addToFavourite(
-        accountId,
-        sessionId,
-        movieId,
-        action
-      );
-      if (action) {
-        success("Added to favourite");
-      } else {
-        success("Delete is successfully");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
 export const getRatedMovieListAction = (accountId, sessionId, page) => {
   return async (dispatch) => {
     try {
@@ -237,10 +104,74 @@ export const getCreatedListAction = (accountId, sessionId) => {
 };
 
 export const addMovieToListAction = (listId, sessionId, movieId, success) => {
-  return async () => {
+  return async (dispatch) => {
     try {
       await dashBoardService.addMovieToList(listId, sessionId, movieId);
-      success("Your rating has been saved");
+      success("Item Added");
+      await dispatch(getDetailsListAction(listId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getDetailsListAction = (listId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.getDetailsList(listId);
+      dispatch(createAction(GET_DETAILS_LIST, data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createNewListAction = (sessionId, val, success, callback) => {
+  return async () => {
+    try {
+      const { data } = await dashBoardService.createNewList(sessionId, val);
+      success("Your List have been successfully saved");
+      await callback(data.list_id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const searchMovieAction = (val) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.searchMovie(val);
+      console.log(data.results);
+      dispatch(createAction(GET_LIST_SEARCH, data.results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteSearchMovieAction = (val) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.searchMovie(val);
+      dispatch(createAction(DETELE_LIST_SEARCH, data.results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteMovieFromListAction = (
+  listId,
+  sessionId,
+  movieId,
+  success
+) => {
+  return async (dispatch) => {
+    try {
+      await dashBoardService.deleteMovieFromList(listId, sessionId, movieId);
+      await dispatch(getDetailsListAction(listId));
+      await success("Item Deleted");
     } catch (error) {
       console.log(error);
     }

@@ -27,6 +27,9 @@ const useStyle = makeStyles(() => {
       "& .MuiSvgIcon-root": {
         color: "white ",
       },
+      "& .MuiInputBase-input": {
+        color: "#f9ab00",
+      },
     },
   };
 });

@@ -21,7 +21,7 @@ const NowPlaying = ({ arrMovieNowPlaying }) => {
   const history = useHistory();
   return (
     <Fragment>
-      <Grid container>
+      <Grid container spacing={3}>
         <Grid item xs={12} className={viewAllIcon}>
           <Button
             variant="contained"

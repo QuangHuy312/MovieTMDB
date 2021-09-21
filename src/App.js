@@ -11,12 +11,16 @@ import { HomeTemplate } from "./template/HomeTemplate/HomeTemplate";
 import DetailMovie from "./views/DetailMovie/DetailMovie";
 import DetailTvShow from "./views/DetailTVShow/DetailTvShow";
 import Home from "./views/Home/Home";
+import ListItems from "./views/ListDashBoard/ListItems/ListItems";
+import ListDashBoard from "./views/ListDashBoard/ListDashBoard";
 import Login from "./views/Login/Login";
 import MovieList from "./views/MovieList/MovieList";
 import NotFound from "./views/NotFound/NotFound";
 import Profile from "./views/Profile/Profile";
 import Rating from "./views/Rating/Rating";
 import TVList from "./views/TVList/TVList.jsx";
+import CreateList from "./views/ListDashBoard/CreateList/CreateList";
+import AddItems from "./views/ListDashBoard/CreateList/AddItems/AddItems";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,16 +35,14 @@ const App = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.themoviedb.org/3/account/10908886/lists?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&session_id=647c4e177f30ebf59a4172d03501fec0b4ae94c1&page=1",
+        url: `https://api.themoviedb.org/3/search/multi?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&query=avan&page=1&include_adult=false`,
         method: "GET",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        // data: JSON.stringify({
-        //   value: 8,
-        // }),
       });
       // console.log(data);
+      const newArr = data.results.filter(
+        (item) => item.media_type !== "person"
+      );
+      console.log(newArr);
     } catch (error) {
       console.log(error.response);
     }
@@ -66,6 +68,29 @@ const App = () => {
           path={`/${infoUser.username}/ratings`}
           exact
           component={Rating}
+        />
+
+        <Admintemplate
+          path={`/${infoUser.username}/list`}
+          exact
+          component={ListDashBoard}
+        />
+        <Admintemplate
+          path={`/${infoUser.username}/list/new`}
+          exact
+          component={CreateList}
+        />
+
+        <Admintemplate
+          path={`/${infoUser.username}/list/:id`}
+          exact
+          component={ListItems}
+        />
+
+        <Admintemplate
+          path={`/${infoUser.username}/list/:id/edit`}
+          exact
+          component={AddItems}
         />
         <HomeTemplate path="/" component={NotFound} />
       </Switch>

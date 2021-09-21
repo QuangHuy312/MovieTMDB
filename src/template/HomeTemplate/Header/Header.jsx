@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import LOGO from "../../../assets/hdvietsub-logo.png";
 import NO_AVATAR from "../../../assets/img_no_avatar.png";
-
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
 

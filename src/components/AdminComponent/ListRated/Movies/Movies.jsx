@@ -2,11 +2,11 @@ import { useSnackbar } from "notistack";
 import React, { Fragment, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addMovieToListAction,
   addToFavouriteAction,
   deleteRatingMovieAction,
   postRatingMovieAction,
-} from "../../../../redux/action/DashBoardManagerAction";
+} from "../../../../redux/action/UserManagerAction";
+import { addMovieToListAction } from "../../../../redux/action/DashBoardManagerAction";
 import ContentList from "../../ContentList/ContentList";
 
 const Movies = ({ arrListRatedMovie, arrCreatedList }) => {

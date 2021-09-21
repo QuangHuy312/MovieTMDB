@@ -1,15 +1,22 @@
 import {
+  DETELE_LIST_SEARCH,
   GET_CREATED_LIST,
+  GET_DETAILS_LIST,
   GET_LIST_FAVORITE_MOVIE,
   GET_LIST_RATED_MOVIE,
   GET_LIST_RATED_TV,
+  GET_LIST_SEARCH,
 } from "../types/DashBoardManagerType";
 
 const initialState = {
   arrListRatedMovie: [],
   arrListRatedTV: [],
+  arrListSearch: [],
+
   arrListFavoriteMovie: [],
+
   arrCreatedList: [],
+  arrDetailsList: [],
 };
 
 export const DashBoardManagerReducer = (
@@ -33,6 +40,21 @@ export const DashBoardManagerReducer = (
 
     case GET_CREATED_LIST: {
       state.arrCreatedList = payload;
+      return { ...state };
+    }
+
+    case GET_DETAILS_LIST: {
+      state.arrDetailsList = payload;
+      return { ...state };
+    }
+
+    case GET_LIST_SEARCH: {
+      state.arrListSearch = payload;
+      return { ...state };
+    }
+
+    case DETELE_LIST_SEARCH: {
+      state.arrListSearch = [];
       return { ...state };
     }
     default:

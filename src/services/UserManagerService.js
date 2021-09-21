@@ -2,15 +2,23 @@ import { API_KEY } from "../utils/settings/config";
 import { baseService } from "./baseService";
 
 export class UserManagerService extends baseService {
+  fetchRequestToken = () => {
+    return this.get(`authentication/token/new?api_key=${API_KEY}`);
+  };
+
+  fetchInfoUser = (id) => {
+    return this.get(`account?api_key=${API_KEY}&session_id=${id}`);
+  };
+
+  fetchGuestSession = () => {
+    return this.get(`authentication/guest_session/new?api_key=${API_KEY}`);
+  };
+
   fetchUserLogin = (info) => {
     return this.postToken(
       `authentication/token/validate_with_login?api_key=${API_KEY}`,
       info
     );
-  };
-
-  fetchRequestToken = () => {
-    return this.get(`authentication/token/new?api_key=${API_KEY}`);
   };
 
   fetchSessionId = (token) => {
@@ -20,12 +28,46 @@ export class UserManagerService extends baseService {
     );
   };
 
-  fetchInfoUser = (id) => {
-    return this.get(`account?api_key=${API_KEY}&session_id=${id}`);
+  userRatingMovie = (movieId, sessionId, rate, guestSessionId) => {
+    return this.postUserRating(
+      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`,
+      rate
+    );
   };
 
-  fetchGuestSession = () => {
-    return this.get(`authentication/guest_session/new?api_key=${API_KEY}`);
+  deleteRatingMovie = (movieId, sessionId, guestSessionId) => {
+    return this.deleteUserRating(
+      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
+    );
+  };
+
+  userRatingTV = (movieId, sessionId, rate, guestSessionId) => {
+    return this.postUserRating(
+      `tv/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`,
+      rate
+    );
+  };
+
+  deleteRatingTV = (movieId, sessionId, guestSessionId) => {
+    return this.deleteUserRating(
+      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
+    );
+  };
+
+  addToWatchList = (accountId, sessionId, movieId, action) => {
+    return this.postAddWatchList(
+      `account/${accountId}/watchlist?api_key=${API_KEY}&session_id=${sessionId}`,
+      movieId,
+      action
+    );
+  };
+
+  addToFavourite = (accountId, sessionId, movieId, action) => {
+    return this.postAddToFavourite(
+      `account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`,
+      movieId,
+      action
+    );
   };
 }
 export const userService = new UserManagerService();

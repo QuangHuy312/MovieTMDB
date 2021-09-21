@@ -12,6 +12,7 @@ import { SnackbarProvider } from "notistack";
 import Slide from "@material-ui/core/Slide";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { ConfirmProvider } from "material-ui-confirm";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,7 +28,9 @@ ReactDOM.render(
           autoHideDuration={2000}
           disableWindowBlurListener={true}
         >
-          <App />
+          <ConfirmProvider>
+            <App />
+          </ConfirmProvider>
         </SnackbarProvider>
       </MuiPickersUtilsProvider>
     </Provider>

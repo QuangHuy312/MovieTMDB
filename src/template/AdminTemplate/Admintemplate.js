@@ -22,12 +22,14 @@ const Admintemplate = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     dispatch(getRatedMovieListAction(id, sessionId, 1));
     dispatch(getRatedTVShowListAction(id, sessionId, 1));
     dispatch(getFavoriteMovieListAction(id, sessionId, 1));
     dispatch(getCreatedListAction(id, sessionId));
   }, [dispatch, id, sessionId]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   return (
     <Route
       {...restProps}
@@ -41,7 +43,11 @@ const Admintemplate = (props) => {
                 arrListRatedTV={arrListRatedTV}
                 arrListRatedMovie={arrListRatedMovie}
               />
-              <RouteComponent {...routeProps} />
+              <RouteComponent
+                {...routeProps}
+                infoUser={infoUser}
+                sessionId={sessionId}
+              />
               <div style={{ backgroundColor: "#032541", color: "#fff" }}>
                 <Footer />
               </div>

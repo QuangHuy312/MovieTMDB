@@ -2,56 +2,15 @@ import { API_KEY } from "../utils/settings/config";
 import { baseService } from "./baseService";
 
 export class DashBoardManagerService extends baseService {
-  userRatingMovie = (movieId, sessionId, rate, guestSessionId) => {
-    return this.postUserRating(
-      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`,
-      rate
-    );
-  };
-
-  deleteRatingMovie = (movieId, sessionId, guestSessionId) => {
-    return this.deleteUserRating(
-      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
-    );
-  };
-
   getRatedMoviesList = (accountId, sessionId, page) => {
     return this.get(
       `account/${accountId}/rated/movies?api_key=${API_KEY}&language=en-US&session_id=${sessionId}&sort_by=created_at.desc&page=${page}`
     );
   };
 
-  userRatingTV = (movieId, sessionId, rate, guestSessionId) => {
-    return this.postUserRating(
-      `tv/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`,
-      rate
-    );
-  };
-
-  deleteRatingTV = (movieId, sessionId, guestSessionId) => {
-    return this.deleteUserRating(
-      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
-    );
-  };
-
   getRatedTVList = (accountId, sessionId, page) => {
     return this.get(
       `account/${accountId}/rated/tv?api_key=${API_KEY}&language=en-US&session_id=${sessionId}&sort_by=created_at.desc&page=${page}`
-    );
-  };
-  addToWatchList = (accountId, sessionId, movieId, action) => {
-    return this.postAddWatchList(
-      `account/${accountId}/watchlist?api_key=${API_KEY}&session_id=${sessionId}`,
-      movieId,
-      action
-    );
-  };
-
-  addToFavourite = (accountId, sessionId, movieId, action) => {
-    return this.postAddToFavourite(
-      `account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`,
-      movieId,
-      action
     );
   };
 
@@ -68,8 +27,32 @@ export class DashBoardManagerService extends baseService {
   };
 
   addMovieToList = (listId, sessionId, movieId) => {
-    return this.postAddWatchList(
+    return this.postInfoMovie(
       `list/${listId}/add_item?api_key=${API_KEY}&session_id=${sessionId}`,
+      movieId
+    );
+  };
+
+  getDetailsList = (listId) => {
+    return this.get(`/list/${listId}?api_key=${API_KEY}&language=en-US`);
+  };
+
+  createNewList = (sessionId, val) => {
+    return this.postToken(
+      `list?api_key=${API_KEY}&session_id=${sessionId}`,
+      val
+    );
+  };
+
+  searchMovie = (val) => {
+    return this.get(
+      `search/movie?api_key=${API_KEY}&language=en-US&query=${val}&page=1`
+    );
+  };
+
+  deleteMovieFromList = (listId, sessionId, movieId) => {
+    return this.postInfoMovie(
+      `list/${listId}/remove_item?api_key=${API_KEY}&session_id=${sessionId}`,
       movieId
     );
   };
