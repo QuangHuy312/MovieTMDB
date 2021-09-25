@@ -16,11 +16,14 @@ import ListDashBoard from "./views/ListDashBoard/ListDashBoard";
 import Login from "./views/Login/Login";
 import MovieList from "./views/MovieList/MovieList";
 import NotFound from "./views/NotFound/NotFound";
-import Profile from "./views/Profile/Profile";
+import DashBoard from "./views/DashBoard/DashBoard";
 import Rating from "./views/Rating/Rating";
 import TVList from "./views/TVList/TVList.jsx";
 import CreateList from "./views/ListDashBoard/CreateList/CreateList";
 import AddItems from "./views/ListDashBoard/CreateList/AddItems/AddItems";
+import Favourites from "./views/Favourites/Favourites";
+import WatchList from "./views/WatchList/WatchList";
+import ChooseImage from "./views/ListDashBoard/CreateList/ChooseImage/ChooseImage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,13 +65,23 @@ const App = () => {
         <Admintemplate
           path={`/${infoUser.username}`}
           exact
-          component={Profile}
+          component={DashBoard}
         />
 
         <Admintemplate
           path={`/${infoUser.username}/ratings`}
           exact
           component={Rating}
+        />
+        <Admintemplate
+          path={`/${infoUser.username}/favorites`}
+          exact
+          component={Favourites}
+        />
+        <Admintemplate
+          path={`/${infoUser.username}/watchlist`}
+          exact
+          component={WatchList}
         />
 
         <Admintemplate
@@ -87,12 +100,18 @@ const App = () => {
           exact
           component={ListItems}
         />
+        <Admintemplate
+          path={`/${infoUser.username}/list/:id/chooseimg`}
+          exact
+          component={ChooseImage}
+        />
 
         <Admintemplate
           path={`/${infoUser.username}/list/:id/edit`}
           exact
           component={AddItems}
         />
+
         <HomeTemplate path="/" component={NotFound} />
       </Switch>
     </BrowserRouter>

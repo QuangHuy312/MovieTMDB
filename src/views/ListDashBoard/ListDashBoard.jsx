@@ -7,17 +7,18 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+import { useConfirm } from "material-ui-confirm";
+import { useSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useStyle from "./style";
-import BACKDROP from "../../assets/img_no_background.png";
 import { useHistory } from "react-router";
+import BACKDROP from "../../assets/img_no_background.png";
 import {
   deleteCreatedListAction,
   getCreatedListAction,
 } from "../../redux/action/DashBoardManagerAction";
-import { useSnackbar } from "notistack";
-import { useConfirm } from "material-ui-confirm";
+import { IMAGE_URL, WIDTH_BACKDROP } from "../../utils/settings/config";
+import useStyle from "./style";
 
 const ListDashBoard = ({ infoUser, sessionId }) => {
   const {
@@ -28,6 +29,7 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
     textCard,
     btnCreateList,
     iconDelete,
+    contentText,
   } = useStyle();
   const { arrCreatedList } = useSelector(
     (state) => state.DashBoardManagerReducer
@@ -77,11 +79,19 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
 
       <Grid container spacing={3}>
         {arrCreatedList?.map((list) => {
+          const backdrop = localStorage.getItem(`${list.id}`);
           return (
             <Grid item xs={6} key={list.id}>
               <Card className={contentCard}>
-                <CardMedia image={BACKDROP} className={imgCard} />
-                <CardContent>
+                <CardMedia
+                  image={
+                    backdrop
+                      ? `${IMAGE_URL}${WIDTH_BACKDROP}${backdrop}`
+                      : BACKDROP
+                  }
+                  className={imgCard}
+                />
+                <CardContent className={contentText}>
                   <div className={textCard}>
                     <Typography
                       variant="body"
@@ -98,6 +108,12 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
 
                     <Typography variant="h5">
                       {list.item_count} items
+                    </Typography>
+                    <Typography variant="body2" style={{ paddingTop: 10 }}>
+                      Description:{" "}
+                      <Typography variant="body" style={{ color: "#f9ab00" }}>
+                        {list.description}
+                      </Typography>
                     </Typography>
                   </div>
                   <div

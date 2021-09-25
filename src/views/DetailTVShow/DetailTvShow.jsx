@@ -33,7 +33,7 @@ const DetailTvShow = (props) => {
   } = useSelector((state) => state.TVShowDetailManagerReducer);
   return (
     <Fragment>
-      <BannerMovie detailBanner={detailBannerTVShow} id={id} />
+      <BannerMovie detailBanner={detailBannerTVShow} id={id} media_type="tv" />
       <ContentDetails
         detailPhotos={detailPhotosTVShow}
         detailCredit={detailCreditTVShow}

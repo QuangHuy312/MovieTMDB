@@ -14,7 +14,7 @@ export class baseService {
       method: "DELETE",
       url: `${API_URL}${url}`,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=utf-8",
       },
     });
   };
@@ -66,7 +66,7 @@ export class baseService {
     });
   };
 
-  postAddToFavourite = (url, movieId, action) => {
+  postAddToFavourite = (url, type, movieId, action) => {
     return axios({
       method: "POST",
       url: `${API_URL}${url}`,
@@ -74,7 +74,7 @@ export class baseService {
         "Content-Type": "application/json;charset=utf-8",
       },
       data: JSON.stringify({
-        media_type: "movie",
+        media_type: type,
         media_id: movieId,
         favorite: action,
       }),

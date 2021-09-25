@@ -6,17 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import Movies from "../../components/AdminComponent/ListRated/Movies/Movies";
 import TVShow from "../../components/AdminComponent/ListRated/TVShow/TVShow";
 import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
-import { getCreatedListAction } from "../../redux/action/DashBoardManagerAction";
+import {
+  getCreatedListAction,
+  getWatchListMovieAction,
+  getWatchListTVAction,
+} from "../../redux/action/DashBoardManagerAction";
 
-const Rating = ({ infoUser, sessionId }) => {
-  const { arrListRatedMovie, arrListRatedTV, arrCreatedList } = useSelector(
+const WatchList = ({ infoUser, sessionId }) => {
+  const { arrWatchListMovie, arrWatchListTV, arrCreatedList } = useSelector(
     (state) => state.DashBoardManagerReducer
   );
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
+    dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
     dispatch(getCreatedListAction(infoUser.id, sessionId));
   }, [dispatch]);
-
   const useStyle = makeStyles(() => {
     return {
       content: {
@@ -72,8 +77,8 @@ const Rating = ({ infoUser, sessionId }) => {
           My Ratings
         </Typography>
         <TabsComponent
-          arrListMovie={arrListRatedMovie}
-          arrListTV={arrListRatedTV}
+          arrListMovie={arrWatchListMovie}
+          arrListTV={arrWatchListTV}
           setValue={setValue}
           value={value}
         />
@@ -82,13 +87,13 @@ const Rating = ({ infoUser, sessionId }) => {
         <Movies
           infoUser={infoUser}
           sessionId={sessionId}
-          arrListMovie={arrListRatedMovie}
+          arrListMovie={arrWatchListMovie}
           arrCreatedList={arrCreatedList}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <TVShow
-          arrListTV={arrListRatedTV}
+          arrListTV={arrWatchListTV}
           infoUser={infoUser}
           sessionId={sessionId}
           arrCreatedList={arrCreatedList}
@@ -98,4 +103,4 @@ const Rating = ({ infoUser, sessionId }) => {
   );
 };
 
-export default Rating;
+export default WatchList;

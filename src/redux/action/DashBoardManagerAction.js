@@ -4,11 +4,16 @@ import {
   GET_CREATED_LIST,
   GET_DETAILS_LIST,
   GET_LIST_FAVORITE_MOVIE,
+  GET_LIST_FAVORITE_TV,
   GET_LIST_RATED_MOVIE,
   GET_LIST_RATED_TV,
   GET_LIST_SEARCH,
+  GET_WATCH_LIST_MOVIE,
+  GET_WATCH_LIST_TV,
 } from "../types/DashBoardManagerType";
 import { createAction } from "./createAction/createAction";
+
+// Rated list action
 
 export const getRatedMovieListAction = (accountId, sessionId, page) => {
   return async (dispatch) => {
@@ -62,6 +67,8 @@ export const getRatedTVShowListAction = (accountId, sessionId, page) => {
   };
 };
 
+// Favorites list action
+
 export const getFavoriteMovieListAction = (accountId, sessionId, page) => {
   return async (dispatch) => {
     try {
@@ -89,19 +96,135 @@ export const getFavoriteMovieListAction = (accountId, sessionId, page) => {
   };
 };
 
-export const getCreatedListAction = (accountId, sessionId) => {
+export const getFavoriteTVListAction = (accountId, sessionId, page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.getFavoriteTVList(
+        accountId,
+        sessionId,
+        page
+      );
+      var arrData = [];
+      if (data.total_pages > 0) {
+        for (let i = 1; i <= data.total_pages; i++) {
+          const { data } = await dashBoardService.getFavoriteTVList(
+            accountId,
+            sessionId,
+            i
+          );
+          arrData.push(...data.results);
+        }
+
+        dispatch(createAction(GET_LIST_FAVORITE_TV, arrData));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// Watch List AcTion
+
+export const getWatchListMovieAction = (accountId, sessionId, page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.getWatchListMovie(
+        accountId,
+        sessionId,
+        page
+      );
+      var arrData = [];
+      if (data.total_pages > 0) {
+        for (let i = 1; i <= data.total_pages; i++) {
+          const { data } = await dashBoardService.getWatchListMovie(
+            accountId,
+            sessionId,
+            i
+          );
+          arrData.push(...data.results);
+        }
+
+        dispatch(createAction(GET_WATCH_LIST_MOVIE, arrData));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getWatchListTVAction = (accountId, sessionId, page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.getWatchListTV(
+        accountId,
+        sessionId,
+        page
+      );
+      var arrData = [];
+      if (data.total_pages > 0) {
+        for (let i = 1; i <= data.total_pages; i++) {
+          const { data } = await dashBoardService.getWatchListTV(
+            accountId,
+            sessionId,
+            i
+          );
+          arrData.push(...data.results);
+        }
+
+        dispatch(createAction(GET_WATCH_LIST_TV, arrData));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// Created List Action
+
+export const getCreatedListAction = (
+  accountId,
+  sessionId,
+  backdrop,
+  idList,
+  success
+) => {
   return async (dispatch) => {
     try {
       const { data } = await dashBoardService.getCreatedList(
         accountId,
         sessionId
       );
-      dispatch(createAction(GET_CREATED_LIST, data.results));
+      if (backdrop) {
+        const newArr = data.results.map((item) => {
+          if (item.id == idList) {
+            localStorage.setItem(`${item.id}`, backdrop);
+            return { ...item, backdrop_path: backdrop };
+          } else {
+            return { ...item };
+          }
+        });
+        dispatch(createAction(GET_CREATED_LIST, newArr));
+        success("Image Saved");
+      } else {
+        dispatch(createAction(GET_CREATED_LIST, data.results));
+      }
     } catch (error) {
       console.log(error);
     }
   };
 };
+export const getDetailsListAction = (listId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await dashBoardService.getDetailsList(listId);
+      dispatch(createAction(GET_DETAILS_LIST, data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// Thêm , xóa , search List Action
 
 export const addMovieToListAction = (listId, sessionId, movieId, success) => {
   return async (dispatch) => {
@@ -109,17 +232,6 @@ export const addMovieToListAction = (listId, sessionId, movieId, success) => {
       await dashBoardService.addMovieToList(listId, sessionId, movieId);
       success("Item Added");
       await dispatch(getDetailsListAction(listId));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const getDetailsListAction = (listId) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await dashBoardService.getDetailsList(listId);
-      dispatch(createAction(GET_DETAILS_LIST, data));
     } catch (error) {
       console.log(error);
     }

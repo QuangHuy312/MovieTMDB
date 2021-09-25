@@ -33,7 +33,11 @@ const DetailMovie = (props) => {
 
   return (
     <Fragment>
-      <BannerMovie detailBanner={detailBannerMovie} id={id} />
+      <BannerMovie
+        detailBanner={detailBannerMovie}
+        id={id}
+        media_type="movie"
+      />
       <ContentDetails
         detailPhotos={detailPhotosMovie}
         detailCredit={detailCreditMovie}

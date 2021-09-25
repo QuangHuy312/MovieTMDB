@@ -36,7 +36,7 @@ import {
 } from "../../../utils/settings/config";
 import useStyle from "./style";
 
-const Banner = ({ detailBanner, id }) => {
+const Banner = ({ detailBanner, id, media_type }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { infoUser, guestSessionId } = useSelector(
@@ -87,7 +87,7 @@ const Banner = ({ detailBanner, id }) => {
   const valueText = (value) => {
     setValueRate(value);
   };
-  const handleAddToListIcon = () => {
+  const handleAddToWatchList = () => {
     if (!sessionId) {
       history.push("/login");
     }
@@ -97,6 +97,7 @@ const Banner = ({ detailBanner, id }) => {
         addToWatchListAction(
           accountId,
           sessionId,
+          media_type,
           id,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
@@ -109,6 +110,7 @@ const Banner = ({ detailBanner, id }) => {
         addToWatchListAction(
           accountId,
           sessionId,
+          media_type,
           id,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
@@ -244,7 +246,7 @@ const Banner = ({ detailBanner, id }) => {
                     <Tooltip title="Add to watch list">
                       <PlaylistAddIcon
                         className={iconAddClick ? btnClickIcons : btnIcons}
-                        onClick={handleAddToListIcon}
+                        onClick={handleAddToWatchList}
                       />
                     </Tooltip>
                     <Tooltip title="Mark as favourite">

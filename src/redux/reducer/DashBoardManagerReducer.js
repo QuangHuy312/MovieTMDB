@@ -1,22 +1,31 @@
 import {
+  CHANGE_BACK_DROP_LIST,
   DETELE_LIST_SEARCH,
   GET_CREATED_LIST,
   GET_DETAILS_LIST,
   GET_LIST_FAVORITE_MOVIE,
+  GET_LIST_FAVORITE_TV,
   GET_LIST_RATED_MOVIE,
   GET_LIST_RATED_TV,
   GET_LIST_SEARCH,
+  GET_WATCH_LIST_MOVIE,
+  GET_WATCH_LIST_TV,
 } from "../types/DashBoardManagerType";
 
 const initialState = {
   arrListRatedMovie: [],
   arrListRatedTV: [],
-  arrListSearch: [],
 
   arrListFavoriteMovie: [],
+  arrListFavoriteTV: [],
+
+  arrWatchListMovie: [],
+  arrWatchListTV: [],
+
+  arrListSearch: [],
 
   arrCreatedList: [],
-  arrDetailsList: [],
+  arrDetailsList: {},
 };
 
 export const DashBoardManagerReducer = (
@@ -38,6 +47,21 @@ export const DashBoardManagerReducer = (
       return { ...state };
     }
 
+    case GET_LIST_FAVORITE_TV: {
+      state.arrListFavoriteTV = payload;
+      return { ...state };
+    }
+
+    case GET_WATCH_LIST_MOVIE: {
+      state.arrWatchListMovie = payload;
+      return { ...state };
+    }
+
+    case GET_WATCH_LIST_TV: {
+      state.arrWatchListTV = payload;
+      return { ...state };
+    }
+
     case GET_CREATED_LIST: {
       state.arrCreatedList = payload;
       return { ...state };
@@ -55,6 +79,14 @@ export const DashBoardManagerReducer = (
 
     case DETELE_LIST_SEARCH: {
       state.arrListSearch = [];
+      return { ...state };
+    }
+
+    case CHANGE_BACK_DROP_LIST: {
+      state.arrDetailsList = {
+        ...state.arrDetailsList,
+        backdrop_path: payload,
+      };
       return { ...state };
     }
     default:

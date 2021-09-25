@@ -89,7 +89,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
     <Container className={content}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <Typography variant="h4">{arrDetailsList?.name}</Typography>
+          <Typography variant="h6">{arrDetailsList?.name}</Typography>
           <div className={title}>
             <Typography variant="h5">Edit</Typography>
           </div>
@@ -97,8 +97,14 @@ const AddItems = ({ infoUser, match, sessionId }) => {
           <div>
             <List className={contentList}>
               <ListItem>
-                <Typography variant="body2" className={textList}>
-                  Step 1 :List Details
+                <Typography
+                  variant="body2"
+                  className={textList}
+                  onClick={() =>
+                    history.push({ pathname: `/${infoUser.username}/list/new` })
+                  }
+                >
+                  Step 1 :Create New
                 </Typography>
               </ListItem>
               <ListItem className={active}>
@@ -107,7 +113,15 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                 </Typography>
               </ListItem>
               <ListItem>
-                <Typography variant="body2" className={textList}>
+                <Typography
+                  variant="body2"
+                  className={textList}
+                  onClick={() =>
+                    history.push({
+                      pathname: `/${infoUser.username}/list/${id}/chooseimg`,
+                    })
+                  }
+                >
                   Step 3 :Choose Images
                 </Typography>
               </ListItem>
@@ -116,13 +130,26 @@ const AddItems = ({ infoUser, match, sessionId }) => {
         </Grid>
 
         <Grid xs={9} style={{ padding: "20px 40px" }}>
-          <Typography variant="body2">Add Item</Typography>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h6">Add Item</Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                history.push({
+                  pathname: `/${infoUser.username}/list/${id}/chooseimg`,
+                })
+              }
+            >
+              Choose Image
+            </Button>
+          </div>
 
           <Autocomplete
             id="combo-box-demo"
             options={arrListSearch?.length > 0 ? arrListSearch : []}
             getOptionLabel={(option) => option.title}
-            style={{ width: "100%", marginTop: 40 }}
+            style={{ width: "100%", marginTop: 30 }}
             inputValue={valueSearch}
             onInputChange={(e, value) => {
               setValueSearch(value);

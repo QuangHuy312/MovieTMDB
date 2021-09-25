@@ -6,17 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import Movies from "../../components/AdminComponent/ListRated/Movies/Movies";
 import TVShow from "../../components/AdminComponent/ListRated/TVShow/TVShow";
 import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
-import { getCreatedListAction } from "../../redux/action/DashBoardManagerAction";
+import {
+  getCreatedListAction,
+  getFavoriteMovieListAction,
+  getFavoriteTVListAction,
+} from "../../redux/action/DashBoardManagerAction";
 
-const Rating = ({ infoUser, sessionId }) => {
-  const { arrListRatedMovie, arrListRatedTV, arrCreatedList } = useSelector(
-    (state) => state.DashBoardManagerReducer
-  );
+const Favorites = ({ infoUser, sessionId }) => {
+  const { arrListFavoriteMovie, arrListFavoriteTV, arrCreatedList } =
+    useSelector((state) => state.DashBoardManagerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+    dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
     dispatch(getCreatedListAction(infoUser.id, sessionId));
   }, [dispatch]);
-
   const useStyle = makeStyles(() => {
     return {
       content: {
@@ -72,8 +76,8 @@ const Rating = ({ infoUser, sessionId }) => {
           My Ratings
         </Typography>
         <TabsComponent
-          arrListMovie={arrListRatedMovie}
-          arrListTV={arrListRatedTV}
+          arrListMovie={arrListFavoriteMovie}
+          arrListTV={arrListFavoriteTV}
           setValue={setValue}
           value={value}
         />
@@ -82,13 +86,13 @@ const Rating = ({ infoUser, sessionId }) => {
         <Movies
           infoUser={infoUser}
           sessionId={sessionId}
-          arrListMovie={arrListRatedMovie}
+          arrListMovie={arrListFavoriteMovie}
           arrCreatedList={arrCreatedList}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <TVShow
-          arrListTV={arrListRatedTV}
+          arrListTV={arrListFavoriteTV}
           infoUser={infoUser}
           sessionId={sessionId}
           arrCreatedList={arrCreatedList}
@@ -98,4 +102,4 @@ const Rating = ({ infoUser, sessionId }) => {
   );
 };
 
-export default Rating;
+export default Favorites;

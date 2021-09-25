@@ -2,14 +2,14 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 import {
-  getCreatedListAction,
   getFavoriteMovieListAction,
   getRatedMovieListAction,
   getRatedTVShowListAction,
 } from "../../redux/action/DashBoardManagerAction";
 import Footer from "../HomeTemplate/Footer/Footer";
+import Header from "../HomeTemplate/Header/Header";
 import Banner from "./Banner/Banner";
-import Header from "./Header/Header.jsx";
+import NavRouteLink from "./NavRouteLink/NavRouteLink";
 
 const Admintemplate = (props) => {
   const { component: RouteComponent, ...restProps } = props;
@@ -24,7 +24,6 @@ const Admintemplate = (props) => {
   useEffect(() => {
     dispatch(getRatedMovieListAction(id, sessionId, 1));
     dispatch(getRatedTVShowListAction(id, sessionId, 1));
-    dispatch(getFavoriteMovieListAction(id, sessionId, 1));
   }, [dispatch, id, sessionId]);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -42,6 +41,7 @@ const Admintemplate = (props) => {
                 arrListRatedTV={arrListRatedTV}
                 arrListRatedMovie={arrListRatedMovie}
               />
+              <NavRouteLink />
               <RouteComponent
                 {...routeProps}
                 infoUser={infoUser}

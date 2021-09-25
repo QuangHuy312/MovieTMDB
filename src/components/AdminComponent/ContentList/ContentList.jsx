@@ -21,17 +21,19 @@ import { useHistory } from "react-router";
 import NO_POSTER from "../../../assets/img_no_poster.jpg";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "../../AdminComponent/ContentList/style";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
 const ContentList = ({
   contentList,
 
   handleClickRating,
-  handleRemoveRating,
+  handleRemove,
   handleClickAddFavorite,
   handleClickRemoveFavorite,
   handleClickAddToList,
   infoUser,
   arrCreatedList,
+  media_type,
 }) => {
   const {
     title,
@@ -76,13 +78,13 @@ const ContentList = ({
     },
   };
 
-  const [personName, setPersonName] = React.useState([]);
+  const [list, setList] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setList(
       // On autofill we get a the stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -172,8 +174,8 @@ const ContentList = ({
                   onClick={() => {
                     setBgActiveFavorite(!bgActiveFavorite);
                     !bgActiveFavorite
-                      ? handleClickAddFavorite(contentList.id)
-                      : handleClickRemoveFavorite(contentList.id);
+                      ? handleClickAddFavorite(media_type, contentList.id)
+                      : handleClickRemoveFavorite(media_type, contentList.id);
                   }}
                 >
                   <Typography variant="body2" className={icFavorite}>
@@ -211,7 +213,7 @@ const ContentList = ({
                       cursor: "pointer",
                     }}
                     onClick={() =>
-                      history.push(`/${infoUser.username}/list/create`)
+                      history.push(`/${infoUser.username}/list/new`)
                     }
                   >
                     <AddIcon fontSize="medium" />
@@ -228,15 +230,15 @@ const ContentList = ({
                           variant="body"
                           style={{ marginLeft: 5, color: "#f9ab00" }}
                         >
-                          {contentList.title.slice(0, 25) ||
-                            contentList.name.slice(0, 25)}
+                          {contentList?.title?.slice(0, 25) ||
+                            contentList?.name?.slice(0, 25)}
                         </Typography>
                       </InputLabel>
                       <Select
                         labelId="demo-multiple-chip-label"
                         id="demo-multiple-chip"
                         multiple
-                        value={personName}
+                        value={list}
                         onChange={handleChange}
                         input={
                           <OutlinedInput
@@ -246,20 +248,39 @@ const ContentList = ({
                         }
                         MenuProps={MenuProps}
                       >
-                        {arrCreatedList?.map((list) => {
-                          return (
-                            <Fragment key={list.id}>
-                              <MenuItem
-                                onClick={() => {
-                                  handleClickAddToList(list.id, contentList.id);
-                                  setAddList(false);
-                                }}
-                              >
-                                {list.name}{" "}
-                              </MenuItem>
-                            </Fragment>
-                          );
-                        })}
+                        {arrCreatedList.length > 0 ? (
+                          <Fragment>
+                            {arrCreatedList?.map((list) => {
+                              return (
+                                <Fragment key={list.id}>
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClickAddToList(
+                                        list.id,
+                                        contentList.id
+                                      );
+                                      setAddList(false);
+                                    }}
+                                  >
+                                    {list.name}
+                                  </MenuItem>
+                                </Fragment>
+                              );
+                            })}
+                          </Fragment>
+                        ) : (
+                          <div style={{ marginTop: 10, textAlign: "center" }}>
+                            <Typography
+                              variant="body"
+                              style={{ textAlign: "center" }}
+                            >
+                              <ArrowDropUpIcon />
+                            </Typography>
+                            <Typography variant="body2">
+                              No List , please click Create List
+                            </Typography>
+                          </div>
+                        )}
                       </Select>
                     </FormControl>
                   </div>
@@ -275,7 +296,7 @@ const ContentList = ({
                     variant="body2"
                     className={icRemove}
                     onClick={() => {
-                      handleRemoveRating(contentList.id);
+                      handleRemove(media_type, contentList.id);
                     }}
                   >
                     <ClearIcon />

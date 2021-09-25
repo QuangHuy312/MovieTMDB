@@ -3,62 +3,90 @@ import React, { Fragment, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToFavouriteAction,
+  addToWatchListAction,
   deleteRatingMovieAction,
   postRatingMovieAction,
 } from "../../../../redux/action/UserManagerAction";
 import { addMovieToListAction } from "../../../../redux/action/DashBoardManagerAction";
 import ContentList from "../../ContentList/ContentList";
+import { useLocation } from "react-router";
 
-const Movies = ({ arrListRatedMovie, arrCreatedList }) => {
+const Movies = ({ arrListMovie, arrCreatedList, sessionId, infoUser }) => {
   const dispatch = useDispatch();
-  const { guestSessionId, infoUser } = useSelector(
-    (state) => state.UserManagerReducer
-  );
-  const sessionId = localStorage.getItem("sessionId");
+  const { guestSessionId } = useSelector((state) => state.UserManagerReducer);
   const { enqueueSnackbar } = useSnackbar();
+  const location = useLocation();
+  const pathname = location.pathname;
 
   const handleClick = () => {
     console.log(123);
   };
 
   const handleClickRating = (id, valueRating) => {
-    if (valueRating) {
-      dispatch(
-        postRatingMovieAction(
-          id,
-          sessionId,
-          valueRating,
-          guestSessionId,
-
-          (mes) => {
-            enqueueSnackbar(mes, { variant: "success" });
-          },
-          infoUser.id
-        )
-      );
-    }
-  };
-
-  const handleRemoveRating = (id) => {
     dispatch(
-      deleteRatingMovieAction(
+      postRatingMovieAction(
         id,
         sessionId,
+        valueRating,
         guestSessionId,
 
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
         },
-        infoUser.id
+        infoUser,
+        pathname
       )
     );
   };
 
-  const handleClickAddFavorite = (movieId) => {
+  const handleRemove = (type, movieId) => {
+    if (pathname === `/${infoUser.username}/ratings`) {
+      dispatch(
+        deleteRatingMovieAction(
+          movieId,
+          sessionId,
+          guestSessionId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          infoUser
+        )
+      );
+    } else if (pathname === `/${infoUser.username}/favorites`) {
+      dispatch(
+        addToFavouriteAction(
+          infoUser.id,
+          sessionId,
+          type,
+          movieId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          false
+        )
+      );
+    } else if (pathname === `/${infoUser.username}/watchlist`) {
+      dispatch(
+        addToWatchListAction(
+          infoUser.id,
+          sessionId,
+          type,
+          movieId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          false
+        )
+      );
+    }
+  };
+
+  const handleClickAddFavorite = (type, movieId) => {
     dispatch(
       addToFavouriteAction(
         infoUser.id,
         sessionId,
+        type,
         movieId,
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
@@ -68,11 +96,12 @@ const Movies = ({ arrListRatedMovie, arrCreatedList }) => {
     );
   };
 
-  const handleClickRemoveFavorite = (movieId) => {
+  const handleClickRemoveFavorite = (type, movieId) => {
     dispatch(
       addToFavouriteAction(
         infoUser.id,
         sessionId,
+        type,
         movieId,
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
@@ -91,19 +120,20 @@ const Movies = ({ arrListRatedMovie, arrCreatedList }) => {
   };
   return (
     <Fragment>
-      {arrListRatedMovie.map((infoMovie) => {
+      {arrListMovie.map((infoMovie) => {
         return (
           <Fragment key={infoMovie.id}>
             <ContentList
               contentList={infoMovie}
               handleClick={handleClick}
               handleClickRating={handleClickRating}
-              handleRemoveRating={handleRemoveRating}
+              handleRemove={handleRemove}
               handleClickAddFavorite={handleClickAddFavorite}
               handleClickRemoveFavorite={handleClickRemoveFavorite}
               infoUser={infoUser}
               arrCreatedList={arrCreatedList}
               handleClickAddToList={handleClickAddToList}
+              media_type="movie"
             />
           </Fragment>
         );

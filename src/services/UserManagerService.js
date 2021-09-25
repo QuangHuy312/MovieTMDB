@@ -48,23 +48,25 @@ export class UserManagerService extends baseService {
     );
   };
 
-  deleteRatingTV = (movieId, sessionId, guestSessionId) => {
+  deleteRatingTV = (tvId, sessionId, guestSessionId) => {
     return this.delete(
-      `movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
+      `tv/${tvId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}&session_id=${sessionId}`
     );
   };
 
-  addToWatchList = (accountId, sessionId, movieId, action) => {
-    return this.postAddWatchList(
+  addToWatchList = (accountId, sessionId, type, movieId, action) => {
+    return this.postInfoMovie(
       `account/${accountId}/watchlist?api_key=${API_KEY}&session_id=${sessionId}`,
       movieId,
+      type,
       action
     );
   };
 
-  addToFavourite = (accountId, sessionId, movieId, action) => {
+  addToFavourite = (accountId, sessionId, type, movieId, action) => {
     return this.postAddToFavourite(
       `account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`,
+      type,
       movieId,
       action
     );

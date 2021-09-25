@@ -91,7 +91,10 @@ const Header = () => {
                   className={avatarUser}
                 />
               </div>
-              <Typography variant="body2" style={{ alignSelf: "center" }}>
+              <Typography
+                variant="body2"
+                style={{ alignSelf: "center", color: "#fff" }}
+              >
                 Hello
                 <Typography
                   variant="body"

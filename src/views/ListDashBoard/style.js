@@ -13,10 +13,18 @@ const useStyle = makeStyles(() => {
       justifyContent: "space-between",
     },
     contentCard: {
-      backgroundColor: "rgba(3,37,65,0.7)",
       position: "relative",
       borderRadius: 10,
       marginTop: 25,
+      "& .MuiCardContent-root": {
+        padding: 0,
+      },
+    },
+
+    contentText: {
+      backgroundColor: "rgba(3,37,65,0.7)",
+      position: "absolute",
+      inset: 0,
     },
     btnCreateList: {
       fontWeight: "bold",
@@ -25,7 +33,7 @@ const useStyle = makeStyles(() => {
     },
 
     imgCard: {
-      height: 400,
+      height: 450,
       width: "100%",
     },
 
