@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Movies from "../../components/AdminComponent/ListRated/Movies/Movies";
-import TVShow from "../../components/AdminComponent/ListRated/TVShow/TVShow";
+import Movies from "../../components/AdminComponent/Movies/Movies";
+import TVShow from "../../components/AdminComponent/TVShow/TVShow";
 import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
 import {
   getCreatedListAction,
@@ -13,15 +13,21 @@ import {
 } from "../../redux/action/DashBoardManagerAction";
 
 const WatchList = ({ infoUser, sessionId }) => {
-  const { arrWatchListMovie, arrWatchListTV, arrCreatedList } = useSelector(
-    (state) => state.DashBoardManagerReducer
-  );
+  const {
+    arrWatchListMovie,
+    arrWatchListTV,
+    arrCreatedList,
+    arrListRatedTV,
+    arrListRatedMovie,
+    arrListFavoriteMovie,
+    arrListFavoriteTV,
+  } = useSelector((state) => state.DashBoardManagerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
     dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
     dispatch(getCreatedListAction(infoUser.id, sessionId));
-  }, [dispatch]);
+  }, []);
   const useStyle = makeStyles(() => {
     return {
       content: {
@@ -34,6 +40,10 @@ const WatchList = ({ infoUser, sessionId }) => {
           "& .MuiTab-wrapper": {
             borderBottom: "4px solid blue",
           },
+        },
+        "& .MuiBox-root": {
+          padding: 0,
+          paddingTop: 15,
         },
       },
 
@@ -74,7 +84,7 @@ const WatchList = ({ infoUser, sessionId }) => {
     <Container className={classes.content}>
       <div style={{ display: "flex" }}>
         <Typography className={classes.title} variant="h6">
-          My Ratings
+          My Watchlist
         </Typography>
         <TabsComponent
           arrListMovie={arrWatchListMovie}
@@ -89,6 +99,8 @@ const WatchList = ({ infoUser, sessionId }) => {
           sessionId={sessionId}
           arrListMovie={arrWatchListMovie}
           arrCreatedList={arrCreatedList}
+          arrListRatedMovie={arrListRatedMovie}
+          arrListFavoriteMovie={arrListFavoriteMovie}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -97,6 +109,8 @@ const WatchList = ({ infoUser, sessionId }) => {
           infoUser={infoUser}
           sessionId={sessionId}
           arrCreatedList={arrCreatedList}
+          arrListRatedTV={arrListRatedTV}
+          arrListFavoriteTV={arrListFavoriteTV}
         />
       </TabPanel>
     </Container>

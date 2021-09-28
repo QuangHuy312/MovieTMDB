@@ -23,7 +23,7 @@ export const getRatedMovieListAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
-      var arrData = [];
+      let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
           const { data } = await dashBoardService.getRatedMoviesList(
@@ -49,7 +49,7 @@ export const getRatedTVShowListAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
-      var arrData = [];
+      let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
           const { data } = await dashBoardService.getRatedTVList(
@@ -77,7 +77,7 @@ export const getFavoriteMovieListAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
-      var arrData = [];
+      let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
           const { data } = await dashBoardService.getFavoriteMovieList(
@@ -104,7 +104,7 @@ export const getFavoriteTVListAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
-      var arrData = [];
+      let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
           const { data } = await dashBoardService.getFavoriteTVList(
@@ -133,7 +133,7 @@ export const getWatchListMovieAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
-      var arrData = [];
+      let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
           const { data } = await dashBoardService.getWatchListMovie(
@@ -160,7 +160,7 @@ export const getWatchListTVAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
-      var arrData = [];
+      let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
           const { data } = await dashBoardService.getWatchListTV(

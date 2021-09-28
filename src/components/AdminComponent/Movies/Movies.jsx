@@ -1,35 +1,38 @@
 import { useSnackbar } from "notistack";
 import React, { Fragment, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import { addMovieToListAction } from "../../../../redux/action/DashBoardManagerAction";
 import {
   addToFavouriteAction,
   addToWatchListAction,
-  deleteRatingTVAction,
-  postRatingTVAction,
-} from "../../../../redux/action/UserManagerAction";
-import ContentList from "../../ContentList/ContentList";
+  deleteRatingMovieAction,
+  postRatingMovieAction,
+} from "../../../redux/action/UserManagerAction";
+import { addMovieToListAction } from "../../../redux/action/DashBoardManagerAction";
+import ContentList from "../ContentList/ContentList";
+import { useLocation } from "react-router";
+import { Typography } from "@material-ui/core";
 
-const TVShow = ({ arrListTV, arrCreatedList, sessionId, infoUser }) => {
+const Movies = ({
+  arrListMovie,
+  arrCreatedList,
+  sessionId,
+  infoUser,
+  arrListRatedMovie,
+  arrListFavoriteMovie,
+}) => {
   const dispatch = useDispatch();
   const { guestSessionId } = useSelector((state) => state.UserManagerReducer);
   const { enqueueSnackbar } = useSnackbar();
   const location = useLocation();
   const pathname = location.pathname;
 
-  const handleClick = () => {
-    console.log(123);
-  };
-
   const handleClickRating = (id, valueRating) => {
     dispatch(
-      postRatingTVAction(
+      postRatingMovieAction(
         id,
         sessionId,
         valueRating,
         guestSessionId,
-
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
         },
@@ -42,7 +45,7 @@ const TVShow = ({ arrListTV, arrCreatedList, sessionId, infoUser }) => {
   const handleRemove = (type, movieId) => {
     if (pathname === `/${infoUser.username}/ratings`) {
       dispatch(
-        deleteRatingTVAction(
+        deleteRatingMovieAction(
           movieId,
           sessionId,
           guestSessionId,
@@ -84,7 +87,7 @@ const TVShow = ({ arrListTV, arrCreatedList, sessionId, infoUser }) => {
   const handleClickAddFavorite = (type, movieId) => {
     dispatch(
       addToFavouriteAction(
-        infoUser,
+        infoUser.id,
         sessionId,
         type,
         movieId,
@@ -99,19 +102,19 @@ const TVShow = ({ arrListTV, arrCreatedList, sessionId, infoUser }) => {
   const handleClickRemoveFavorite = (type, movieId) => {
     dispatch(
       addToFavouriteAction(
-        infoUser.id,
+        infoUser,
         sessionId,
         type,
         movieId,
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
         },
-        false
+        false,
+        pathname
       )
     );
   };
 
-  // Hiện tại api ko có phần add tv vô list , nên mặc định nó add Movie và lấy idList là idMovie
   const handleClickAddToList = (listId, movieId) => {
     dispatch(
       addMovieToListAction(listId, sessionId, movieId, (mes) => {
@@ -119,28 +122,49 @@ const TVShow = ({ arrListTV, arrCreatedList, sessionId, infoUser }) => {
       })
     );
   };
+
+  arrListMovie?.forEach((movie, index) => {
+    const idxFavorites = arrListFavoriteMovie?.findIndex(
+      (item) => item.id === movie.id
+    );
+    const idxRated = arrListRatedMovie?.findIndex(
+      (item) => item.id === movie.id
+    );
+    if (idxFavorites > -1) {
+      arrListMovie[idxFavorites].favorite = true;
+    }
+    if (idxRated > -1) {
+      arrListMovie[index].rating = arrListRatedMovie[idxRated].rating;
+    }
+  });
+
   return (
     <Fragment>
-      {arrListTV.map((infoTV) => {
-        return (
-          <Fragment key={infoTV.id}>
-            <ContentList
-              contentList={infoTV}
-              handleClick={handleClick}
-              handleClickRating={handleClickRating}
-              handleRemove={handleRemove}
-              handleClickAddFavorite={handleClickAddFavorite}
-              handleClickRemoveFavorite={handleClickRemoveFavorite}
-              infoUser={infoUser}
-              arrCreatedList={arrCreatedList}
-              handleClickAddToList={handleClickAddToList}
-              media_type="tv"
-            />
-          </Fragment>
-        );
-      })}
+      {arrListMovie.length > 0 ? (
+        <Fragment>
+          {arrListMovie.map((infoMovie) => {
+            return (
+              <Fragment key={infoMovie.id}>
+                <ContentList
+                  contentList={infoMovie}
+                  handleClickRating={handleClickRating}
+                  handleRemove={handleRemove}
+                  handleClickAddFavorite={handleClickAddFavorite}
+                  handleClickRemoveFavorite={handleClickRemoveFavorite}
+                  infoUser={infoUser}
+                  arrCreatedList={arrCreatedList}
+                  handleClickAddToList={handleClickAddToList}
+                  media_type="movie"
+                />
+              </Fragment>
+            );
+          })}
+        </Fragment>
+      ) : (
+        <Typography variant="body1">You haven't added any movies</Typography>
+      )}
     </Fragment>
   );
 };
 
-export default memo(TVShow);
+export default memo(Movies);

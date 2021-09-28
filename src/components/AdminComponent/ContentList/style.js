@@ -31,26 +31,30 @@ const useStyle = makeStyles(() => {
       lineHeight: 2.3,
       fontSize: 15,
     },
+    listIcons: {
+      marginTop: 10,
+      width: "70%",
+      "& > ul > li": {
+        paddingTop: 5,
+        textAlign: "center",
+      },
+    },
     bgRating: {
-      background: "#508d50",
+      background: "#01d277",
       color: "white",
       position: "relative",
     },
-    bgFavorite: {
-      background: "#f864ab",
-      "& .MuiSvgIcon-root": {
-        color: "#fff",
-      },
-    },
+
     contentIcons: {
       width: 35,
       height: 35,
       borderRadius: "50%",
       border: "1px solid #999",
       cursor: "pointer",
+      zIndex: 2,
       "&:hover": {
-        transition: "ease-out 0.4s",
-        background: "#f9ab00",
+        transition: "all 0.4s",
+        backgroundColor: "#f9ab00",
         "& $icons": {
           color: "white",
         },
@@ -59,15 +63,49 @@ const useStyle = makeStyles(() => {
         },
       },
     },
-    icons: {
-      textAlign: "center",
-      fontSize: 5,
-      paddingTop: 5,
-      color: "#f9ab00",
+    hoverIconFavorite: {
+      "&:hover": {
+        backgroundColor: "#f864ab",
+        "& $textIconFavorite": {
+          color: "#fff",
+        },
+      },
     },
-    iconRemove: { color: "red" },
-    iconFavorite: { color: "#ec329d" },
-    iconAddList: { color: "#663f55" },
+    bgFavorite: {
+      background: "#f864ab",
+      "&:hover": {
+        background: "#f9ab00",
+      },
+    },
+    textIconFavorite: {
+      color: "#f864ab",
+      fontSize: 23,
+    },
+
+    textActiveIconFavorite: {
+      color: "#fff",
+      fontSize: 23,
+    },
+
+    hoverIconAddList: {
+      "&:hover": {
+        backgroundColor: "#665c5c",
+        "& $iconAddList": {
+          color: "white",
+        },
+      },
+    },
+    iconAddList: { color: "#663f55", textAlign: "center", paddingTop: 5 },
+    hoverIconRemove: {
+      "&:hover": {
+        backgroundColor: "#f05d5d",
+        "& $iconRemove": {
+          color: "white",
+        },
+      },
+    },
+    iconRemove: { color: "red", textAlign: "center", paddingTop: 5 },
+
     textIcon: {
       fontSize: 14,
       marginLeft: 12,
@@ -75,14 +113,11 @@ const useStyle = makeStyles(() => {
       color: "#72977b",
       position: "relative",
     },
-    listIcons: {
-      marginTop: 10,
-      width: "70%",
-    },
 
     starRate: {
       position: "absolute",
       top: "95%",
+      zIndex: 3,
     },
 
     contentAddList: {

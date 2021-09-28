@@ -26,6 +26,7 @@ const useStyle = makeStyles(() => {
       position: "absolute",
       inset: 0,
     },
+
     btnCreateList: {
       fontWeight: "bold",
       borderRadius: 7,
@@ -57,7 +58,7 @@ const useStyle = makeStyles(() => {
       backgroundColor: "#fff",
       textAlign: "center",
       color: "red",
-      zIndex: 99,
+      zIndex: 9,
       boxShadow: "2px 23px 197px -5px rgba(183,6,6,1)",
       cursor: "pointer",
     },

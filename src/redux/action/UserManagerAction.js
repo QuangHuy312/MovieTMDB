@@ -81,18 +81,22 @@ export const postRatingMovieAction = (
 ) => {
   return async (dispatch) => {
     try {
-      await userService.userRatingMovie(
+      const { data } = await userService.userRatingMovie(
         movieId,
         sessionId,
         rate,
         guestSessionId
       );
       success("Your rating has been saved");
-
-      if (pathname === `/${infoUser.username}/ratings`) {
+      if (data.success) {
         await dispatch(getRatedMovieListAction(infoUser.id, sessionId, 1));
-      } else if (pathname === `/${infoUser.username}/favorites`) {
-        await dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+        if (pathname === `/${infoUser.username}/favorites`) {
+          await dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+        }
+        // phần này api hơi fail , khi rating tự động xóa movie trong watchlist luôn
+        if (pathname === `/${infoUser.username}/watchlist`) {
+          dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -128,12 +132,20 @@ export const postRatingTVAction = (
 ) => {
   return async (dispatch) => {
     try {
-      await userService.userRatingTV(movieId, sessionId, rate, guestSessionId);
+      const { data } = await userService.userRatingTV(
+        movieId,
+        sessionId,
+        rate,
+        guestSessionId
+      );
       success("Your rating has been saved");
-      if (pathname === `/${infoUser.username}/ratings`) {
+      if (data.success) {
         await dispatch(getRatedTVShowListAction(infoUser.id, sessionId, 1));
-      } else if (pathname === `/${infoUser.username}/favorites`) {
-        await dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
+        if (pathname === `/${infoUser.username}/watchlist`) {
+          dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
+        } else if (pathname === `/${infoUser.username}/favorites`) {
+          dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -182,7 +194,8 @@ export const addToWatchListAction = (
         success("Delete is successfully");
         if (type === "tv") {
           await dispatch(getWatchListTVAction(accountId, sessionId, 1));
-        } else if (type === "movie") {
+        }
+        if (type === "movie") {
           await dispatch(getWatchListMovieAction(accountId, sessionId, 1));
         }
       }
@@ -193,17 +206,18 @@ export const addToWatchListAction = (
 };
 
 export const addToFavouriteAction = (
-  accountId,
+  infoUser,
   sessionId,
   type,
   movieId,
   success,
-  action
+  action,
+  pathname
 ) => {
   return async (dispatch) => {
     try {
       await userService.addToFavourite(
-        accountId,
+        infoUser,
         sessionId,
         type,
         movieId,
@@ -211,12 +225,31 @@ export const addToFavouriteAction = (
       );
       if (action) {
         success("Added to favourite");
+        if (type === "tv") {
+          dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
+        }
+        if (type === "movie") {
+          dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+        }
       } else {
         success("Delete is successfully");
         if (type === "tv") {
-          await dispatch(getFavoriteTVListAction(accountId, sessionId, 1));
-        } else if (type === "movie") {
-          await dispatch(getFavoriteMovieListAction(accountId, sessionId, 1));
+          dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
+          if (pathname === `/${infoUser.username}/ratings`) {
+            dispatch(getRatedTVShowListAction(infoUser.id, sessionId, 1));
+          }
+          if (pathname === `/${infoUser.username}/watchlist`) {
+            dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
+          }
+        }
+        if (type === "movie") {
+          dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+          if (pathname === `/${infoUser.username}/ratings`) {
+            dispatch(getRatedMovieListAction(infoUser.id, sessionId, 1));
+          }
+          if (pathname === `/${infoUser.username}/watchlist`) {
+            dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
+          }
         }
       }
     } catch (error) {

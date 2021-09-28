@@ -32,6 +32,7 @@ import useStyle from "./style";
 const AddItems = ({ infoUser, match, sessionId }) => {
   const {
     title,
+    listName,
     content,
     contentList,
     active,
@@ -89,7 +90,15 @@ const AddItems = ({ infoUser, match, sessionId }) => {
     <Container className={content}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <Typography variant="h6">{arrDetailsList?.name}</Typography>
+          <Typography
+            variant="h6"
+            onClick={() =>
+              history.push({ pathname: `/${infoUser.username}/list/${id}` })
+            }
+            className={listName}
+          >
+            {arrDetailsList?.name}
+          </Typography>
           <div className={title}>
             <Typography variant="h5">Edit</Typography>
           </div>
@@ -218,13 +227,14 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                 variant="outlined"
               />
             )}
+            autoComplete
             noOptionsText={
               <div style={{ textAlign: "center" }}>
                 <img src={NO_ITEM} alt="noitem" className={poster} />
               </div>
             }
           />
-          {arrDetailsList?.items?.length > 0 && (
+          {arrDetailsList?.items?.length > 0 ? (
             <Fragment>
               {arrDetailsList?.items?.map((item, index) => {
                 return (
@@ -294,6 +304,10 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                 </Button>
               </div>
             </Fragment>
+          ) : (
+            <Typography variant="body2" style={{ paddingTop: 25 }}>
+              There are no items added to this list.
+            </Typography>
           )}
         </Grid>
       </Grid>

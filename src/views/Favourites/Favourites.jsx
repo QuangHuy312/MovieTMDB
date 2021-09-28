@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Movies from "../../components/AdminComponent/ListRated/Movies/Movies";
-import TVShow from "../../components/AdminComponent/ListRated/TVShow/TVShow";
+import Movies from "../../components/AdminComponent/Movies/Movies";
+import TVShow from "../../components/AdminComponent/TVShow/TVShow";
 import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
 import {
   getCreatedListAction,
@@ -13,14 +13,20 @@ import {
 } from "../../redux/action/DashBoardManagerAction";
 
 const Favorites = ({ infoUser, sessionId }) => {
-  const { arrListFavoriteMovie, arrListFavoriteTV, arrCreatedList } =
-    useSelector((state) => state.DashBoardManagerReducer);
+  const {
+    arrListFavoriteMovie,
+    arrListFavoriteTV,
+    arrCreatedList,
+    arrListRatedMovie,
+    arrListRatedTV,
+  } = useSelector((state) => state.DashBoardManagerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
     dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
     dispatch(getCreatedListAction(infoUser.id, sessionId));
   }, [dispatch]);
+
   const useStyle = makeStyles(() => {
     return {
       content: {
@@ -33,6 +39,10 @@ const Favorites = ({ infoUser, sessionId }) => {
           "& .MuiTab-wrapper": {
             borderBottom: "4px solid blue",
           },
+        },
+        "& .MuiBox-root": {
+          padding: 0,
+          paddingTop: 15,
         },
       },
 
@@ -73,7 +83,7 @@ const Favorites = ({ infoUser, sessionId }) => {
     <Container className={classes.content}>
       <div style={{ display: "flex" }}>
         <Typography className={classes.title} variant="h6">
-          My Ratings
+          My Favorites
         </Typography>
         <TabsComponent
           arrListMovie={arrListFavoriteMovie}
@@ -86,8 +96,10 @@ const Favorites = ({ infoUser, sessionId }) => {
         <Movies
           infoUser={infoUser}
           sessionId={sessionId}
-          arrListMovie={arrListFavoriteMovie}
           arrCreatedList={arrCreatedList}
+          arrListMovie={arrListFavoriteMovie}
+          arrListFavoriteMovie={arrListFavoriteMovie}
+          arrListRatedMovie={arrListRatedMovie}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -96,6 +108,8 @@ const Favorites = ({ infoUser, sessionId }) => {
           infoUser={infoUser}
           sessionId={sessionId}
           arrCreatedList={arrCreatedList}
+          arrListFavoriteTV={arrListFavoriteTV}
+          arrListRatedTV={arrListRatedTV}
         />
       </TabPanel>
     </Container>

@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import clsx from "clsx";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getDetailsListAction } from "../../../redux/action/DashBoardManagerAction";
@@ -89,57 +89,71 @@ const ListItems = ({ match, infoUser }) => {
 
       <div>
         <Grid container spacing={3} style={{ paddingTop: 30 }}>
-          {arrDetailsList?.items?.map((items, index) => {
-            return (
-              <Grid item xs={6} sm={4} md={3} lg={2} key={items.id}>
-                <Card className={card}>
-                  <div className={contentCard}>
-                    <CardMedia
-                      image={
-                        items.poster_path
-                          ? `${IMAGE_URL}${WIDTH_IMAGE}${items.poster_path}`
-                          : NO_POSTER
-                      }
-                      className={media}
-                    />
-                    <Typography
-                      variant="h2"
-                      component="span"
-                      className={arrow}
-                      onClick={() => {
-                        if (items.media_type === "movie") {
-                          history.push(`/detailmovies/${items.id}`);
-                        } else if (items.media_type === "tv") {
-                          history.push(`/detailtvshow/${items.id}`);
-                        }
-                      }}
-                    >
-                      <ArrowRightAltIcon />
-                    </Typography>
-                    <Typography variant="h1" component="div" className={rated}>
-                      {items.vote_average}
-                    </Typography>
-                  </div>
-                  <CardContent>
-                    <Typography
-                      variant="body2"
-                      className={title}
-                      component="p"
-                      onClick={() => {
-                        if (items.media_type === "movie") {
-                          history.push(`/detailmovies/${items.id}`);
-                        } else if (items.media_type === "tv") {
-                          history.push(`/detailtvshow/${items.id}`);
-                        }
-                      }}
-                    >
-                      {items.title || items.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })}
+          {arrDetailsList?.items.length > 0 ? (
+            <Fragment>
+              {arrDetailsList?.items?.map((items, index) => {
+                return (
+                  <Grid item xs={6} sm={4} md={3} lg={2} key={items.id}>
+                    <Card className={card}>
+                      <div className={contentCard}>
+                        <CardMedia
+                          image={
+                            items.poster_path
+                              ? `${IMAGE_URL}${WIDTH_IMAGE}${items.poster_path}`
+                              : NO_POSTER
+                          }
+                          className={media}
+                        />
+                        <Typography
+                          variant="h2"
+                          component="span"
+                          className={arrow}
+                          onClick={() => {
+                            if (items.media_type === "movie") {
+                              history.push(`/detailmovies/${items.id}`);
+                            } else if (items.media_type === "tv") {
+                              history.push(`/detailtvshow/${items.id}`);
+                            }
+                          }}
+                        >
+                          <ArrowRightAltIcon />
+                        </Typography>
+                        <Typography
+                          variant="h1"
+                          component="div"
+                          className={rated}
+                        >
+                          {items.vote_average}
+                        </Typography>
+                      </div>
+                      <CardContent>
+                        <Typography
+                          variant="body2"
+                          className={title}
+                          component="p"
+                          onClick={() => {
+                            if (items.media_type === "movie") {
+                              history.push(`/detailmovies/${items.id}`);
+                            } else if (items.media_type === "tv") {
+                              history.push(`/detailtvshow/${items.id}`);
+                            }
+                          }}
+                        >
+                          {items.title || items.name}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Fragment>
+          ) : (
+            <div style={{ textAlign: "center", padding: "30px 0" }}>
+              <Typography variant="body1">
+                There are no movies in this list
+              </Typography>
+            </div>
+          )}
         </Grid>
       </div>
 

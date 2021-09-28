@@ -19,6 +19,14 @@ const useStyle = makeStyles(() => {
         padding: "15px 25px",
       },
     },
+    listName: {
+      cursor: "pointer",
+      paddingLeft: 15,
+      "&:hover": {
+        color: "#f9ab00",
+        transition: "all 0.5s",
+      },
+    },
 
     contentList: {
       padding: 15,

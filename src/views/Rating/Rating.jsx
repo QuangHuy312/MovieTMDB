@@ -3,18 +3,28 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Movies from "../../components/AdminComponent/ListRated/Movies/Movies";
-import TVShow from "../../components/AdminComponent/ListRated/TVShow/TVShow";
+import Movies from "../../components/AdminComponent/Movies/Movies";
+import TVShow from "../../components/AdminComponent/TVShow/TVShow";
 import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
-import { getCreatedListAction } from "../../redux/action/DashBoardManagerAction";
+import {
+  getCreatedListAction,
+  getFavoriteMovieListAction,
+  getFavoriteTVListAction,
+} from "../../redux/action/DashBoardManagerAction";
 
 const Rating = ({ infoUser, sessionId }) => {
-  const { arrListRatedMovie, arrListRatedTV, arrCreatedList } = useSelector(
-    (state) => state.DashBoardManagerReducer
-  );
+  const {
+    arrListRatedMovie,
+    arrListRatedTV,
+    arrCreatedList,
+    arrListFavoriteMovie,
+    arrListFavoriteTV,
+  } = useSelector((state) => state.DashBoardManagerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCreatedListAction(infoUser.id, sessionId));
+    dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+    dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
   }, [dispatch]);
 
   const useStyle = makeStyles(() => {
@@ -29,6 +39,10 @@ const Rating = ({ infoUser, sessionId }) => {
           "& .MuiTab-wrapper": {
             borderBottom: "4px solid blue",
           },
+        },
+        "& .MuiBox-root": {
+          padding: 0,
+          paddingTop: 15,
         },
       },
 
@@ -84,6 +98,8 @@ const Rating = ({ infoUser, sessionId }) => {
           sessionId={sessionId}
           arrListMovie={arrListRatedMovie}
           arrCreatedList={arrCreatedList}
+          arrListRatedMovie={arrListRatedMovie}
+          arrListFavoriteMovie={arrListFavoriteMovie}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -92,6 +108,8 @@ const Rating = ({ infoUser, sessionId }) => {
           infoUser={infoUser}
           sessionId={sessionId}
           arrCreatedList={arrCreatedList}
+          arrListRatedTV={arrListRatedTV}
+          arrListFavoriteTV={arrListFavoriteTV}
         />
       </TabPanel>
     </Container>

@@ -9,23 +9,23 @@ import {
   Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ClearIcon from "@material-ui/icons/Clear";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ListIcon from "@material-ui/icons/List";
+import StarsIcon from "@material-ui/icons/Stars";
 import { Rating } from "@material-ui/lab";
 import clsx from "clsx";
 import moment from "moment";
 import React, { Fragment, memo, useState } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import { AiTwotoneHeart } from "react-icons/ai";
 import { useHistory } from "react-router";
 import NO_POSTER from "../../../assets/img_no_poster.jpg";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "../../AdminComponent/ContentList/style";
-import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
 const ContentList = ({
   contentList,
-
   handleClickRating,
   handleRemove,
   handleClickAddFavorite,
@@ -42,30 +42,35 @@ const ContentList = ({
     poster,
     date,
     contentIcons,
-    icons,
+    iconAddList,
+    iconRemove,
     textIcon,
     listIcons,
-    iconRemove,
-    iconFavorite,
-    iconAddList,
-    rating,
+    textIconFavorite,
+    textActiveIconFavorite,
+
     bgRating,
     bgFavorite,
     starRate,
     contentAddList,
     borderContentAddList,
+    hoverIconFavorite,
+    hoverIconAddList,
+    hoverIconRemove,
   } = useStyle();
-
-  const icRemove = clsx(iconRemove, icons);
-  const icAddList = clsx(icons, iconAddList);
-  const icFavorite = clsx(icons, iconFavorite);
   const rated = clsx(contentIcons, bgRating);
-  const favorites = clsx(contentIcons, bgFavorite);
+  const contentIconFavorite = clsx(hoverIconFavorite, contentIcons);
+  const contentActiveFavorite = clsx(
+    hoverIconFavorite,
+    contentIcons,
+    bgFavorite
+  );
+  const contentIconAddList = clsx(hoverIconAddList, contentIcons);
+  const contentIconRemove = clsx(hoverIconRemove, contentIcons);
   const history = useHistory();
 
   const [showRating, setShowRating] = useState(false);
   const [addList, setAddList] = useState(false);
-  const [bgActiveFavorite, setBgActiveFavorite] = useState(false);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -127,7 +132,7 @@ const ContentList = ({
             <Typography className={title} variant="body2">
               {contentList.title}
             </Typography>
-            <Typography variant="body" className={date}>
+            <Typography variant="body1" className={date}>
               {moment(contentList.release_date).format("LL")}
             </Typography>
           </div>
@@ -145,15 +150,24 @@ const ContentList = ({
                 onClick={() => setShowRating(!showRating)}
               >
                 <div className={rated}>
-                  <Typography variant="body2" className={rating}>
-                    {contentList.rating}
-                  </Typography>
+                  {contentList.rating ? (
+                    <Typography variant="body1" style={{ paddingTop: 5 }}>
+                      {contentList.rating}
+                    </Typography>
+                  ) : (
+                    <StarsIcon
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  )}
                 </div>
                 <Typography variant="body2" className={textIcon}>
                   Your Rating
                 </Typography>
               </div>
-              {showRating ? (
+              {showRating && (
                 <div className={starRate}>
                   <Rating
                     precision={0.5}
@@ -165,23 +179,44 @@ const ContentList = ({
                     }}
                   />
                 </div>
-              ) : null}
+              )}
             </ListItem>
             <ListItem>
-              <div style={{ display: "flex" }}>
-                <div
-                  className={bgActiveFavorite ? favorites : contentIcons}
-                  onClick={() => {
-                    setBgActiveFavorite(!bgActiveFavorite);
-                    !bgActiveFavorite
-                      ? handleClickAddFavorite(media_type, contentList.id)
-                      : handleClickRemoveFavorite(media_type, contentList.id);
-                  }}
-                >
-                  <Typography variant="body2" className={icFavorite}>
-                    <FavoriteBorderIcon />
-                  </Typography>
-                </div>
+              <div style={{ display: "flex", cursor: "pointer" }}>
+                {contentList.favorite ? (
+                  <div
+                    className={contentActiveFavorite}
+                    onClick={() =>
+                      handleClickRemoveFavorite(media_type, contentList.id)
+                    }
+                  >
+                    <Typography
+                      variant="body2"
+                      style={{
+                        textAlign: "center",
+                        paddingTop: 5,
+                      }}
+                    >
+                      <AiTwotoneHeart className={textActiveIconFavorite} />
+                    </Typography>
+                  </div>
+                ) : (
+                  <div className={contentIconFavorite}>
+                    <Typography
+                      variant="body2"
+                      style={{
+                        textAlign: "center",
+                        paddingTop: 5,
+                      }}
+                      onClick={() =>
+                        handleClickAddFavorite(media_type, contentList.id)
+                      }
+                    >
+                      <AiTwotoneHeart className={textIconFavorite} />
+                    </Typography>
+                  </div>
+                )}
+
                 <Typography variant="body2" className={textIcon}>
                   Favorite
                 </Typography>
@@ -195,8 +230,8 @@ const ContentList = ({
                 }}
                 onClick={() => setAddList(!addList)}
               >
-                <div className={contentIcons}>
-                  <Typography variant="body2" className={icAddList}>
+                <div className={contentIconAddList}>
+                  <Typography variant="body2" className={iconAddList}>
                     <ListIcon />
                   </Typography>
                 </div>
@@ -217,7 +252,7 @@ const ContentList = ({
                     }
                   >
                     <AddIcon fontSize="medium" />
-                    <Typography variant="body">Create List</Typography>
+                    <Typography variant="body1">Create List</Typography>
                   </div>
 
                   <div>
@@ -227,7 +262,7 @@ const ContentList = ({
                       >
                         Add
                         <Typography
-                          variant="body"
+                          variant="body1"
                           style={{ marginLeft: 5, color: "#f9ab00" }}
                         >
                           {contentList?.title?.slice(0, 25) ||
@@ -271,7 +306,7 @@ const ContentList = ({
                         ) : (
                           <div style={{ marginTop: 10, textAlign: "center" }}>
                             <Typography
-                              variant="body"
+                              variant="body1"
                               style={{ textAlign: "center" }}
                             >
                               <ArrowDropUpIcon />
@@ -290,15 +325,14 @@ const ContentList = ({
               ) : null}
             </ListItem>
             <ListItem>
-              <div style={{ display: "flex", cursor: "pointer" }}>
-                <div className={contentIcons}>
-                  <Typography
-                    variant="body2"
-                    className={icRemove}
-                    onClick={() => {
-                      handleRemove(media_type, contentList.id);
-                    }}
-                  >
+              <div
+                style={{ display: "flex", cursor: "pointer" }}
+                onClick={() => {
+                  handleRemove(media_type, contentList.id);
+                }}
+              >
+                <div className={contentIconRemove}>
+                  <Typography variant="body2" className={iconRemove}>
                     <ClearIcon />
                   </Typography>
                 </div>

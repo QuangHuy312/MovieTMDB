@@ -120,7 +120,7 @@ const Banner = ({ detailBanner, id, media_type }) => {
       );
     }
   };
-  const handleRatingIcon = () => {
+  const handleUserRating = () => {
     if (!sessionId) {
       history.push("/login");
     }
@@ -177,6 +177,7 @@ const Banner = ({ detailBanner, id, media_type }) => {
         addToFavouriteAction(
           accountId,
           sessionId,
+          "movie",
           id,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
@@ -207,17 +208,17 @@ const Banner = ({ detailBanner, id, media_type }) => {
         }}
       >
         <CustomCard
-          effectColor="#C780FF" // required
+          effectColor="#000" // required
           blur={6} // default blur value is 10px
           borderRadius="none" // default border radius value is 10px
           style={{
             height: "700px",
-            backgroundColor: "rgba(10, 10, 10, 0.44)",
+            backgroundColor: "rgba(10, 10, 10, 0.7)",
           }}
         >
           <Container className={content}>
             <Grid container spacing={3}>
-              <Grid item xs={3} sm={4}>
+              <Grid item xs={2} sm={3}>
                 <CardMedia
                   image={
                     poster_path
@@ -229,7 +230,7 @@ const Banner = ({ detailBanner, id, media_type }) => {
                 />
               </Grid>
               <Grid item xs={9} sm={8}>
-                <Typography variant="h2" className={titleMovie}>
+                <Typography variant="h3" className={titleMovie}>
                   <i> {title || name}</i>
                 </Typography>
                 <Typography variant="body2">
@@ -259,10 +260,10 @@ const Banner = ({ detailBanner, id, media_type }) => {
                     </Tooltip>
                   </Typography>
                 </Typography>
-                <div>
+                <div style={{ padding: "10px 0" }}>
                   {genres?.map((genre) => (
                     <Typography
-                      variant="span"
+                      variant="body2"
                       component="a"
                       className={genresMovie}
                     >
@@ -297,14 +298,14 @@ const Banner = ({ detailBanner, id, media_type }) => {
                   />
                   <Tooltip title="Send your rating">
                     <StarsIcon
-                      onClick={handleRatingIcon}
+                      onClick={handleUserRating}
                       className={iconRatingClick ? btnClickIcons : btnIcons}
                       fontSize="large"
                     />
                   </Tooltip>
                 </div>
                 <Typography variant="h6" className={desc}>
-                  {overview}
+                  {overview?.slice(0, 450)}...
                 </Typography>
                 <div>
                   <Button

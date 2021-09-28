@@ -106,54 +106,64 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
         </Grid>
         <Grid item xs={9}>
           <Grid container spacing={2}>
-            {arrDetailsList.items?.map((item, index) => {
-              return (
-                <Fragment key={item.id}>
-                  <Grid item xs={4}>
-                    <Card className={contentCard}>
-                      <div>
-                        <Typography variant="body">{index + 1}. </Typography>
-                        <Typography variant="body">
-                          {item.name || item.title}
-                        </Typography>
-                      </div>
+            {arrDetailsList.items?.length > 0 ? (
+              <Fragment>
+                {arrDetailsList.items?.map((item, index) => {
+                  return (
+                    <Fragment key={item.id}>
+                      <Grid item xs={4}>
+                        <Card className={contentCard}>
+                          <div>
+                            <Typography variant="body">
+                              {index + 1}.{" "}
+                            </Typography>
+                            <Typography variant="body">
+                              {item.name || item.title}
+                            </Typography>
+                          </div>
 
-                      <CardMedia
-                        image={
-                          item.backdrop_path
-                            ? `${IMAGE_URL}${WIDTH_IMAGE}${item.backdrop_path}`
-                            : NO_BACK_DROP
-                        }
-                        className={backdrop}
-                        onClick={() =>
-                          handleClickChooseImage(item.backdrop_path)
-                        }
-                      >
-                        {item.backdrop_path === backdropList ? (
-                          <div className={activeChooseImage}>
-                            <Typography
-                              variant="body2"
-                              style={{ paddingTop: 10 }}
-                            >
-                              SELECTED
-                            </Typography>
-                          </div>
-                        ) : (
-                          <div className={textCard}>
-                            <Typography
-                              variant="body2"
-                              style={{ paddingTop: 10 }}
-                            >
-                              SELECT THIS IMAGE
-                            </Typography>
-                          </div>
-                        )}
-                      </CardMedia>
-                    </Card>
-                  </Grid>
-                </Fragment>
-              );
-            })}
+                          <CardMedia
+                            image={
+                              item.backdrop_path
+                                ? `${IMAGE_URL}${WIDTH_IMAGE}${item.backdrop_path}`
+                                : NO_BACK_DROP
+                            }
+                            className={backdrop}
+                            onClick={() =>
+                              handleClickChooseImage(item.backdrop_path)
+                            }
+                          >
+                            {item.backdrop_path === backdropList ? (
+                              <div className={activeChooseImage}>
+                                <Typography
+                                  variant="body2"
+                                  style={{ paddingTop: 10 }}
+                                >
+                                  SELECTED
+                                </Typography>
+                              </div>
+                            ) : (
+                              <div className={textCard}>
+                                <Typography
+                                  variant="body2"
+                                  style={{ paddingTop: 10 }}
+                                >
+                                  SELECT THIS IMAGE
+                                </Typography>
+                              </div>
+                            )}
+                          </CardMedia>
+                        </Card>
+                      </Grid>
+                    </Fragment>
+                  );
+                })}
+              </Fragment>
+            ) : (
+              <Typography variant="body2" style={{ paddingTop: 25 }}>
+                There are no items added to this list.
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </Grid>

@@ -17,6 +17,7 @@ const useStyle = makeStyles(() => {
     },
     poster: {
       height: "100%",
+      maxHeight: 450,
       backgroundSize: "cover",
       backgroundPosition: "center",
       borderRadius: 10,
@@ -62,7 +63,7 @@ const useStyle = makeStyles(() => {
     },
     genresMovie: {
       color: "#f9ab00",
-      margin: 10,
+      marginRight: 10,
       cursor: "pointer",
       "@media screen and (max-width:768px)": {
         fontSize: 10,
