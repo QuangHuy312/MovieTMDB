@@ -1,18 +1,28 @@
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     container: {
       marginTop: 40,
       height: 500,
       position: "relative",
+      [theme.breakpoints.down("md")]: {
+        height: 400,
+      },
+
+      [theme.breakpoints.down("sm")]: {
+        height: 350,
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: 300,
+        "& $buttonWatchMobile": {
+          display: "flex",
+        },
+      },
     },
     content: {
       position: "absolute",
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
+      inset: 0,
       zIndex: 3,
     },
     overlay: {
@@ -21,27 +31,32 @@ const useStyle = makeStyles(() => {
       backgroundAttachment: "fixed",
       backgroundSize: "cover",
       position: "absolute",
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
+      inset: 0,
       zIndex: 1,
     },
     poster: {
-      height: "100%",
+      width: "100%",
+      height: 430,
       objectFit: "cover",
-      "@media only screen and (max-width:768px)": {
+      borderRadius: 10,
+      [theme.breakpoints.between("sm", "md")]: {
+        height: 300,
+      },
+      [theme.breakpoints.down("xs")]: {
         height: "auto",
       },
     },
     titleMovie: {
       fontWeight: "bold",
       paddingBottom: 15,
-      "@media screen and (max-width:992px)": {
-        fontSize: 40,
-      },
-      "@media screen and (max-width:600px)": {
+      fontSize: 30,
+
+      [theme.breakpoints.down("md")]: {
         fontSize: 20,
+      },
+
+      [theme.breakpoints.down("xs")]: {
+        fontSize: 15,
       },
     },
     age: {
@@ -55,13 +70,18 @@ const useStyle = makeStyles(() => {
     titleRate: {
       padding: "10px 0px",
       fontSize: 35,
-      "@media screen and (max-width:768px)": {
+
+      [theme.breakpoints.down("md")]: {
         fontSize: 20,
+      },
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 15,
+        paddingTop: 0,
       },
     },
     desc: {
       fontSize: 15,
-      "@media screen and (max-width:768px)": {
+      [theme.breakpoints.down("md")]: {
         fontSize: 10,
       },
     },
@@ -69,21 +89,39 @@ const useStyle = makeStyles(() => {
       color: "#f9ab00",
       margin: 10,
       cursor: "pointer",
-      "@media screen and (max-width:768px)": {
+      [theme.breakpoints.down("md")]: {
         fontSize: 10,
       },
     },
-
+    descTab: { display: "none" },
     buttonWatch: {
       background: "#7f5e16",
       margin: "30px 0px",
       padding: 15,
       color: "#fff",
-      borderRadius: 20,
+      borderRadius: 10,
       transition: "all 0.5s",
       "&:hover": {
         background: "#f9ab00",
       },
+      [theme.breakpoints.down("md")]: {
+        padding: 10,
+        borderRadius: 15,
+        margin: "15px 0",
+      },
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
+      },
+    },
+    buttonWatchMobile: {
+      width: "100%",
+      fontSize: 5,
+      background: "#7f5e16",
+      marginTop: 10,
+      color: "#fff",
+      borderRadius: 5,
+      transition: "all 0.5s",
+      display: "none",
     },
 
     trailer: {

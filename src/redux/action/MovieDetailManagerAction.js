@@ -1,7 +1,7 @@
 import { detailManager } from "../../services/MovieDetailManagerService";
 import { createAction } from "./createAction/createAction";
 import {
-  GET_BANNER_MOVIE,
+  GET_DETAIL_BANNER_MOVIE,
   GET_CREDIT_MOVIE,
   GET_PHOTOS_MOVIE,
   GET_RECOMMEND_MOVIE,
@@ -13,7 +13,8 @@ export const getDetailBannerMovieAction = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await detailManager.getBannerMovie(id);
-      dispatch(createAction(GET_BANNER_MOVIE, data));
+      console.log(data);
+      dispatch(createAction(GET_DETAIL_BANNER_MOVIE, data));
     } catch (error) {
       console.log(error);
     }

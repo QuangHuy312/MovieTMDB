@@ -42,7 +42,7 @@ const TVShow = ({ arrTVShowTopRated }) => {
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -53,13 +53,6 @@ const TVShow = ({ arrTVShowTopRated }) => {
         breakpoint: 780,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 580,
-        settings: {
-          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -78,7 +71,7 @@ const TVShow = ({ arrTVShowTopRated }) => {
   } = useStyle();
   const arrowContent = clsx(arrowContentPrev, arrowContentNext);
   return (
-    <Container className={content}>
+    <Container maxWidth="xl" className={content} spacing={3}>
       <Typography variant="h4" component="h1" className={title}>
         TV SHOW
       </Typography>

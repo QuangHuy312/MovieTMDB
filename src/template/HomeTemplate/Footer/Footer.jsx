@@ -1,17 +1,15 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid, List, ListItem, Typography } from "@material-ui/core";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import InstagramIcon from "@material-ui/icons/Instagram";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import useStyle from "./style";
 
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import YouTubeIcon from "@material-ui/icons/YouTube";
-import { NavLink } from "react-router-dom";
 const Footer = () => {
-  const { content, title, list, contact } = useStyle();
+  const { content, title, list } = useStyle();
   return (
     <div className={content}>
-      <Container>
+      <Container maxWidth="xl">
         <Grid container>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" className={title}>
@@ -19,42 +17,42 @@ const Footer = () => {
             </Typography>
             <Grid container>
               <Grid item xs={6}>
-                <ul className={list}>
-                  <li>
+                <List className={list}>
+                  <ListItem>
                     <NavLink to="/">Action</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Adventure</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Animation</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Comedy</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Crime</NavLink>
-                  </li>
-                </ul>
+                  </ListItem>
+                </List>
               </Grid>
               <Grid item xs={6}>
-                <ul className={list}>
-                  <li>
+                <List className={list}>
+                  <ListItem>
                     <NavLink to="/">Drama</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Fantacy</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Horror</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Mystrey</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Romance</NavLink>
-                  </li>
-                </ul>
+                  </ListItem>
+                </List>
               </Grid>
             </Grid>
           </Grid>
@@ -64,68 +62,63 @@ const Footer = () => {
             </Typography>
             <Grid container>
               <Grid item xs={6}>
-                <ul className={list}>
-                  <li>
+                <List className={list}>
+                  <ListItem>
                     <NavLink to="/">Valentine Day</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Comedies</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Scary TV Series</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Best 2021 Documentaries</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Crime TV</NavLink>
-                  </li>
-                </ul>
+                  </ListItem>
+                </List>
               </Grid>
               <Grid item xs={6}>
-                <ul className={list}>
-                  <li>
+                <List className={list}>
+                  <ListItem>
                     <NavLink to="/">Reality TV Shows</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Cartoon</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">TV News</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Fantacy</NavLink>
-                  </li>
-                  <li>
+                  </ListItem>
+                  <ListItem>
                     <NavLink to="/">Romance</NavLink>
-                  </li>
-                </ul>
+                  </ListItem>
+                </List>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={2}>
-            <Typography variant="h6" className={title}>
-              Contact with me
-            </Typography>
-            <Grid container>
-              <Grid item className={contact}>
-                <NavLink to="/">
-                  <FacebookIcon />
-                </NavLink>
-
-                <NavLink to="/">
-                  <TwitterIcon />
-                </NavLink>
-
-                <NavLink to="/">
-                  <InstagramIcon />
-                </NavLink>
-
-                <NavLink to="/">
-                  <YouTubeIcon />
-                </NavLink>
-              </Grid>
-            </Grid>
+            <div>
+              <Typography variant="h6" className={title}>
+                Contact with me
+              </Typography>
+              <List conponent="nav" style={{ display: "flex" }}>
+                <ListItem>
+                  <a href="https://www.facebook.com/huy.buidinhquanghuy">
+                    <FacebookIcon style={{ color: "#fff" }} />
+                  </a>
+                </ListItem>
+                <ListItem>
+                  <a href="https://www.instagram.com/huyquang0312">
+                    <InstagramIcon style={{ color: "#e7663d" }} />
+                  </a>
+                </ListItem>
+              </List>
+            </div>
           </Grid>
         </Grid>
         <div>

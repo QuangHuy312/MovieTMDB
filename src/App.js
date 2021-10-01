@@ -24,6 +24,8 @@ import AddItems from "./views/ListDashBoard/CreateList/AddItems/AddItems";
 import Favourites from "./views/Favourites/Favourites";
 import WatchList from "./views/WatchList/WatchList";
 import ChooseImage from "./views/ListDashBoard/CreateList/ChooseImage/ChooseImage";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import { theme } from "./utils/settings/config";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,65 +57,74 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <HomeTemplate path="/" exact component={Home} />
-        <HomeTemplate path="/detailmovies/:id" exact component={DetailMovie} />
-        <HomeTemplate path="/detailTVshow/:id" exact component={DetailTvShow} />
-        <HomeTemplate path="/movies/list" exact component={MovieList} />
-        <HomeTemplate path="/tvshow/list" exact component={TVList} />
-        <Route path="/login" exact component={Login} />
-        <Admintemplate
-          path={`/${infoUser.username}`}
-          exact
-          component={DashBoard}
-        />
+      <MuiThemeProvider theme={theme}>
+        <Switch>
+          <HomeTemplate path="/" exact component={Home} />
+          <HomeTemplate
+            path="/detailmovies/:id"
+            exact
+            component={DetailMovie}
+          />
+          <HomeTemplate
+            path="/detailTVshow/:id"
+            exact
+            component={DetailTvShow}
+          />
+          <HomeTemplate path="/movies/list" exact component={MovieList} />
+          <HomeTemplate path="/tvshow/list" exact component={TVList} />
+          <Route path="/login" exact component={Login} />
+          <Admintemplate
+            path={`/${infoUser.username}`}
+            exact
+            component={DashBoard}
+          />
 
-        <Admintemplate
-          path={`/${infoUser.username}/ratings`}
-          exact
-          component={Rating}
-        />
-        <Admintemplate
-          path={`/${infoUser.username}/favorites`}
-          exact
-          component={Favourites}
-        />
-        <Admintemplate
-          path={`/${infoUser.username}/watchlist`}
-          exact
-          component={WatchList}
-        />
+          <Admintemplate
+            path={`/${infoUser.username}/ratings`}
+            exact
+            component={Rating}
+          />
+          <Admintemplate
+            path={`/${infoUser.username}/favorites`}
+            exact
+            component={Favourites}
+          />
+          <Admintemplate
+            path={`/${infoUser.username}/watchlist`}
+            exact
+            component={WatchList}
+          />
 
-        <Admintemplate
-          path={`/${infoUser.username}/list`}
-          exact
-          component={ListDashBoard}
-        />
-        <Admintemplate
-          path={`/${infoUser.username}/list/new`}
-          exact
-          component={CreateList}
-        />
+          <Admintemplate
+            path={`/${infoUser.username}/list`}
+            exact
+            component={ListDashBoard}
+          />
+          <Admintemplate
+            path={`/${infoUser.username}/list/new`}
+            exact
+            component={CreateList}
+          />
 
-        <Admintemplate
-          path={`/${infoUser.username}/list/:id`}
-          exact
-          component={ListItems}
-        />
-        <Admintemplate
-          path={`/${infoUser.username}/list/:id/chooseimg`}
-          exact
-          component={ChooseImage}
-        />
+          <Admintemplate
+            path={`/${infoUser.username}/list/:id`}
+            exact
+            component={ListItems}
+          />
+          <Admintemplate
+            path={`/${infoUser.username}/list/:id/chooseimg`}
+            exact
+            component={ChooseImage}
+          />
 
-        <Admintemplate
-          path={`/${infoUser.username}/list/:id/edit`}
-          exact
-          component={AddItems}
-        />
-
-        <HomeTemplate path="/" component={NotFound} />
-      </Switch>
+          <Admintemplate
+            path={`/${infoUser.username}/list/:id/edit`}
+            exact
+            component={AddItems}
+          />
+          <HomeTemplate path="/" component={NotFound} />
+        </Switch>
+      </MuiThemeProvider>
     </BrowserRouter>
   );
 };

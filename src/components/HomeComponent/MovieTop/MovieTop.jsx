@@ -24,6 +24,7 @@ const MovieTop = ({ arrMoviePopular }) => {
     poster,
     desc,
     titleRate,
+    buttonWatchMobile,
   } = useStyle();
   return (
     <div className={container}>
@@ -33,7 +34,7 @@ const MovieTop = ({ arrMoviePopular }) => {
           backgroundImage: `url(${IMAGE_URL}${WIDTH_BACKDROP}${arrMoviePopular?.backdrop_path})`,
         }}
       ></div>
-      <Container style={{ paddingTop: 40 }} className={content}>
+      <Container maxWidth="xl" style={{ paddingTop: 40 }} className={content}>
         <Grid container spacing={3}>
           <Grid item xs={3} sm={4}>
             <img
@@ -41,9 +42,19 @@ const MovieTop = ({ arrMoviePopular }) => {
               src={`${IMAGE_URL}${WIDTH_IMAGE}${arrMoviePopular?.poster_path}`}
               className={poster}
             />
+
+            <Button
+              startIcon={<PlayArrowIcon style={{ fontSize: 10 }} />}
+              className={buttonWatchMobile}
+              onClick={() =>
+                history.push(`/detailmovies/${arrMoviePopular?.id}`)
+              }
+            >
+              Watch Now
+            </Button>
           </Grid>
           <Grid item xs={9} sm={8}>
-            <Typography variant="h2" className={titleMovie}>
+            <Typography variant="h3" className={titleMovie}>
               <i> {arrMoviePopular?.original_title}</i>
             </Typography>
             <Typography variant="body2">
@@ -68,7 +79,7 @@ const MovieTop = ({ arrMoviePopular }) => {
             <Typography variant="h4" className={titleRate}>
               Movie Of The Year <Rating name="simple-controlled" value={5} />
             </Typography>
-            <Typography variant="h7" className={desc}>
+            <Typography variant="body2" className={desc}>
               {arrMoviePopular?.overview}
             </Typography>
             <div>

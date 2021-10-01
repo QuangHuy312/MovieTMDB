@@ -1,9 +1,19 @@
 import { makeStyles } from "@material-ui/styles";
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     titleText: {
       textAlign: "center",
       paddingBottom: 20,
+      [theme.breakpoints.down("lg")]: {
+        fontSize: 25,
+      },
+      [theme.breakpoints.down("md")]: {
+        fontSize: 25,
+        textAlign: "left",
+        paddingBottom: 0,
+        paddingTop: 30,
+        borderTop: "1px solid #5a4c4c",
+      },
     },
     content: {
       paddingTop: 30,
@@ -13,10 +23,23 @@ const useStyle = makeStyles(() => {
       overflow: "hidden",
       maxWidth: 350,
       height: 330,
-      //   marginLeft: 30,
-      marginBottom: 35,
       boxShadow: "none",
       position: "relative",
+
+      "& .MuiCardContent-root:last-child": {
+        padding: 0,
+        paddingTop: 10,
+      },
+      [theme.breakpoints.down("lg")]: {
+        height: 500,
+      },
+
+      [theme.breakpoints.down("md")]: {
+        height: 400,
+      },
+      [theme.breakpoints.down("sm")]: {
+        height: 320,
+      },
     },
 
     contentCard: {
@@ -36,7 +59,9 @@ const useStyle = makeStyles(() => {
       },
     },
     media: {
-      height: 270,
+      minHeight: 250,
+      maxHeight: 330,
+
       borderRadius: 10,
       backgroundPosition: "center",
       backgroundSize: "cover",
@@ -51,11 +76,26 @@ const useStyle = makeStyles(() => {
         display: "none",
         backgroundColor: "rgba(0,0,0,0.7)",
       },
+
+      [theme.breakpoints.down("lg")]: {
+        minHeight: 400,
+        maxHeight: 450,
+      },
+      [theme.breakpoints.down("md")]: {
+        minHeight: 400,
+        maxHeight: 450,
+      },
+      [theme.breakpoints.down("sm")]: {
+        minHeight: 270,
+        maxHeight: 300,
+      },
     },
     title: {
       boder: "none",
       color: "white",
       transition: "all 0.5s",
+      padding: 0,
+      paddingTop: 10,
       "&:hover": {
         cursor: "pointer",
         color: "#f9ab00",

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     content: {
       paddingTop: 40,
@@ -8,16 +8,13 @@ const useStyle = makeStyles(() => {
     },
     title: {
       fontSize: 30,
-      "@media screen and (max-width:768px)": {
-        fontSize: 20,
-      },
     },
     card: {
       backgroundColor: "transparent",
     },
     contentMedia: {
       marginLeft: "20px",
-      height: 300,
+      height: 350,
       borderRadius: 10,
       position: "relative",
       "&:hover": {
@@ -25,6 +22,20 @@ const useStyle = makeStyles(() => {
           transform: "scale(1)",
           transition: "0.6s ease",
         },
+      },
+
+      [theme.breakpoints.down("xl")]: {
+        height: 400,
+      },
+      [theme.breakpoints.down("md")]: {
+        height: 350,
+      },
+
+      [theme.breakpoints.down("sm")]: {
+        height: 300,
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: 230,
       },
     },
     hoverContent: {
@@ -45,49 +56,59 @@ const useStyle = makeStyles(() => {
       transform: "translate(-50%,-50%)",
       color: "#fff",
       border: "1px solid #f9ab00",
-      borderRadius: 25,
+      borderRadius: 15,
       padding: 15,
       fontSize: 14,
       transition: "all 0.5s",
       "&:hover": {
         backgroundColor: "#7f5e16",
       },
+      [theme.breakpoints.down("md")]: {
+        padding: 10,
+        borderRadius: 10,
+      },
+      [theme.breakpoints.down("sm")]: {
+        padding: 5,
+        borderRadius: 5,
+        fontSize: 10,
+      },
     },
     arrowContentNext: {
       width: 20,
       position: "absolute",
-      top: "-9%",
+      top: "-7%",
       right: "14%",
       cursor: "pointer",
-      "@media screen and (max-width:992px)": {
+
+      [theme.breakpoints.down("lg")]: {
         right: "19%",
       },
-      "@media screen and (max-width:780px)": {
-        right: "23%",
+      [theme.breakpoints.down("md")]: {
+        right: "25%",
       },
-      "@media screen and (max-width:600px)": {
-        right: "28%",
+      [theme.breakpoints.down("sm")]: {
+        right: "33%",
       },
-      "@media screen and (max-width:470px)": {
-        right: "37%",
+      [theme.breakpoints.down("xs")]: {
+        right: "43%",
       },
     },
 
     arrowContentPrev: {
       left: "80%",
       right: 0,
-      "@media screen and (max-width:992px)": {
+
+      [theme.breakpoints.down("lg")]: {
         left: "73%",
       },
-      "@media screen and (max-width:780px)": {
-        left: "66%",
+      [theme.breakpoints.down("md")]: {
+        left: "70%",
       },
-      "@media screen and (max-width:600px)": {
-        left: "57%",
+      [theme.breakpoints.down("sm")]: {
+        left: "53%",
       },
-
-      "@media screen and (max-width:470px)": {
-        left: "48%",
+      [theme.breakpoints.down("xs")]: {
+        left: "40%",
       },
     },
     arrowImage: {

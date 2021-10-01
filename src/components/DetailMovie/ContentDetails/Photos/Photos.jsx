@@ -10,7 +10,7 @@ const Photos = ({ detailPhotos }) => {
     <Grid container spacing={3} style={{ paddingTop: 30 }}>
       {backdrops?.slice(0, 24)?.map((poster) => {
         return (
-          <Grid item xs={4}>
+          <Grid item xs={6} md={4}>
             <img
               src={`${IMAGE_URL}${WIDTH_IMAGE}${poster.file_path}`}
               alt="photos"

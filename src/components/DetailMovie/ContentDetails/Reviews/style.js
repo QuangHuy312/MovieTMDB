@@ -2,8 +2,8 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => {
   return {
     imgUser: {
-      width: 50,
-      height: 50,
+      maxWidth: 50,
+      maxHeight: 50,
     },
     content: {
       display: "flex",
@@ -31,6 +31,10 @@ const useStyle = makeStyles(() => {
       cursor: "pointer",
       paddingLeft: 10,
       fontSize: 15,
+    },
+    textReviews: {
+      fontSize: 12,
+      wordBreak: "break-all",
     },
   };
 });

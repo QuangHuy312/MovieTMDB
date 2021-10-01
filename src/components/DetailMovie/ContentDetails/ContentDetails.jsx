@@ -1,12 +1,12 @@
 import { Box, Container, Grid, Tab, Tabs, Typography } from "@material-ui/core";
-import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
-import useStyle from "./style";
-import SimilarMovie from "./Similar/Similar";
+import React, { Fragment, useState } from "react";
 import Photos from "../../DetailMovie/ContentDetails/Photos/Photos";
 import Credit from "./Credit/Credit";
-import Reviews from "./Reviews/Reviews";
 import Recommend from "./Recommend/Recommend";
+import Reviews from "./Reviews/Reviews";
+import SimilarMovie from "./Similar/Similar";
+import useStyle from "./style";
 
 const ContentDetails = ({
   detailPhotos,
@@ -51,11 +51,12 @@ const ContentDetails = ({
   };
 
   const { content } = useStyle();
+
   return (
     <Fragment>
-      <Container className={content}>
+      <Container maxWidth="xl" className={content}>
         <Grid container>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} lg={8}>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -67,11 +68,11 @@ const ContentDetails = ({
             </Tabs>
             <TabPanel value={value} index={0}>
               {detailReviews?.length > 0 ? (
-                <div>
-                  {detailReviews?.map((reviews) => (
-                    <Reviews reviews={reviews} />
+                <Fragment>
+                  {detailReviews?.map((reviews, index) => (
+                    <Reviews reviews={reviews} key={index} />
                   ))}
-                </div>
+                </Fragment>
               ) : (
                 <div> No Review</div>
               )}
@@ -83,7 +84,7 @@ const ContentDetails = ({
               <Photos detailPhotos={detailPhotos} />
             </TabPanel>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} lg={4}>
             <SimilarMovie detailSimilar={detailSimilar} />
           </Grid>
         </Grid>

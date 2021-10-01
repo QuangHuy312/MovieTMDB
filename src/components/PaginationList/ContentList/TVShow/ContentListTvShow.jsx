@@ -109,7 +109,7 @@ const ContentListTvShow = () => {
 
   return (
     <Fragment>
-      <Container style={{ padding: "40px 0px" }}>
+      <Container maxWidth="xl" style={{ padding: "40px 0px" }}>
         <Grid container style={{ padding: 25 }}>
           <Grid item xs={12} sm={3} md={2}>
             <Typography variant="body2" style={{ fontSize: 10 }}>

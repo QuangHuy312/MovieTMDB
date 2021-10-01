@@ -1,13 +1,16 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Route } from "react-router-dom";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 
 export const HomeTemplate = (props) => {
   const { component: RouteComponent, ...restProps } = props;
+  const sessionId = localStorage.getItem("sessionId");
+  const { infoUser } = useSelector((state) => state.UserManagerReducer);
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   return (
     <Route
       {...restProps}
@@ -15,7 +18,11 @@ export const HomeTemplate = (props) => {
         return (
           <div style={{ backgroundColor: "#1a191f", color: "#fff" }}>
             <Header />
-            <RouteComponent {...routeProps} />
+            <RouteComponent
+              {...routeProps}
+              infoUser={infoUser}
+              sessionId={sessionId}
+            />
             <Footer />
           </div>
         );

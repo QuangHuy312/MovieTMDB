@@ -13,7 +13,7 @@ import clsx from "clsx";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 const Recommend = ({ detailRecommend }) => {
-  const { content, card, title, rated, iconArrow, contentCard, media } =
+  const { content, card, title, rated, iconArrow, contentCard, poster } =
     useStyle();
   const history = useHistory();
   const arrow = clsx(rated, iconArrow);
@@ -25,12 +25,12 @@ const Recommend = ({ detailRecommend }) => {
       <Grid container style={{ paddingTop: 50 }}>
         {detailRecommend?.slice(0, 6)?.map((recommend) => {
           return (
-            <Grid item xs={6} sm={4} md={2}>
+            <Grid item xs={6} md={4} lg={2}>
               <Card className={card}>
                 <div className={contentCard}>
                   <CardMedia
                     image={`${IMAGE_URL}${WIDTH_IMAGE}${recommend.poster_path}`}
-                    className={media}
+                    className={poster}
                   />
                   <Typography
                     variant="h2"

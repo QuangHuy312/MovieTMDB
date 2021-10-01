@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect } from "react";
-import BannerMovie from "../../components/DetailMovie/Banner/Banner";
-import ContentDetails from "../../components/DetailMovie/ContentDetails/ContentDetails";
 import { useDispatch, useSelector } from "react-redux";
+import Banner from "../../components/DetailMovie/Banner/Banner";
+import ContentDetails from "../../components/DetailMovie/ContentDetails/ContentDetails";
+import {
+  getFavoriteMovieListAction,
+  getRatedMovieListAction,
+  getWatchListMovieAction,
+} from "../../redux/action/DashBoardManagerAction";
 import {
   getDetailBannerMovieAction,
   getDetailCreditMovieAction,
@@ -11,8 +16,8 @@ import {
   getDetailSimilarMovieAction,
 } from "../../redux/action/MovieDetailManagerAction";
 
-const DetailMovie = (props) => {
-  const id = props.match.params.id;
+const DetailMovie = ({ match, infoUser, sessionId }) => {
+  const id = match.params.id;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDetailBannerMovieAction(id));
@@ -21,6 +26,10 @@ const DetailMovie = (props) => {
     dispatch(getDetailSimilarMovieAction(id));
     dispatch(getDetailReviewsMovieAction(id));
     dispatch(getDetailRecommendMovieAction(id));
+
+    dispatch(getRatedMovieListAction(infoUser.id, sessionId, 1));
+    dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+    dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
   }, [id, dispatch]);
   const {
     detailPhotosMovie,
@@ -31,11 +40,36 @@ const DetailMovie = (props) => {
     detailRecommendMovie,
   } = useSelector((state) => state.MovieDetailManagerReducer);
 
+  const { arrListRatedMovie, arrListFavoriteMovie, arrWatchListMovie } =
+    useSelector((state) => state.DashBoardManagerReducer);
+
+  const idxFavorites = arrListFavoriteMovie?.findIndex(
+    (item) => item.id === detailBannerMovie.id
+  );
+  const idxRated = arrListRatedMovie?.findIndex(
+    (item) => item.id === detailBannerMovie.id
+  );
+
+  const idxWatchList = arrWatchListMovie?.findIndex(
+    (item) => item.id === detailBannerMovie.id
+  );
+  if (idxFavorites > -1) {
+    detailBannerMovie.favorite = true;
+  }
+  if (idxRated > -1) {
+    detailBannerMovie.rating = arrListRatedMovie[idxRated].rating;
+  }
+
+  if (idxWatchList > -1) {
+    detailBannerMovie.watchlist = true;
+  }
+
   return (
     <Fragment>
-      <BannerMovie
+      <Banner
         detailBanner={detailBannerMovie}
-        id={id}
+        detailCredit={detailCreditMovie}
+        movieId={id}
         media_type="movie"
       />
       <ContentDetails

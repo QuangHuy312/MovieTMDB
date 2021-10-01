@@ -12,6 +12,7 @@ import NowPlaying from "./NowPlaying/NowPlaying";
 
 const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
   const [value, setValue] = useState(0);
+
   const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
 
@@ -50,7 +51,7 @@ const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
 
   const { content } = useStyle();
   return (
-    <Container className={content}>
+    <Container maxWidth="xl" className={content}>
       <Tabs
         value={value}
         onChange={handleChange}

@@ -1,41 +1,70 @@
 import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => {
   return {
-    backdrop: {
-      height: "700px",
+    backdrop: (props) => ({
+      height: "auto",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
-      position: "relative",
-    },
+      backgroundImage: props.backgroundImage,
+    }),
 
     content: {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%,-50%)",
+      paddingTop: 100,
     },
     poster: {
-      height: "100%",
-      maxHeight: 450,
+      width: "100%",
+      minHeight: 350,
+      maxHeight: 350,
       backgroundSize: "cover",
       backgroundPosition: "center",
       borderRadius: 10,
-      "@media only screen and (max-width:768px)": {
-        height: "60%",
-      },
       "@media only screen and (max-width:500px)": {
-        height: "30%",
+        minHeight: 200,
+      },
+    },
+
+    buttonWatch: {
+      border: "2px solid #7f5e16",
+      margin: "30px 0px",
+      color: "#fff",
+      borderRadius: 5,
+      width: "100%",
+      padding: "10px 0",
+      transition: "all 0.5s",
+      "&:hover": {
+        background: "#f9ab00",
+      },
+      "@media only screen and (max-width:768px)": {
+        display: "none",
       },
     },
     titleMovie: {
-      fontWeight: "bold",
+      fontWeight: 500,
       paddingBottom: 15,
       "@media screen and (max-width:992px)": {
         fontSize: 40,
       },
-      "@media screen and (max-width:600px)": {
+      "@media screen and (max-width:768px)": {
+        fontSize: 30,
+      },
+      "@media screen and (max-width:500px)": {
         fontSize: 20,
+      },
+    },
+    titleData: {
+      color: "#f9ab00",
+      marginLeft: 5,
+      cursor: "pointer",
+      opacity: 0.8,
+      transition: "all 0.5s",
+      "&:hover": { opacity: 1 },
+    },
+    textUserScore: {
+      fontSize: 15,
+      marginLeft: 10,
+      "@media screen and (max-width:500px)": {
+        fontSize: 10,
       },
     },
     voteCount: {
@@ -55,36 +84,16 @@ const useStyle = makeStyles(() => {
 
     desc: {
       fontSize: 15,
-      marginTop: 30,
-      "@media screen and (max-width:768px)": {
+      padding: "0 25px 0 0 ",
+      "@media screen and (max-width:500px)": {
         fontSize: 10,
-        marginTop: 0,
-      },
-    },
-    genresMovie: {
-      color: "#f9ab00",
-      marginRight: 10,
-      cursor: "pointer",
-      "@media screen and (max-width:768px)": {
-        fontSize: 10,
-      },
-    },
-
-    buttonWatch: {
-      background: "#7f5e16",
-      margin: "30px 0px",
-      padding: 15,
-      color: "#fff",
-      borderRadius: 20,
-      transition: "all 0.5s",
-      "&:hover": {
-        background: "#f9ab00",
       },
     },
 
     trailer: {
       position: "absolute",
-      width: 800,
+      width: "70%",
+      height: "70%",
       border: "none",
       top: "50%",
       left: "50%",
@@ -93,17 +102,89 @@ const useStyle = makeStyles(() => {
     btnIcons: {
       transition: "all 0.5s",
       cursor: "pointer",
-      marginLeft: 10,
+      fontSize: 15,
+      color: "#fff",
+    },
+
+    btnActiveIconsFavorite: {
+      color: "#d343a8",
+      "&:hover": {
+        color: "#f9ab00",
+      },
+    },
+    btnActiveIconsAddList: {
+      color: "#c06969",
+      "&:hover": {
+        color: "#f9ab00",
+      },
+    },
+    btnActiveIconsRating: {
+      color: "#ffb400",
       "&:hover": {
         color: "#f9ab00",
       },
     },
 
-    btnClickIcons: {
-      transition: "all 0.5s",
-      cursor: "pointer",
-      marginLeft: 10,
+    trailerMovie: {
+      width: "100%",
+      borderRadius: 20,
+    },
+    iconPlay: {
+      padding: 5,
+      backgroundColor: "#fff",
+      width: 50,
+      height: 50,
+      borderRadius: "50%",
       color: "#f9ab00",
+      transition: "ease-in 0.5s",
+      border: "8px solid #999",
+      "&:hover": {
+        backgroundColor: "#f9ab00",
+        color: "#fff",
+      },
+    },
+    contentRating: {
+      backgroundColor: "#032541",
+      color: "#fff",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+      position: "relative",
+      "& .MuiRating-iconEmpty": {
+        color: "#999",
+      },
+      "&:after": {
+        content: "''",
+        position: "absolute",
+        top: -8,
+        borderStyle: "solid",
+        borderWidth: "0 10px 10px",
+        borderColor: "#032541 transparent",
+        display: "block",
+        width: 0,
+        zIndex: 1,
+      },
+    },
+
+    scrollBars: {
+      backgroundColor: "#f9ab00",
+      borderRadius: "3px",
+      width: "3px",
+      cursor: "pointer",
+    },
+    contentVideo: {
+      width: "100% !important",
+      height: "400px !important",
+      "& div": {
+        borderRadius: 15,
+      },
+      "@media screen and (max-width:768px)": {
+        height: "370px !important",
+      },
+      "@media screen and (max-width:500px)": {
+        height: "300px !important",
+      },
     },
   };
 });

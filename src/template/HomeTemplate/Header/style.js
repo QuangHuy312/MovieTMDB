@@ -3,6 +3,20 @@ import { makeStyles } from "@material-ui/core";
 const useStyle = makeStyles(() => {
   return {
     content: {
+      background: "#1a191f",
+      padding: 10,
+      borderBottom: "1px solid #5a4c4c",
+      width: "100%",
+      zIndex: 99,
+      transition: "background 500ms linear",
+      boxShadow: "none",
+    },
+
+    scrollNav: {
+      backgroundColor: "transparent",
+    },
+
+    navContent: {
       display: "flex",
       justifyContent: "space-between",
       height: 50,
@@ -12,20 +26,6 @@ const useStyle = makeStyles(() => {
       display: "flex",
       justifyContent: "center",
       padding: 5,
-    },
-
-    navContent: {
-      backgroundColor: "#1a191f",
-      padding: 10,
-      borderBottom: "1px solid #5a4c4c",
-      position: "fixed",
-      width: "100%",
-      zIndex: 99,
-      transition: "all 0.5s",
-    },
-
-    scrollNav: {
-      backgroundColor: "transparent",
     },
 
     listNavbar: {

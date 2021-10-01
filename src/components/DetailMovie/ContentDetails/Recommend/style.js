@@ -15,6 +15,12 @@ const useStyle = makeStyles(() => {
       position: "relative",
       marginLeft: 10,
       marginRight: 10,
+      "@media screen and (max-width:992px)": {
+        height: 440,
+      },
+      "@media screen and (max-width:768px)": {
+        height: 380,
+      },
     },
 
     contentCard: {
@@ -33,7 +39,7 @@ const useStyle = makeStyles(() => {
         },
       },
     },
-    media: {
+    poster: {
       height: 390,
       borderRadius: 10,
       backgroundPosition: "center",
@@ -48,6 +54,15 @@ const useStyle = makeStyles(() => {
         height: "100%",
         display: "none",
         backgroundColor: "rgba(0,0,0,0.7)",
+      },
+      "@media screen and (max-width:1200px)": {
+        height: 300,
+      },
+      "@media screen and (max-width:992px)": {
+        height: 400,
+      },
+      "@media screen and (max-width:768px)": {
+        height: 330,
       },
     },
     title: {

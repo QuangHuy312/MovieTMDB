@@ -26,16 +26,18 @@ const SimilarMovie = ({ detailSimilar }) => {
     title,
   } = useStyle();
   const arrow = clsx(rated, iconArrow);
+
   return (
     <Fragment>
-      <Typography variant="h4" component="h1" className={titleText}>
+      <Typography variant="h4" className={titleText}>
         You may also like...
       </Typography>
-      <Container className={content}>
+
+      <Container maxWidth="xxl" className={content}>
         <Grid container spacing={4}>
-          {detailSimilar?.slice(0, 10)?.map((movieSimilar) => {
+          {detailSimilar?.slice(0, 12)?.map((movieSimilar) => {
             return (
-              <Grid item xs={6}>
+              <Grid item xs={6} md={4} lg={6}>
                 <Card className={card}>
                   <div className={contentCard}>
                     <CardMedia
@@ -53,7 +55,7 @@ const SimilarMovie = ({ detailSimilar }) => {
                     >
                       <ArrowRightAltIcon />
                     </Typography>
-                    <Typography variant="h1" component="div" className={rated}>
+                    <Typography variant="h1" className={rated}>
                       {`${movieSimilar.vote_average.toFixed(1)}`}
                     </Typography>
                   </div>
@@ -61,7 +63,6 @@ const SimilarMovie = ({ detailSimilar }) => {
                     <Typography
                       variant="body2"
                       className={title}
-                      component="p"
                       onClick={() =>
                         history.push({ pathname: `${movieSimilar.id}` })
                       }

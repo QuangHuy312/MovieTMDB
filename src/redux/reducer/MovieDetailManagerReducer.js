@@ -1,5 +1,5 @@
 import {
-  GET_BANNER_MOVIE,
+  GET_DETAIL_BANNER_MOVIE,
   GET_CREDIT_MOVIE,
   GET_PHOTOS_MOVIE,
   GET_RECOMMEND_MOVIE,
@@ -20,7 +20,7 @@ export const MovieDetailManagerReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case GET_BANNER_MOVIE: {
+    case GET_DETAIL_BANNER_MOVIE: {
       state.detailBannerMovie = payload;
       return { ...state };
     }

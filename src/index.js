@@ -13,6 +13,7 @@ import Slide from "@material-ui/core/Slide";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { ConfirmProvider } from "material-ui-confirm";
+import "video-react/dist/video-react.css";
 
 ReactDOM.render(
   <React.StrictMode>

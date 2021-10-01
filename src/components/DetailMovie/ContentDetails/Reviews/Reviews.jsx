@@ -5,7 +5,8 @@ import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
 
 const Reviews = ({ reviews }) => {
-  const { imgUser, content, createTime, rating, btnShowText } = useStyle();
+  const { imgUser, content, createTime, rating, btnShowText, textReviews } =
+    useStyle();
   const [comment, setComment] = useState(false);
   return (
     <Fragment>
@@ -20,11 +21,11 @@ const Reviews = ({ reviews }) => {
           <div style={{ paddingLeft: 15 }}>
             <div>
               {comment ? (
-                <Typography variant="body2" component="span">
+                <Typography variant="body2" className={textReviews}>
                   {reviews.content}
                 </Typography>
               ) : (
-                <Typography variant="body2" component="span">
+                <Typography variant="body2" className={textReviews}>
                   {reviews.content.substr(0, 200)}
                 </Typography>
               )}
@@ -39,6 +40,7 @@ const Reviews = ({ reviews }) => {
                 {comment ? "Show Less" : "Read More"}
               </Typography>
             </div>
+
             <Typography variant="body" className={createTime}>
               {reviews.created_at} by {reviews.author}
             </Typography>

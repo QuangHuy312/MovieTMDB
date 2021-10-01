@@ -11,7 +11,7 @@ const Credit = ({ detailCredit }) => {
       <Grid container spacing={4}>
         {detailCredit?.cast?.slice(0, 30)?.map((person) => {
           return (
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <div className={profile}>
                 <img
                   src={`${IMAGE_URL}${WIDTH_IMAGE}${person.profile_path}`}

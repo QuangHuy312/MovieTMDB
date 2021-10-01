@@ -2,24 +2,30 @@ import {
   Button,
   CardMedia,
   Container,
+  Fab,
   Grid,
   Modal,
   Typography,
 } from "@material-ui/core";
-import Slider from "@material-ui/core/Slider";
+import Popover from "@material-ui/core/Popover";
 import Tooltip from "@material-ui/core/Tooltip";
-import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import { RemoveCircleOutline } from "@material-ui/icons";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-import StarsIcon from "@material-ui/icons/Stars";
+import StarIcons from "@material-ui/icons/Star";
 import { Rating } from "@material-ui/lab";
 import { CustomCard } from "@tsamantanis/react-glassmorphism";
 import "@tsamantanis/react-glassmorphism/dist/index.css";
+import clsx from "clsx";
+import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useState } from "react";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import { Scrollbars } from "react-custom-scrollbars";
 import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import NO_POSTER from "../../../assets/img_no_poster.jpg";
 import {
   addToFavouriteAction,
@@ -35,19 +41,19 @@ import {
   WIDTH_IMAGE,
 } from "../../../utils/settings/config";
 import useStyle from "./style";
+import BACKDROP_VIDEO from "../../../assets/backdrop_video.jpg";
 
-const Banner = ({ detailBanner, id, media_type }) => {
+const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
   const history = useHistory();
+  const location = useLocation();
+  const pathname = location.pathname;
   const dispatch = useDispatch();
   const { infoUser, guestSessionId } = useSelector(
     (state) => state.UserManagerReducer
   );
-  const accountId = infoUser.id;
+
   const [open, setOpen] = useState(false);
-  const [valueRate, setValueRate] = useState("");
-  const [iconAddClick, setIconAddClick] = useState(false);
-  const [iconFavouriteClick, setIconFavouriteClick] = useState(false);
-  const [iconRatingClick, setIconRatingClick] = useState(false);
+
   const sessionId = localStorage.getItem("sessionId");
   const { enqueueSnackbar } = useSnackbar();
   const handleClose = () => {
@@ -63,277 +69,473 @@ const Banner = ({ detailBanner, id, media_type }) => {
     genres,
     overview,
     vote_average,
-    vote_count,
+    tagline,
     episode_run_time,
     name,
+    id,
+    rating,
+    favorite,
+    watchlist,
+    first_air_date,
   } = detailBanner;
 
   const {
     backdrop,
     content,
     titleMovie,
+    titleData,
+    textUserScore,
     age,
     releaseDate,
-    genresMovie,
     buttonWatch,
     poster,
     desc,
     trailer,
-    voteCount,
     btnIcons,
-    btnClickIcons,
-  } = useStyle();
-  const rating = Math.floor(vote_average / 2);
-  const valueText = (value) => {
-    setValueRate(value);
-  };
+    btnActiveIconsFavorite,
+    btnActiveIconsRating,
+    btnActiveIconsAddList,
+    iconPlay,
+    contentRating,
+    scrollBars,
+    contentVideo,
+  } = useStyle({
+    backgroundImage: `url(${IMAGE_URL}${WIDTH_BACKDROP}${backdrop_path})`,
+  });
+  const bgActiveFavorite = clsx(btnIcons, btnActiveIconsFavorite);
+  const bgActiveRating = clsx(btnIcons, btnActiveIconsRating);
+  const bgActiveAddList = clsx(btnIcons, btnActiveIconsAddList);
+
   const handleAddToWatchList = () => {
     if (!sessionId) {
       history.push("/login");
     }
-    setIconAddClick(!iconAddClick);
-    if (!iconAddClick) {
+
+    if (!watchlist) {
       dispatch(
         addToWatchListAction(
-          accountId,
+          infoUser.id,
           sessionId,
           media_type,
           id,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           },
-          true
+          true,
+          pathname
         )
       );
     } else {
       dispatch(
         addToWatchListAction(
-          accountId,
+          infoUser.id,
           sessionId,
           media_type,
           id,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           },
-          false
+          false,
+          pathname
         )
       );
     }
   };
-  const handleUserRating = () => {
-    if (!sessionId) {
-      history.push("/login");
-    }
-    setIconRatingClick(!iconRatingClick);
-    if (history.location.pathname === `/detailmovies/${id}`) {
-      if (!iconRatingClick) {
-        dispatch(
-          postRatingMovieAction(
-            id,
-            sessionId,
-            valueRate,
-            guestSessionId,
-            (mes) => {
-              enqueueSnackbar(mes, { variant: "success" });
-            }
-          )
-        );
-      } else {
-        dispatch(
-          deleteRatingMovieAction(id, sessionId, guestSessionId, (mes) => {
-            enqueueSnackbar(mes, { variant: "success" });
-          })
-        );
-      }
-    } else if (history.location.pathname === `/detailtvshow/${id}`) {
-      if (!iconRatingClick) {
-        dispatch(
-          postRatingTVAction(
-            id,
-            sessionId,
-            valueRate,
-            guestSessionId,
-            (mes) => {
-              enqueueSnackbar(mes, { variant: "success" });
-            }
-          )
-        );
-      } else {
-        dispatch(
-          deleteRatingTVAction(id, sessionId, guestSessionId, (mes) => {
-            enqueueSnackbar(mes, { variant: "success" });
-          })
-        );
-      }
-    }
-  };
-  const handleFavouriteIcon = () => {
-    if (!sessionId) {
-      history.push("/login");
-    }
-    setIconFavouriteClick(!iconFavouriteClick);
-    if (!iconFavouriteClick) {
+  const handleClearRating = () => {
+    if (pathname === `/detailmovies/${movieId}`) {
       dispatch(
-        addToFavouriteAction(
-          accountId,
+        deleteRatingMovieAction(
+          movieId,
           sessionId,
-          "movie",
-          id,
+          guestSessionId,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           },
-          true
+          infoUser,
+          pathname
+        )
+      );
+    } else if (pathname === `/detailtvshow/${movieId}`) {
+      dispatch(
+        deleteRatingTVAction(
+          id,
+          sessionId,
+          guestSessionId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          infoUser,
+          pathname
+        )
+      );
+    }
+  };
+  const handleClickRating = (valRating) => {
+    if (!sessionId) {
+      history.push("/login");
+    }
+
+    if (pathname === `/detailmovies/${movieId}`) {
+      dispatch(
+        postRatingMovieAction(
+          movieId,
+          sessionId,
+          valRating,
+          guestSessionId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          infoUser,
+          pathname
+        )
+      );
+    } else if (pathname === `/detailtvshow/${movieId}`) {
+      dispatch(
+        postRatingTVAction(
+          movieId,
+          sessionId,
+          valRating,
+          guestSessionId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          infoUser,
+          pathname
+        )
+      );
+    }
+  };
+
+  const handleClickFavorite = () => {
+    if (!sessionId) {
+      history.push("/login");
+    }
+
+    if (!favorite) {
+      dispatch(
+        addToFavouriteAction(
+          infoUser,
+          sessionId,
+          media_type,
+          movieId,
+          (mes) => {
+            enqueueSnackbar(mes, { variant: "success" });
+          },
+          true,
+          pathname
         )
       );
     } else {
       dispatch(
         addToFavouriteAction(
-          accountId,
+          infoUser,
           sessionId,
-          id,
+          media_type,
+          movieId,
           (mes) => {
             enqueueSnackbar(mes, { variant: "success" });
           },
-          false
+          false,
+          pathname
         )
       );
     }
   };
+
   return (
     <Fragment>
-      <div
-        className={backdrop}
-        style={{
-          backgroundImage: `url(${IMAGE_URL}${WIDTH_BACKDROP}${backdrop_path})`,
-        }}
-      >
+      <div className={backdrop}>
         <CustomCard
           effectColor="#000" // required
           blur={6} // default blur value is 10px
           borderRadius="none" // default border radius value is 10px
           style={{
-            height: "700px",
             backgroundColor: "rgba(10, 10, 10, 0.7)",
           }}
         >
-          <Container className={content}>
-            <Grid container spacing={3}>
-              <Grid item xs={2} sm={3}>
-                <CardMedia
-                  image={
-                    poster_path
-                      ? `${IMAGE_URL}${WIDTH_IMAGE}${poster_path}`
-                      : NO_POSTER
-                  }
-                  className={poster}
-                  alt="poster"
-                />
-              </Grid>
-              <Grid item xs={9} sm={8}>
-                <Typography variant="h3" className={titleMovie}>
-                  <i> {title || name}</i>
-                </Typography>
-                <Typography variant="body2">
-                  <Typography variant="span" className={age}>
-                    16+
-                  </Typography>
-                  {runtime
-                    ? `${Math.floor(runtime / 60)}hr ${runtime % 60}mins`
-                    : ` ${episode_run_time?.[0] % 60}mins`}
-                  <Typography variant="span" className={releaseDate}>
-                    <i> {release_date}</i>
-                  </Typography>
-                  <Typography variant="body" style={{ paddingLeft: 20 }}>
-                    <Tooltip title="Add to watch list">
-                      <PlaylistAddIcon
-                        className={iconAddClick ? btnClickIcons : btnIcons}
-                        onClick={handleAddToWatchList}
-                      />
-                    </Tooltip>
-                    <Tooltip title="Mark as favourite">
-                      <FavoriteBorderOutlinedIcon
-                        className={
-                          iconFavouriteClick ? btnClickIcons : btnIcons
-                        }
-                        onClick={handleFavouriteIcon}
-                      />
-                    </Tooltip>
-                  </Typography>
-                </Typography>
-                <div style={{ padding: "10px 0" }}>
-                  {genres?.map((genre) => (
-                    <Typography
-                      variant="body2"
-                      component="a"
-                      className={genresMovie}
+          <Container maxWidth="xxl" style={{ position: "relative" }}>
+            <div className={content}>
+              <Typography variant="h4" className={titleMovie}>
+                <i> {title || name}</i>
+              </Typography>
+              <Grid container spacing={4}>
+                <Grid item xs={6} md={4} xl={2}>
+                  <CardMedia
+                    image={
+                      poster_path
+                        ? `${IMAGE_URL}${WIDTH_IMAGE}${poster_path}`
+                        : NO_POSTER
+                    }
+                    className={poster}
+                    alt="poster"
+                  />
+                  <div>
+                    <Button
+                      startIcon={<PlayArrowIcon />}
+                      className={buttonWatch}
+                      onClick={() => setOpen(true)}
                     >
-                      {genre.name}
+                      Watch Trailer
+                    </Button>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={8} xl={4}>
+                  <Typography variant="body2">
+                    <Typography variant="span" className={age}>
+                      16+
                     </Typography>
-                  ))}
-                </div>
-                <Typography variant="body2" component="div">
-                  <Typography variant="body2" component="span">
-                    <Rating name="simple-controlled" value={rating} />
+                    {runtime
+                      ? `${Math.floor(runtime / 60)}hr ${runtime % 60}mins`
+                      : ` ${episode_run_time?.[0] % 60}mins`}
+                    <Typography variant="span" className={releaseDate}>
+                      <i> {release_date || first_air_date}</i>
+                    </Typography>
                   </Typography>
+                  <div>
+                    <Typography variant="body1" style={{ marginTop: 10 }}>
+                      Cast:
+                      {detailCredit?.cast
+                        ?.slice(0, 4)
+                        ?.map((cast, index, arr) => (
+                          <Fragment>
+                            {index !== arr.length - 1 ? (
+                              <Typography variant="span" className={titleData}>
+                                {cast.name + ","}
+                              </Typography>
+                            ) : (
+                              <Typography variant="span" className={titleData}>
+                                {cast.name + ""}
+                              </Typography>
+                            )}
+                          </Fragment>
+                        ))}
+                    </Typography>
+                  </div>
+                  <div style={{ paddingTop: "10px 0" }}>
+                    <Typography variant="body2">
+                      Genre:
+                      {genres?.map((genre, index, arr) => (
+                        <Fragment>
+                          {index !== arr.length - 1 ? (
+                            <Typography
+                              variant="body2"
+                              component="a"
+                              className={titleData}
+                            >
+                              {genre.name + ","}
+                            </Typography>
+                          ) : (
+                            <Typography
+                              variant="body2"
+                              component="a"
+                              className={titleData}
+                            >
+                              {genre.name}
+                            </Typography>
+                          )}
+                        </Fragment>
+                      ))}
+                    </Typography>
+                  </div>
+                  <Grid item container spacing={2}>
+                    <Grid item xs={4}>
+                      <div
+                        style={{
+                          display: "flex",
+                          padding: "15px 0",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 60,
+                            height: 60,
+                          }}
+                        >
+                          <CircularProgressbar
+                            value={vote_average * 10}
+                            text={`${vote_average * 10}%`}
+                            styles={buildStyles({
+                              strokeLinecap: "butt",
+                              textSize: "30px",
+                              pathTransitionDuration: 0.5,
+                              pathColor: `rgba(0, 255, 0, ${
+                                vote_average * 10
+                              })`,
+                              textColor: "#fff",
+                              trailColor: "#669e79",
+                              backgroundColor: "#20c172",
+                            })}
+                          />
+                        </div>
+                        <div>
+                          <Typography className={textUserScore}>
+                            User score
+                          </Typography>
+                        </div>
+                      </div>
+                    </Grid>
+                    <Grid item xs={6} md={4}>
+                      <div style={{ display: "flex", marginTop: 25 }}>
+                        <div style={{ marginRight: 15 }}>
+                          <Tooltip title="Add to watch list">
+                            <Fab
+                              size="small"
+                              style={{
+                                backgroundColor: "#032541",
+                              }}
+                              onClick={handleAddToWatchList}
+                            >
+                              <PlaylistAddIcon
+                                className={
+                                  watchlist ? bgActiveAddList : btnIcons
+                                }
+                              />
+                            </Fab>
+                          </Tooltip>
+                        </div>
+
+                        <div style={{ marginRight: 15 }}>
+                          <Tooltip title="Mark as favourite">
+                            <Fab
+                              size="small"
+                              style={{
+                                backgroundColor: "#032541",
+                              }}
+                              onClick={handleClickFavorite}
+                            >
+                              <FavoriteIcon
+                                className={
+                                  favorite ? bgActiveFavorite : btnIcons
+                                }
+                              />
+                            </Fab>
+                          </Tooltip>
+                        </div>
+
+                        <div>
+                          <PopupState
+                            variant="popover"
+                            popupId="demo-popup-popover"
+                          >
+                            {(popupState) => (
+                              <Fragment>
+                                <Tooltip title="Send your rating">
+                                  <Fab
+                                    size="small"
+                                    style={{ backgroundColor: "#032541" }}
+                                    {...bindTrigger(popupState)}
+                                  >
+                                    <StarIcons
+                                      className={
+                                        rating ? bgActiveRating : btnIcons
+                                      }
+                                      fontSize="large"
+                                    />
+                                  </Fab>
+                                </Tooltip>
+
+                                <Popover
+                                  {...bindPopover(popupState)}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "center",
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "center",
+                                  }}
+                                  style={{ marginTop: 15 }}
+                                >
+                                  <div className={contentRating}>
+                                    <Tooltip title="Clear">
+                                      <RemoveCircleOutline
+                                        size="small"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={handleClearRating}
+                                      />
+                                    </Tooltip>
+                                    <Typography
+                                      variant="body2"
+                                      component="span"
+                                      style={{ marginLeft: 10 }}
+                                    >
+                                      <Rating
+                                        name="simple-controlled"
+                                        value={rating / 2}
+                                        precision={0.5}
+                                        onChange={(event, newValue) => {
+                                          handleClickRating(newValue * 2);
+                                        }}
+                                      />
+                                    </Typography>
+                                  </div>
+                                </Popover>
+                              </Fragment>
+                            )}
+                          </PopupState>
+                        </div>
+                      </div>
+                    </Grid>
+                  </Grid>
 
                   <Typography
-                    variant="body2"
-                    component="span"
-                    className={voteCount}
+                    variannt="body2"
+                    component="i"
+                    style={{ color: "#999" }}
                   >
-                    {vote_count} vote
+                    {tagline}
                   </Typography>
-                </Typography>
 
-                <div style={{ marginTop: 15, display: "flex" }}>
-                  <Typography variant="body2">Your Rate</Typography>
-                  <Slider
-                    defaultValue={5}
-                    min={1}
-                    max={10}
-                    step={0.5}
-                    valueLabelDisplay="auto"
-                    style={{ width: 150, marginLeft: 20, color: "#f9ab00" }}
-                    getAriaValueText={valueText}
-                  />
-                  <Tooltip title="Send your rating">
-                    <StarsIcon
-                      onClick={handleUserRating}
-                      className={iconRatingClick ? btnClickIcons : btnIcons}
-                      fontSize="large"
-                    />
-                  </Tooltip>
-                </div>
-                <Typography variant="h6" className={desc}>
-                  {overview?.slice(0, 450)}...
-                </Typography>
-                <div>
-                  <Button
-                    startIcon={<PlayArrowIcon />}
-                    className={buttonWatch}
-                    onClick={() => setOpen(true)}
+                  <div
+                    style={{
+                      padding: "30px 0",
+                      backgroundColor: "rgb(35 35 31 / 40%)",
+                      width: "100%",
+                      borderRadius: 10,
+                      marginTop: 20,
+                    }}
                   >
-                    Watch Now
-                  </Button>
-                </div>
-              </Grid>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-              >
-                <div className={trailer}>
+                    <Scrollbars
+                      style={{ width: "80%", height: 100, margin: "0 auto" }}
+                      renderThumbVertical={({ style, ...props }) => (
+                        <div {...props} className={scrollBars} />
+                      )}
+                    >
+                      <Typography variant="h6" className={desc}>
+                        {overview}
+                      </Typography>
+                    </Scrollbars>
+                  </div>
+                </Grid>
+                <Grid item xs={12} xl={6}>
                   <ReactPlayer
-                    playing={true}
-                    controls={true}
-                    width="100%"
-                    height="550px"
                     url={`https://www.youtube.com/watch?v=${videos?.results[0]?.key}`}
+                    controls
+                    playing
+                    playIcon={<PlayArrowIcon className={iconPlay} />}
+                    className={contentVideo}
+                    light
                   />
-                </div>
-              </Modal>
-            </Grid>
+                </Grid>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div className={trailer}>
+                    <ReactPlayer
+                      playing
+                      controls
+                      width="100%"
+                      height="100%"
+                      url={`https://www.youtube.com/watch?v=${videos?.results[0]?.key}`}
+                    />
+                  </div>
+                </Modal>
+              </Grid>
+            </div>
           </Container>
         </CustomCard>
       </div>

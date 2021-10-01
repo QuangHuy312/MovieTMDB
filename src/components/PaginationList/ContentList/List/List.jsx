@@ -26,7 +26,7 @@ const List = ({ arrList, setPage, arrGenresList }) => {
     <Fragment>
       {arrList?.results?.length !== 0 ? (
         <div className={content}>
-          <Container>
+          <Container maxWidth="xl">
             <Grid container>
               {arrList?.results?.slice(0, 18)?.map((movie) => {
                 return (
