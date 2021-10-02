@@ -31,7 +31,7 @@ const DashBoard = ({ infoUser, sessionId }) => {
       [name]: event.target.value,
     });
   };
-  return <div>dfasfd</div>;
+  return <div></div>;
 };
 
 export default DashBoard;

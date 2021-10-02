@@ -38,8 +38,9 @@ const useStyle = makeStyles(() => {
       },
     },
     contentPoster: {
+      opacity: 0.8,
       "&:hover": {
-        opacity: 0.6,
+        opacity: 1,
         transform: "scale(1.1)",
         transition: "0.5s all",
         "& $iconPlay": {

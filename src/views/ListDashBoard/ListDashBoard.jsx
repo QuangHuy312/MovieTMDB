@@ -41,7 +41,7 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
 
   useEffect(() => {
     dispatch(getCreatedListAction(infoUser.id, sessionId));
-  }, [dispatch]);
+  }, []);
 
   const handleDeleteList = (listId) => {
     confirm({
@@ -62,7 +62,7 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
       .catch(() => console.log("deletion canclled"));
   };
   return (
-    <Container className={content}>
+    <Container maxWidth="xl" className={content}>
       <div className={title}>
         <Typography variant="h4" style={{ fontWeight: "bold" }}>
           My lists
@@ -81,7 +81,7 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
         {arrCreatedList?.map((list) => {
           const backdrop = localStorage.getItem(`${list.id}`);
           return (
-            <Grid item xs={6} key={list.id}>
+            <Grid item xs={12} lg={6} key={list.id}>
               <Card className={contentCard}>
                 <CardMedia
                   image={

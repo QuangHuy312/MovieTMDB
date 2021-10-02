@@ -81,7 +81,7 @@ const WatchList = ({ infoUser, sessionId }) => {
 
   const classes = useStyle();
   return (
-    <Container className={classes.content}>
+    <Container maxWidth="xl" className={classes.content}>
       <div style={{ display: "flex" }}>
         <Typography className={classes.title} variant="h6">
           My Watchlist

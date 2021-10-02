@@ -1,28 +1,19 @@
 import {
-  FormControl,
-  InputLabel,
-  List,
-  ListItem,
-  MenuItem,
-  OutlinedInput,
-  Select,
+  Card,
+  CardContent,
+  CardMedia,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import ClearIcon from "@material-ui/icons/Clear";
-import ListIcon from "@material-ui/icons/List";
-import StarsIcon from "@material-ui/icons/Stars";
-import { Rating } from "@material-ui/lab";
-import clsx from "clsx";
 import moment from "moment";
-import React, { Fragment, memo, useState } from "react";
+import React, { memo } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-import { AiTwotoneHeart } from "react-icons/ai";
 import { useHistory } from "react-router";
 import NO_POSTER from "../../../assets/img_no_poster.jpg";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
-import useStyle from "../../AdminComponent/ContentList/style";
+import IconList from "./IconList/IconList";
+import useStyle from "./style";
 
 const ContentList = ({
   contentList,
@@ -36,315 +27,119 @@ const ContentList = ({
   media_type,
 }) => {
   const {
+    card,
     title,
     content,
-    contentInfo,
+    root,
     poster,
     date,
-    contentIcons,
-    iconAddList,
-    iconRemove,
-    textIcon,
+    overview,
+    circularRate,
+
     listIcons,
-    textIconFavorite,
-    textActiveIconFavorite,
-
-    bgRating,
-    bgFavorite,
-    starRate,
-    contentAddList,
-    borderContentAddList,
-    hoverIconFavorite,
-    hoverIconAddList,
-    hoverIconRemove,
   } = useStyle();
-  const rated = clsx(contentIcons, bgRating);
-  const contentIconFavorite = clsx(hoverIconFavorite, contentIcons);
-  const contentActiveFavorite = clsx(
-    hoverIconFavorite,
-    contentIcons,
-    bgFavorite
-  );
-  const contentIconAddList = clsx(hoverIconAddList, contentIcons);
-  const contentIconRemove = clsx(hoverIconRemove, contentIcons);
   const history = useHistory();
-
-  const [showRating, setShowRating] = useState(false);
-  const [addList, setAddList] = useState(false);
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
-
-  const [list, setList] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setList(
-      // On autofill we get a the stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
+  const theme = useTheme();
+  const isDeskTop = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <div className={content}>
-      <div>
-        <img
-          src={`${IMAGE_URL}${WIDTH_IMAGE}${contentList.poster_path}`}
-          alt="poster"
+    <Card className={card}>
+      <div className={content}>
+        <CardMedia
+          image={
+            contentList.poster_path
+              ? `${IMAGE_URL}${WIDTH_IMAGE}${contentList.poster_path}`
+              : NO_POSTER
+          }
           className={poster}
-          onError={(e) => (e.target.src = NO_POSTER)}
         />
+        <CardContent>
+          <div className={root}>
+            <div className={circularRate}>
+              <CircularProgressbar
+                value={contentList.vote_average * 10}
+                text={`${contentList.vote_average * 10}%`}
+                styles={buildStyles({
+                  strokeLinecap: "butt",
+                  textSize: "30px",
+                  pathTransitionDuration: 0.5,
+                  pathColor: `rgba(0, 255, 0, ${
+                    contentList.vote_average * 10
+                  })`,
+                  textColor: "black",
+                  trailColor: "#204529",
+                  backgroundColor: "#20c172",
+                })}
+              />
+            </div>
+            <div>
+              <Typography
+                className={title}
+                variant="body2"
+                onClick={() => {
+                  if (media_type == "movie") {
+                    history.push({
+                      pathname: `/detailmovies/${contentList.id}`,
+                    });
+                  } else if (media_type == "tv") {
+                    history.push({
+                      pathname: `/detailtvshow/${contentList.id}`,
+                    });
+                  }
+                }}
+              >
+                {contentList.title || contentList.name}
+              </Typography>
+              <Typography variant="body1" className={date}>
+                {moment(contentList.release_date).format("LL")}
+              </Typography>
+            </div>
+          </div>
+          <div className={overview}>
+            <Typography variant="body2">
+              {contentList.overview.slice(0, 400)}
+            </Typography>
+          </div>
+          {!isDeskTop && (
+            <div className={listIcons}>
+              <IconList
+                contentList={contentList}
+                handleClickRating={handleClickRating}
+                handleRemove={handleRemove}
+                handleClickAddFavorite={handleClickAddFavorite}
+                handleClickRemoveFavorite={handleClickRemoveFavorite}
+                handleClickAddToList={handleClickAddToList}
+                infoUser={infoUser}
+                arrCreatedList={arrCreatedList}
+                media_type={media_type}
+              />
+            </div>
+          )}
+        </CardContent>
       </div>
-      <div className={contentInfo}>
-        <div style={{ display: "flex" }}>
-          <div
-            style={{
-              width: 60,
-              height: 60,
-              padding: "7px 10px 0",
-            }}
-          >
-            <CircularProgressbar
-              value={contentList.vote_average * 10}
-              text={`${contentList.vote_average * 10}%`}
-              styles={buildStyles({
-                strokeLinecap: "butt",
-                textSize: "30px",
-                pathTransitionDuration: 0.5,
-                pathColor: `rgba(0, 255, 0, ${contentList.vote_average * 10})`,
-                textColor: "black",
-                trailColor: "#204529",
-                backgroundColor: "#20c172",
-              })}
-            />
-          </div>
-          <div>
-            <Typography className={title} variant="body2">
-              {contentList.title}
-            </Typography>
-            <Typography variant="body1" className={date}>
-              {moment(contentList.release_date).format("LL")}
-            </Typography>
-          </div>
-        </div>
+      {isMobile && (
         <div>
           <Typography variant="body2">
             {contentList.overview.slice(0, 400)}
           </Typography>
         </div>
+      )}
+      {isDeskTop && (
         <div className={listIcons}>
-          <List style={{ display: "flex" }}>
-            <ListItem>
-              <div
-                style={{ display: "flex", cursor: "pointer" }}
-                onClick={() => setShowRating(!showRating)}
-              >
-                <div className={rated}>
-                  {contentList.rating ? (
-                    <Typography variant="body1" style={{ paddingTop: 5 }}>
-                      {contentList.rating}
-                    </Typography>
-                  ) : (
-                    <StarsIcon
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  )}
-                </div>
-                <Typography variant="body2" className={textIcon}>
-                  Your Rating
-                </Typography>
-              </div>
-              {showRating && (
-                <div className={starRate}>
-                  <Rating
-                    precision={0.5}
-                    name="simple-controlled"
-                    value={Math.round(contentList.rating * 2) / 4}
-                    onChange={(event, newValue) => {
-                      handleClickRating(contentList.id, newValue * 2);
-                      setShowRating(false);
-                    }}
-                  />
-                </div>
-              )}
-            </ListItem>
-            <ListItem>
-              <div style={{ display: "flex", cursor: "pointer" }}>
-                {contentList.favorite ? (
-                  <div
-                    className={contentActiveFavorite}
-                    onClick={() =>
-                      handleClickRemoveFavorite(media_type, contentList.id)
-                    }
-                  >
-                    <Typography
-                      variant="body2"
-                      style={{
-                        textAlign: "center",
-                        paddingTop: 5,
-                      }}
-                    >
-                      <AiTwotoneHeart className={textActiveIconFavorite} />
-                    </Typography>
-                  </div>
-                ) : (
-                  <div className={contentIconFavorite}>
-                    <Typography
-                      variant="body2"
-                      style={{
-                        textAlign: "center",
-                        paddingTop: 5,
-                      }}
-                      onClick={() =>
-                        handleClickAddFavorite(media_type, contentList.id)
-                      }
-                    >
-                      <AiTwotoneHeart className={textIconFavorite} />
-                    </Typography>
-                  </div>
-                )}
-
-                <Typography variant="body2" className={textIcon}>
-                  Favorite
-                </Typography>
-              </div>
-            </ListItem>
-            <ListItem>
-              <div
-                style={{
-                  display: "flex",
-                  cursor: "pointer",
-                }}
-                onClick={() => setAddList(!addList)}
-              >
-                <div className={contentIconAddList}>
-                  <Typography variant="body2" className={iconAddList}>
-                    <ListIcon />
-                  </Typography>
-                </div>
-                <Typography variant="body2" className={textIcon}>
-                  Add to List
-                </Typography>
-              </div>
-              {addList ? (
-                <div className={contentAddList}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() =>
-                      history.push(`/${infoUser.username}/list/new`)
-                    }
-                  >
-                    <AddIcon fontSize="medium" />
-                    <Typography variant="body1">Create List</Typography>
-                  </div>
-
-                  <div>
-                    <FormControl style={{ width: "80%", marginTop: 20 }}>
-                      <InputLabel
-                        style={{ paddingLeft: 10, fontSize: 14, color: "#fff" }}
-                      >
-                        Add
-                        <Typography
-                          variant="body1"
-                          style={{ marginLeft: 5, color: "#f9ab00" }}
-                        >
-                          {contentList?.title?.slice(0, 25) ||
-                            contentList?.name?.slice(0, 25)}
-                        </Typography>
-                      </InputLabel>
-                      <Select
-                        labelId="demo-multiple-chip-label"
-                        id="demo-multiple-chip"
-                        multiple
-                        value={list}
-                        onChange={handleChange}
-                        input={
-                          <OutlinedInput
-                            id="select-multiple-chip"
-                            label="Chip"
-                          />
-                        }
-                        MenuProps={MenuProps}
-                      >
-                        {arrCreatedList.length > 0 ? (
-                          <Fragment>
-                            {arrCreatedList?.map((list) => {
-                              return (
-                                <Fragment key={list.id}>
-                                  <MenuItem
-                                    onClick={() => {
-                                      handleClickAddToList(
-                                        list.id,
-                                        contentList.id
-                                      );
-                                      setAddList(false);
-                                    }}
-                                  >
-                                    {list.name}
-                                  </MenuItem>
-                                </Fragment>
-                              );
-                            })}
-                          </Fragment>
-                        ) : (
-                          <div style={{ marginTop: 10, textAlign: "center" }}>
-                            <Typography
-                              variant="body1"
-                              style={{ textAlign: "center" }}
-                            >
-                              <ArrowDropUpIcon />
-                            </Typography>
-                            <Typography variant="body2">
-                              No List , please click Create List
-                            </Typography>
-                          </div>
-                        )}
-                      </Select>
-                    </FormControl>
-                  </div>
-
-                  <div className={borderContentAddList}></div>
-                </div>
-              ) : null}
-            </ListItem>
-            <ListItem>
-              <div
-                style={{ display: "flex", cursor: "pointer" }}
-                onClick={() => {
-                  handleRemove(media_type, contentList.id);
-                }}
-              >
-                <div className={contentIconRemove}>
-                  <Typography variant="body2" className={iconRemove}>
-                    <ClearIcon />
-                  </Typography>
-                </div>
-                <Typography variant="body2" className={textIcon}>
-                  Remove
-                </Typography>
-              </div>
-            </ListItem>
-          </List>
+          <IconList
+            contentList={contentList}
+            handleClickRating={handleClickRating}
+            handleRemove={handleRemove}
+            handleClickAddFavorite={handleClickAddFavorite}
+            handleClickRemoveFavorite={handleClickRemoveFavorite}
+            handleClickAddToList={handleClickAddToList}
+            infoUser={infoUser}
+            arrCreatedList={arrCreatedList}
+            media_type={media_type}
+          />
         </div>
-      </div>
-    </div>
+      )}
+    </Card>
   );
 };
 

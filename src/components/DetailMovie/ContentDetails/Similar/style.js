@@ -30,14 +30,11 @@ const useStyle = makeStyles((theme) => {
         padding: 0,
         paddingTop: 10,
       },
-      [theme.breakpoints.down("lg")]: {
-        height: 500,
-      },
 
       [theme.breakpoints.down("md")]: {
         height: 400,
       },
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("xs")]: {
         height: 320,
       },
     },
@@ -59,7 +56,7 @@ const useStyle = makeStyles((theme) => {
       },
     },
     media: {
-      minHeight: 250,
+      minHeight: 260,
       maxHeight: 330,
 
       borderRadius: 10,
@@ -78,16 +75,16 @@ const useStyle = makeStyles((theme) => {
       },
 
       [theme.breakpoints.down("lg")]: {
-        minHeight: 400,
-        maxHeight: 450,
+        minHeight: 230,
+        maxHeight: 280,
       },
       [theme.breakpoints.down("md")]: {
-        minHeight: 400,
-        maxHeight: 450,
+        minHeight: 320,
+        maxHeight: 370,
       },
-      [theme.breakpoints.down("sm")]: {
-        minHeight: 270,
-        maxHeight: 300,
+      [theme.breakpoints.down("xs")]: {
+        minHeight: 250,
+        maxHeight: 270,
       },
     },
     title: {

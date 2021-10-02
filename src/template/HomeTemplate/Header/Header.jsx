@@ -1,14 +1,23 @@
 import {
   AppBar,
   Avatar,
-  Button,
   Container,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
   Typography,
 } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useTheme } from "@material-ui/styles";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import LOGO from "../../../assets/hdvietsub-logo.png";
@@ -17,21 +26,15 @@ import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
 
 const Header = () => {
-  const {
-    navContent,
-    scrollNav,
-    content,
-    logoHeader,
-    navLink,
-    listNavbar,
-    avatarUser,
-  } = useStyle();
   const [isScrolled, setIsScrolled] = useState(false);
-  const scrolled = clsx(content, scrollNav);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [anchorEl, setAnchorEl] = useState(null);
   const user = localStorage.getItem("sessionId");
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   const history = useHistory();
+  const theme = useTheme();
+  const isDeskTop = useMediaQuery(theme.breakpoints.down("md"));
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   useEffect(() => {
     const handleScroll = (e) => {
@@ -43,6 +46,20 @@ const Header = () => {
     };
   }, [isScrolled]);
 
+  useEffect(() => {
+    if (isDeskTop) {
+      if (openDrawer) {
+        setOpenDrawer(false);
+      }
+    }
+  }, [isDeskTop]);
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -51,40 +68,70 @@ const Header = () => {
     setAnchorEl(null);
   };
   const handleLogout = () => {
+    setOpenDrawer(false);
     setAnchorEl(null);
     localStorage.removeItem("sessionId");
   };
-
+  const {
+    root,
+    navContent,
+    isActive,
+    logo,
+    scrollNav,
+    content,
+    navLink,
+    listNavbar,
+    contentUser,
+    avatarUser,
+    userName,
+    menuIcon,
+    drawerHeader,
+    contentDrawer,
+    itemMenu,
+    login,
+  } = useStyle({ isDeskTop, openDrawer });
+  const scrolled = clsx(content, scrollNav);
   return (
-    <AppBar color="transparent" className={isScrolled ? content : scrolled}>
-      <Container maxWidth="xl" className={navContent}>
-        <div style={{ display: "flex" }}>
-          <NavLink to="/" className={logoHeader}>
-            <img src={LOGO} alt="logo" />
+    <div className={root}>
+      <AppBar color="transparent" className={isScrolled ? content : scrolled}>
+        <Container className={navContent}>
+          <NavLink to="/">
+            <img src={LOGO} alt="logo" className={logo} />
           </NavLink>
-        </div>
-        <div style={{ display: "flex" }}>
-          <ul className={listNavbar}>
-            <li>
-              <NavLink to="/" className={navLink}>
+
+          <List disablePadding className={listNavbar}>
+            <ListItem>
+              <NavLink
+                to="/"
+                className={navLink}
+                exact={true}
+                activeClassName={isActive}
+              >
                 HOME
               </NavLink>
-            </li>
-            <li>
-              <NavLink to="/movies/list" className={navLink}>
+            </ListItem>
+            <ListItem>
+              <NavLink
+                to="/movies/list"
+                className={navLink}
+                activeClassName={isActive}
+              >
                 MOVIE
               </NavLink>
-            </li>
-            <li>
-              <NavLink to="/tvshow/list" className={navLink}>
-                TV SHOW
+            </ListItem>
+            <ListItem>
+              <NavLink
+                to="/tvshow/list"
+                className={navLink}
+                activeClassName={isActive}
+              >
+                TV
               </NavLink>
-            </li>
-          </ul>
-        </div>
-        <div style={{ display: "flex" }}>
+            </ListItem>
+          </List>
+
           {user ? (
-            <>
+            <div className={contentUser}>
               <div>
                 <Avatar
                   alt="Remy Sharp"
@@ -97,23 +144,15 @@ const Header = () => {
                   className={avatarUser}
                 />
               </div>
+
               <Typography
                 variant="body2"
-                style={{ alignSelf: "center", color: "#fff" }}
+                className={userName}
+                onClick={() => history.push(`/${infoUser.username}`)}
               >
-                Hello
-                <Typography
-                  variant="body"
-                  style={{
-                    color: "#f9ab00",
-                    paddingLeft: 10,
-                    cursor: "pointer",
-                  }}
-                  onClick={() => history.push(`/${infoUser.username}`)}
-                >
-                  {infoUser.name || infoUser.username}
-                </Typography>
+                {infoUser.name || infoUser.username}
               </Typography>
+
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -123,21 +162,136 @@ const Header = () => {
                 onClick={handleClose}
               >
                 <MenuItem onClick={() => history.push(`/${infoUser.username}`)}>
-                  Profile
+                  My List
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
-            </>
+            </div>
           ) : (
-            <NavLink to="/login">
-              <Button variant="contained" color="primary">
-                Login
-              </Button>
-            </NavLink>
+            <>
+              {!isDeskTop && (
+                <NavLink to="/login" className={root}>
+                  <AccountCircleOutlinedIcon
+                    className={avatarUser}
+                    size="large"
+                  />
+                  <Typography variant="body2" className={login}>
+                    Login
+                  </Typography>
+                </NavLink>
+              )}
+            </>
           )}
-        </div>
-      </Container>
-    </AppBar>
+
+          <div className={menuIcon}>
+            <IconButton edge="end" onClick={handleDrawerOpen} color="inherit">
+              <MenuIcon style={{ color: "#fff" }} />
+            </IconButton>
+          </div>
+
+          <Drawer
+            open={openDrawer}
+            onClose={handleDrawerClose}
+            anchor="right"
+            transitionDuration={400}
+            className={contentDrawer}
+          >
+            <div className={drawerHeader}>
+              {user ? (
+                <div>
+                  <div className={root}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={
+                        !!infoUser.avatar?.tmdb
+                          ? `${IMAGE_URL}${WIDTH_IMAGE}${infoUser?.avatar?.tmdb?.avatar_path}`
+                          : NO_AVATAR
+                      }
+                      onClick={handleClick}
+                      className={avatarUser}
+                    />
+                    <div style={{ alignSelf: "center", color: "#fff" }}>
+                      <Typography
+                        variant="span"
+                        className={userName}
+                        onClick={() => history.push(`/${infoUser.username}`)}
+                      >
+                        {infoUser.name || infoUser.username}
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className={root}>
+                  <NavLink to="/login" className={root}>
+                    <AccountCircleOutlinedIcon
+                      className={avatarUser}
+                      size="large"
+                    />
+                    <Typography variant="body2" className={login}>
+                      Login
+                    </Typography>
+                  </NavLink>
+                </div>
+              )}
+              <IconButton onClick={handleDrawerClose}>
+                <ChevronRightIcon style={{ color: "#fff" }} />
+              </IconButton>
+            </div>
+            <div className={root}>
+              <List disablePadding>
+                <ListItem>
+                  <NavLink
+                    to="/"
+                    className={itemMenu}
+                    onClick={handleDrawerClose}
+                  >
+                    HOME
+                  </NavLink>
+                </ListItem>
+                <ListItem>
+                  <NavLink
+                    to="/movies/list"
+                    className={itemMenu}
+                    onClick={handleDrawerClose}
+                  >
+                    MOVIE LIST
+                  </NavLink>
+                </ListItem>
+
+                <ListItem>
+                  <NavLink
+                    to="/tvshow/list"
+                    className={itemMenu}
+                    onClick={handleDrawerClose}
+                  >
+                    TV SHOW LIST
+                  </NavLink>
+                </ListItem>
+                {user && (
+                  <ListItem>
+                    <NavLink
+                      to={`/${infoUser.username}`}
+                      className={itemMenu}
+                      onClick={handleDrawerClose}
+                    >
+                      My List
+                    </NavLink>
+                  </ListItem>
+                )}
+                {user && (
+                  <ListItem>
+                    <NavLink to="/" className={itemMenu} onClick={handleLogout}>
+                      Logout
+                    </NavLink>
+                  </ListItem>
+                )}
+              </List>
+            </div>
+          </Drawer>
+        </Container>
+      </AppBar>
+    </div>
   );
 };
 

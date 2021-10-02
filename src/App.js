@@ -73,11 +73,6 @@ const App = () => {
           <HomeTemplate path="/movies/list" exact component={MovieList} />
           <HomeTemplate path="/tvshow/list" exact component={TVList} />
           <Route path="/login" exact component={Login} />
-          <Admintemplate
-            path={`/${infoUser.username}`}
-            exact
-            component={DashBoard}
-          />
 
           <Admintemplate
             path={`/${infoUser.username}/ratings`}
@@ -96,7 +91,7 @@ const App = () => {
           />
 
           <Admintemplate
-            path={`/${infoUser.username}/list`}
+            path={`/${infoUser.username}`}
             exact
             component={ListDashBoard}
           />

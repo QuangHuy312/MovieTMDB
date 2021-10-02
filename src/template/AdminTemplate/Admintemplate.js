@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 import {
-  getFavoriteMovieListAction,
   getRatedMovieListAction,
   getRatedTVShowListAction,
 } from "../../redux/action/DashBoardManagerAction";
@@ -36,11 +35,13 @@ const Admintemplate = (props) => {
           return (
             <Fragment>
               <Header />
+
               <Banner
                 infoUser={infoUser}
                 arrListRatedTV={arrListRatedTV}
                 arrListRatedMovie={arrListRatedMovie}
               />
+
               <NavRouteLink />
               <RouteComponent
                 {...routeProps}

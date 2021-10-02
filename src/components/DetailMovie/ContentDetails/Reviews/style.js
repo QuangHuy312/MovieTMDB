@@ -4,6 +4,7 @@ const useStyle = makeStyles(() => {
     imgUser: {
       maxWidth: 50,
       maxHeight: 50,
+      width: "100%",
     },
     content: {
       display: "flex",

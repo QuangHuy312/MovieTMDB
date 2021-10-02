@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/styles";
 
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     content: {
-      padding: "40px 0",
+      padding: "40px 25px",
       "& .MuiCard-root": {
         overflow: "initial",
       },
@@ -36,6 +36,12 @@ const useStyle = makeStyles(() => {
     imgCard: {
       height: 450,
       width: "100%",
+      [theme.breakpoints.down("md")]: {
+        height: 400,
+      },
+      [theme.breakpoints.down("sm")]: {
+        height: 350,
+      },
     },
 
     textCard: {

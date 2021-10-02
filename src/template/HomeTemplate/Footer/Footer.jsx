@@ -58,7 +58,7 @@ const Footer = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6" className={title}>
-              Movie Categories
+              TV Show Categories
             </Typography>
             <Grid container>
               <Grid item xs={6}>

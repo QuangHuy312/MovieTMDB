@@ -16,6 +16,9 @@
   content: "" !important;
 }
 
+.MuiCard-root {
+  overflow: inherit !important;
+}
 .MuiSelect-icon {
   color: white !important;
 }

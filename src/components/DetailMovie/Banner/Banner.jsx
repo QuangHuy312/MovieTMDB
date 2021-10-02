@@ -41,7 +41,6 @@ import {
   WIDTH_IMAGE,
 } from "../../../utils/settings/config";
 import useStyle from "./style";
-import BACKDROP_VIDEO from "../../../assets/backdrop_video.jpg";
 
 const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
   const history = useHistory();

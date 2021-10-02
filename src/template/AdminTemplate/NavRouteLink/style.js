@@ -1,19 +1,28 @@
 import { makeStyles } from "@material-ui/core";
 const useStyle = makeStyles(() => {
   return {
-    listNavbar: {
-      display: "flex",
-      marginTop: 15,
+    isActive: {
+      color: "#f9ab00",
     },
     navLink: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: "0px 35px",
-      border: "transparent",
-      transition: "all 0.5s",
+      transition: "all 0.3s",
+      position: "relative",
       "&:hover": {
         color: "#f9ab00",
+        "&::after": {
+          width: "100%",
+          transition: "all 0.5s linear",
+        },
+      },
+      "&::after": {
+        content: "''",
+        position: "absolute",
+        bottom: -5,
+        left: 0,
+        right: 0,
+        top: 0,
+        width: 0,
+        borderBottom: "3px solid #f9ab00",
       },
     },
   };

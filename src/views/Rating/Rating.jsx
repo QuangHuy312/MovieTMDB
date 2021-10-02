@@ -30,7 +30,8 @@ const Rating = ({ infoUser, sessionId }) => {
   const useStyle = makeStyles(() => {
     return {
       content: {
-        padding: "20px 0 40px",
+        paddingTop: 20,
+        paddingBottom: 20,
         "& .MuiTab-root": {
           minWidth: 50,
           marginLeft: 30,
@@ -80,7 +81,7 @@ const Rating = ({ infoUser, sessionId }) => {
 
   const classes = useStyle();
   return (
-    <Container className={classes.content}>
+    <Container maxWidth="xl" className={classes.content}>
       <div style={{ display: "flex" }}>
         <Typography className={classes.title} variant="h6">
           My Ratings

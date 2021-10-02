@@ -1,14 +1,35 @@
 import { makeStyles } from "@material-ui/styles";
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
+    root: {
+      display: "flex",
+      [theme.breakpoints.down("sm")]: {
+        display: "block",
+      },
+    },
+    card: { padding: "0 15px 15px 20px" },
     content: {
       display: "flex",
       marginBottom: 20,
+      "& .MuiCardContent-root": {
+        width: "100%",
+      },
+      [theme.breakpoints.down("md")]: {
+        marginBottom: 0,
+      },
     },
     poster: {
       borderRadius: 10,
-      width: 150,
-      height: 200,
+      minWidth: 150,
+      minHeight: 200,
+      marginBottom: 20,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+
+      [theme.breakpoints.down("sm")]: {
+        width: 50,
+        height: 50,
+      },
     },
     title: {
       fontWeight: "bold",
@@ -17,10 +38,18 @@ const useStyle = makeStyles(() => {
       "&:hover": {
         color: "#f9ab00",
       },
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 17,
+      },
     },
-    contentInfo: {
-      padding: "10px 15px",
-      width: "100%",
+    circularRate: {
+      width: 60,
+      height: 60,
+      padding: "7px 10px 0",
+      [theme.breakpoints.down("sm")]: {
+        width: 100,
+        height: 100,
+      },
     },
     date: {
       color: "#aa8181",
@@ -31,116 +60,20 @@ const useStyle = makeStyles(() => {
       lineHeight: 2.3,
       fontSize: 15,
     },
+    overview: {
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+    },
     listIcons: {
-      marginTop: 10,
-      width: "70%",
-      "& > ul > li": {
-        paddingTop: 5,
-        textAlign: "center",
+      "& .MuiListItem-gutters": {
+        padding: 0,
+        paddingTop: 10,
       },
-    },
-    bgRating: {
-      background: "#01d277",
-      color: "white",
-      position: "relative",
-    },
-
-    contentIcons: {
-      width: 35,
-      height: 35,
-      borderRadius: "50%",
-      border: "1px solid #999",
-      cursor: "pointer",
-      zIndex: 2,
-      "&:hover": {
-        transition: "all 0.4s",
-        backgroundColor: "#f9ab00",
-        "& $icons": {
-          color: "white",
-        },
-        "& $rating": {
-          color: "white",
-        },
+      "& .MuiList-padding": {
+        paddingBottom: 20,
+        paddingTop: 15,
       },
-    },
-    hoverIconFavorite: {
-      "&:hover": {
-        backgroundColor: "#f864ab",
-        "& $textIconFavorite": {
-          color: "#fff",
-        },
-      },
-    },
-    bgFavorite: {
-      background: "#f864ab",
-      "&:hover": {
-        background: "#f9ab00",
-      },
-    },
-    textIconFavorite: {
-      color: "#f864ab",
-      fontSize: 23,
-    },
-
-    textActiveIconFavorite: {
-      color: "#fff",
-      fontSize: 23,
-    },
-
-    hoverIconAddList: {
-      "&:hover": {
-        backgroundColor: "#665c5c",
-        "& $iconAddList": {
-          color: "white",
-        },
-      },
-    },
-    iconAddList: { color: "#663f55", textAlign: "center", paddingTop: 5 },
-    hoverIconRemove: {
-      "&:hover": {
-        backgroundColor: "#f05d5d",
-        "& $iconRemove": {
-          color: "white",
-        },
-      },
-    },
-    iconRemove: { color: "red", textAlign: "center", paddingTop: 5 },
-
-    textIcon: {
-      fontSize: 14,
-      marginLeft: 12,
-      marginTop: 8,
-      color: "#72977b",
-      position: "relative",
-    },
-
-    starRate: {
-      position: "absolute",
-      top: "95%",
-      zIndex: 3,
-    },
-
-    contentAddList: {
-      padding: "20px 0",
-      background: "#01b4e4",
-      position: "absolute",
-      top: "-65%",
-      left: "80%",
-      width: "300px",
-      height: "auto",
-      zIndex: 9,
-      color: "#fff",
-      textAlign: "center",
-    },
-    borderContentAddList: {
-      position: "absolute",
-      top: "35%",
-      left: "-4%",
-      borderStyle: "solid",
-      borderColor: "#01b4e4",
-      borderWidth: "10px",
-      borderTopLeftRadius: "20px",
-      borderBottomLeftRadius: "20px",
     },
   };
 });
