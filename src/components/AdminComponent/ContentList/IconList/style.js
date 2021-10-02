@@ -83,15 +83,17 @@ const useStyle = makeStyles((theme) => {
 
     textIconAddList: {
       color: "#663f55",
+      paddingTop: 5,
       [theme.breakpoints.down("sm")]: {
-        fontSize: 12,
+        fontSize: 20,
       },
     },
 
     textIconRemove: {
       color: "red",
+      paddingTop: 5,
       [theme.breakpoints.down("sm")]: {
-        fontSize: 12,
+        fontSize: 15,
       },
     },
 
@@ -116,31 +118,85 @@ const useStyle = makeStyles((theme) => {
       top: "95%",
       zIndex: 3,
     },
+    contentRating: {
+      backgroundColor: "#032541",
+      color: "#fff",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+      position: "relative",
+      "& .MuiRating-iconEmpty": {
+        color: "#999",
+      },
+      "&:after": {
+        content: "''",
+        position: "absolute",
+        top: -8,
+        borderStyle: "solid",
+        borderWidth: "0 10px 10px",
+        borderColor: "#032541 transparent",
+        display: "block",
+        width: 0,
+        zIndex: 1,
+      },
+    },
 
     contentAddList: {
       padding: "20px 0",
-      background: "#01b4e4",
-      position: "absolute",
-      top: "-65%",
-      left: "80%",
-      width: "300px",
-      height: "auto",
+      background: "#032541",
+      width: 300,
       zIndex: 9,
       color: "#fff",
+      position: "relative",
       textAlign: "center",
-      "& div": {
-        justifyContent: "center",
+      "& > span": {
+        cursor: "pointer",
+        [theme.breakpoints.down("sm")]: {
+          fontSize: 12,
+        },
+        "&:hover": {
+          color: "#f9ab00",
+          transition: "all 0.5s",
+        },
+      },
+      "&:after": {
+        content: "''",
+        position: "absolute",
+        top: -10,
+        left: "50%",
+        borderStyle: "solid",
+        borderWidth: "0 10px 10px",
+        borderColor: "#01b4e4 transparent",
+        width: 0,
+        zIndex: 1,
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: 200,
       },
     },
-    borderContentAddList: {
-      position: "absolute",
-      top: "35%",
-      left: "-4%",
-      borderStyle: "solid",
-      borderColor: "#01b4e4",
-      borderWidth: "10px",
-      borderTopLeftRadius: "20px",
-      borderBottomLeftRadius: "20px",
+    formControl: {
+      width: "85%",
+      marginTop: 15,
+      "& .MuiSelect-select": {
+        border: "1px solid #625e5e",
+      },
+    },
+    inputForm: {
+      paddingLeft: 10,
+      fontSize: 14,
+      color: "#fff",
+
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 10,
+      },
+    },
+    titleMovie: {
+      marginLeft: 10,
+      color: "#f9ab00",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 12,
+      },
     },
   };
 });

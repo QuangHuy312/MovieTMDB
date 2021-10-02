@@ -41,6 +41,20 @@ const Movies = ({
       )
     );
   };
+  const handleClickClearRating = (id) => {
+    dispatch(
+      deleteRatingMovieAction(
+        id,
+        sessionId,
+        guestSessionId,
+        (mes) => {
+          enqueueSnackbar(mes, { variant: "success" });
+        },
+        infoUser,
+        pathname
+      )
+    );
+  };
 
   const handleRemove = (type, movieId) => {
     if (pathname === `/${infoUser.username}/ratings`) {
@@ -58,7 +72,7 @@ const Movies = ({
     } else if (pathname === `/${infoUser.username}/favorites`) {
       dispatch(
         addToFavouriteAction(
-          infoUser.id,
+          infoUser,
           sessionId,
           type,
           movieId,
@@ -87,14 +101,15 @@ const Movies = ({
   const handleClickAddFavorite = (type, movieId) => {
     dispatch(
       addToFavouriteAction(
-        infoUser.id,
+        infoUser,
         sessionId,
         type,
         movieId,
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
         },
-        true
+        true,
+        pathname
       )
     );
   };
@@ -131,7 +146,7 @@ const Movies = ({
       (item) => item.id === movie.id
     );
     if (idxFavorites > -1) {
-      arrListMovie[idxFavorites].favorite = true;
+      arrListMovie[index].favorite = true;
     }
     if (idxRated > -1) {
       arrListMovie[index].rating = arrListRatedMovie[idxRated].rating;
@@ -148,6 +163,7 @@ const Movies = ({
                 <ContentList
                   contentList={infoMovie}
                   handleClickRating={handleClickRating}
+                  handleClickClearRating={handleClickClearRating}
                   handleRemove={handleRemove}
                   handleClickAddFavorite={handleClickAddFavorite}
                   handleClickRemoveFavorite={handleClickRemoveFavorite}

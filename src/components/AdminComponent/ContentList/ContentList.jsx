@@ -18,6 +18,7 @@ import useStyle from "./style";
 const ContentList = ({
   contentList,
   handleClickRating,
+  handleClickClearRating,
   handleRemove,
   handleClickAddFavorite,
   handleClickRemoveFavorite,
@@ -105,6 +106,7 @@ const ContentList = ({
               <IconList
                 contentList={contentList}
                 handleClickRating={handleClickRating}
+                handleClickClearRating={handleClickClearRating}
                 handleRemove={handleRemove}
                 handleClickAddFavorite={handleClickAddFavorite}
                 handleClickRemoveFavorite={handleClickRemoveFavorite}

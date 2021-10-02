@@ -127,6 +127,12 @@ export const deleteRatingMovieAction = (
         if (pathname === `/detailmovies/${movieId}`) {
           await dispatch(getDetailBannerMovieAction(movieId));
         }
+        if (pathname === `/${infoUser.username}/favorites`) {
+          await dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+        }
+        if (pathname === `/${infoUser.username}/watchlist`) {
+          dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -186,6 +192,11 @@ export const deleteRatingTVAction = (
         await dispatch(getRatedTVShowListAction(infoUser.id, sessionId, 1));
         if (pathname === `/detailtvshow/${movieId}`) {
           await dispatch(getDetailBannerTvShowAction(movieId));
+        }
+        if (pathname === `/${infoUser.username}/watchlist`) {
+          dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
+        } else if (pathname === `/${infoUser.username}/favorites`) {
+          dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
         }
       }
     } catch (error) {
@@ -252,20 +263,25 @@ export const addToFavouriteAction = (
 ) => {
   return async (dispatch) => {
     try {
-      await userService.addToFavourite(
+      const { data } = await userService.addToFavourite(
         infoUser,
         sessionId,
         type,
         movieId,
         action
       );
-      if (action) {
+      if (data.success) {
         success("Added to favourite");
-        if (type === "tv") {
-          dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
-        }
         if (type === "movie") {
-          dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+          await dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
+          if (pathname === `/${infoUser.username}/ratings`) {
+            dispatch(getRatedMovieListAction(infoUser.id, sessionId, 1));
+          }
+        } else if (type === "tv") {
+          await dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
+          if (pathname === `/${infoUser.username}/ratings`) {
+            dispatch(getRatedTVShowListAction(infoUser.id, sessionId, 1));
+          }
         }
       } else {
         success("Delete is successfully");

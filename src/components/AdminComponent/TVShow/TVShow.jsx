@@ -26,10 +26,6 @@ const TVShow = ({
   const location = useLocation();
   const pathname = location.pathname;
 
-  const handleClick = () => {
-    console.log(123);
-  };
-
   const handleClickRating = (id, valueRating) => {
     dispatch(
       postRatingTVAction(
@@ -38,6 +34,21 @@ const TVShow = ({
         valueRating,
         guestSessionId,
 
+        (mes) => {
+          enqueueSnackbar(mes, { variant: "success" });
+        },
+        infoUser,
+        pathname
+      )
+    );
+  };
+
+  const handleClickClearRating = (id) => {
+    dispatch(
+      deleteRatingTVAction(
+        id,
+        sessionId,
+        guestSessionId,
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
         },
@@ -63,7 +74,7 @@ const TVShow = ({
     } else if (pathname === `/${infoUser.username}/favorites`) {
       dispatch(
         addToFavouriteAction(
-          infoUser.id,
+          infoUser,
           sessionId,
           type,
           movieId,
@@ -99,7 +110,8 @@ const TVShow = ({
         (mes) => {
           enqueueSnackbar(mes, { variant: "success" });
         },
-        true
+        true,
+        pathname
       )
     );
   };
@@ -135,7 +147,7 @@ const TVShow = ({
     );
     const idxRated = arrListRatedTV?.findIndex((item) => item.id === movie.id);
     if (idxFavorites > -1) {
-      arrListTV[idxFavorites].favorite = true;
+      arrListTV[index].favorite = true;
     }
     if (idxRated > -1) {
       arrListTV[index].rating = arrListRatedTV[idxRated].rating;
@@ -150,8 +162,8 @@ const TVShow = ({
               <Fragment key={infoTV.id}>
                 <ContentList
                   contentList={infoTV}
-                  handleClick={handleClick}
                   handleClickRating={handleClickRating}
+                  handleClickClearRating={handleClickClearRating}
                   handleRemove={handleRemove}
                   handleClickAddFavorite={handleClickAddFavorite}
                   handleClickRemoveFavorite={handleClickRemoveFavorite}
