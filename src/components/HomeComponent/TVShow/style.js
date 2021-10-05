@@ -5,12 +5,36 @@ const useStyle = makeStyles((theme) => {
     content: {
       paddingTop: 40,
       position: "relative",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: 20,
+      },
     },
     title: {
-      fontSize: 30,
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: 25,
+      "& >h4": {
+        fontSize: 30,
+        [theme.breakpoints.down("sm")]: {
+          fontSize: 20,
+        },
+      },
+      "& >button": { borderRadius: 10 },
     },
+
     card: {
       backgroundColor: "transparent",
+    },
+    slider: {
+      padding: 20,
+      [theme.breakpoints.down("sm")]: {
+        "& .slick-next": {
+          right: -15,
+        },
+        "& .slick-prev": {
+          left: -15,
+        },
+      },
     },
     contentMedia: {
       marginLeft: "20px",
@@ -30,10 +54,10 @@ const useStyle = makeStyles((theme) => {
       [theme.breakpoints.down("md")]: {
         height: 350,
       },
-
       [theme.breakpoints.down("sm")]: {
         height: 300,
       },
+
       [theme.breakpoints.down("xs")]: {
         height: 230,
       },
@@ -71,55 +95,6 @@ const useStyle = makeStyles((theme) => {
         padding: 5,
         borderRadius: 5,
         fontSize: 10,
-      },
-    },
-    arrowContentNext: {
-      width: 20,
-      position: "absolute",
-      top: "-7%",
-      right: "14%",
-      cursor: "pointer",
-
-      [theme.breakpoints.down("lg")]: {
-        right: "19%",
-      },
-      [theme.breakpoints.down("md")]: {
-        right: "25%",
-      },
-      [theme.breakpoints.down("sm")]: {
-        right: "33%",
-      },
-      [theme.breakpoints.down("xs")]: {
-        right: "43%",
-      },
-    },
-
-    arrowContentPrev: {
-      left: "80%",
-      right: 0,
-
-      [theme.breakpoints.down("lg")]: {
-        left: "73%",
-      },
-      [theme.breakpoints.down("md")]: {
-        left: "70%",
-      },
-      [theme.breakpoints.down("sm")]: {
-        left: "53%",
-      },
-      [theme.breakpoints.down("xs")]: {
-        left: "40%",
-      },
-    },
-    arrowImage: {
-      color: "white",
-      fontSize: 30,
-      transition: "all 0.5s",
-      padding: 5,
-      background: "#222028",
-      "&:hover": {
-        backgroundColor: "#5a4c4c",
-        color: "#f9ab00",
       },
     },
   };

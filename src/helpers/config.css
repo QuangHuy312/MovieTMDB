@@ -2,20 +2,13 @@
   outline: none !important;
 }
 
-.slick-slide {
-  position: relative !important;
-}
-
-.slick-prev,
-.slick-next {
-  display: none !important;
-}
-
 .slick-prev:before,
 .slick-next:before {
-  content: "" !important;
-}
+  display: none;
+  width: 0 !important;
 
+  height: 0 !important;
+}
 .MuiCard-root {
   overflow: inherit !important;
 }

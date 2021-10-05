@@ -2,8 +2,6 @@ import {
   Button,
   Container,
   Grid,
-  List,
-  ListItem,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -14,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import * as yup from "yup";
 import { createNewListAction } from "../../../redux/action/DashBoardManagerAction";
+import ContentNavList from "./ContentNavList/ContentNavList";
 import useStyle from "./style";
 
 let schema = yup.object().shape({
@@ -22,7 +21,7 @@ let schema = yup.object().shape({
 });
 
 const CreateList = ({ infoUser, sessionId }) => {
-  const { title, content, contentList, active, textList } = useStyle();
+  const { title, content, contentForm, btnSubmit } = useStyle();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -30,7 +29,6 @@ const CreateList = ({ infoUser, sessionId }) => {
   const history = useHistory();
 
   const handleSubmitForm = (e) => {
-    console.log(values);
     e.preventDefault();
     if (!isValid) return;
 
@@ -52,8 +50,8 @@ const CreateList = ({ infoUser, sessionId }) => {
       validateOnMount: true,
     });
   return (
-    <Container className={content}>
-      <Grid container spacing={3}>
+    <Container maxWidth="xl" className={content}>
+      <Grid container>
         <Grid item xs={3}>
           <Typography variant="h4">Create New List</Typography>
           <div className={title}>
@@ -61,27 +59,11 @@ const CreateList = ({ infoUser, sessionId }) => {
           </div>
 
           <div>
-            <List className={contentList}>
-              <ListItem className={active}>
-                <Typography variant="body2" className={textList}>
-                  Step 1 :List Details
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <Typography variant="body2" className={textList}>
-                  Step 2 :Add Items
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <Typography variant="body2" className={textList}>
-                  Step 3 :Choose Images
-                </Typography>
-              </ListItem>
-            </List>
+            <ContentNavList infoUser={infoUser} />
           </div>
         </Grid>
         <Grid item xs={9}>
-          <form style={{ padding: "40px 15px" }} onSubmit={handleSubmitForm}>
+          <form className={contentForm} onSubmit={handleSubmitForm}>
             <div>
               <TextField
                 type="text"
@@ -110,15 +92,7 @@ const CreateList = ({ infoUser, sessionId }) => {
               />
             </div>
             <div>
-              <Button
-                type="submit"
-                variant="contained"
-                style={{
-                  borderRadius: 10,
-                  backgroundColor: "#01b4e4",
-                  color: "#fff",
-                }}
-              >
+              <Button type="submit" variant="contained" className={btnSubmit}>
                 Countinue
               </Button>
             </div>

@@ -19,10 +19,10 @@ import {
   getMovieListAction,
   getMovieListFilteredAction,
 } from "../../../../redux/action/MovieManagerAction";
-import List from "../List/List";
+import List from "../DetailList/DetailList";
 import useStyle from "./style";
 
-const ContentListMovie = () => {
+const MovieCatalog = () => {
   const [clickFilter, setClickFilter] = useState(false);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -105,16 +105,25 @@ const ContentListMovie = () => {
     setClickFilter(true);
   }, []);
 
-  const { formControl, select, btnFilter, input, contentDate } = useStyle();
+  const {
+    content,
+    formControl,
+    slider,
+    select,
+    contentRating,
+    userRating,
+    datePicker,
+    btnFilter,
+    input,
+    contentDate,
+  } = useStyle();
 
   return (
     <Fragment>
-      <Container maxWidth="xl" style={{ padding: "40px 0px" }}>
-        <Grid container style={{ padding: 25 }}>
-          <Grid item xs={12} sm={3} md={2}>
-            <Typography variant="body2" style={{ fontSize: 10 }}>
-              GENRE :
-            </Typography>
+      <Container maxWidth="xl" className={content}>
+        <Grid container>
+          <Grid item xs={6} sm={4} lg={2}>
+            <Typography variant="body2">GENRE :</Typography>
             <FormControl className={formControl}>
               <Select
                 displayEmpty
@@ -141,10 +150,8 @@ const ContentListMovie = () => {
             </FormControl>
           </Grid>
 
-          <Grid xs={12} sm={3} md={2}>
-            <Typography variant="body2" style={{ fontSize: 10 }}>
-              LANGUAGE :
-            </Typography>
+          <Grid xs={6} sm={4} lg={2}>
+            <Typography variant="body2">LANGUAGE :</Typography>
             <FormControl className={formControl}>
               <Select
                 displayEmpty
@@ -171,20 +178,18 @@ const ContentListMovie = () => {
             </FormControl>
           </Grid>
 
-          <Grid xs={12} sm={4} md={2}>
-            <Typography variant="body2" style={{ fontSize: 10 }}>
-              RATING :
-            </Typography>
-            <Typography variant="body" style={{ fontSize: 12 }}>
-              User Rating:
-              <Typography
-                variant="body"
-                style={{ color: "#f9ab00", fontSize: 14, paddingLeft: 10 }}
-              >
-                {rating.slice(0, 1)}-{rating.slice(1, 2)}
-              </Typography>
-            </Typography>
-            <div style={{ width: 150 }}>
+          <Grid xs={12} sm={4} lg={2}>
+            <div className={contentRating}>
+              <div>
+                <Typography variant="body2">RATING :</Typography>
+                <Typography variant="span">
+                  User Rating:
+                  <Typography variant="span" className={userRating}>
+                    {rating.slice(0, 1)}-{rating.slice(1, 2)}
+                  </Typography>
+                </Typography>
+              </div>
+
               <Slider
                 min={1}
                 max={10}
@@ -193,12 +198,12 @@ const ContentListMovie = () => {
                 onChange={handleChangeRating}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
-                style={{ color: "#f9ab00" }}
+                className={slider}
               />
             </div>
           </Grid>
-          <Grid xs={12} sm={12} md={6} lg={4} className={contentDate}>
-            <div style={{ width: "45%" }}>
+          <Grid xs={6} md={4} lg={2}>
+            <div className={contentDate}>
               <Typography variant="body2">From</Typography>
               <KeyboardDatePicker
                 disableToolbar
@@ -211,11 +216,13 @@ const ContentListMovie = () => {
                 KeyboardButtonProps={{
                   "aria-label": "change date",
                 }}
-                style={{ width: 150, margin: 0 }}
+                className={datePicker}
               />
             </div>
+          </Grid>
 
-            <div style={{ width: "40%" }}>
+          <Grid xs={6} md={4} lg={2}>
+            <div className={contentDate}>
               <Typography variant="body2">To</Typography>
               <KeyboardDatePicker
                 disableToolbar
@@ -228,21 +235,21 @@ const ContentListMovie = () => {
                 KeyboardButtonProps={{
                   "aria-label": "change date",
                 }}
-                style={{ width: 150, margin: 0 }}
+                className={datePicker}
               />
             </div>
           </Grid>
-
-          <Grid xs={12} sm={6} md={2} style={{ textAlign: "right" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              endIcon={<SubdirectoryArrowRightOutlinedIcon />}
-              className={btnFilter}
-              onClick={handleClickFilter}
-            >
-              APPLY FILTER
-            </Button>
+          <Grid xs={12} md={4} lg={2}>
+            <div className={btnFilter}>
+              <Button
+                variant="contained"
+                color="primary"
+                endIcon={<SubdirectoryArrowRightOutlinedIcon />}
+                onClick={handleClickFilter}
+              >
+                APPLY FILTER
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </Container>
@@ -268,4 +275,4 @@ const ContentListMovie = () => {
   );
 };
 
-export default ContentListMovie;
+export default MovieCatalog;

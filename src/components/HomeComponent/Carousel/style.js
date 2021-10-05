@@ -1,44 +1,86 @@
 import { makeStyles } from "@material-ui/styles";
 
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     contentCarousel: {
       background: "rgba(0,0,0,0.1)",
       backgroundPosition: "center",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-      height: "700px",
+      height: 700,
       padding: 0,
       position: "relative",
+      [theme.breakpoints.down("md")]: {
+        height: 500,
+      },
+
+      [theme.breakpoints.down("sm")]: {
+        height: 400,
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "auto",
+      },
+      "& .slick-slider > button": {
+        display: "none !important",
+      },
     },
 
     slideCarousel: {
       position: "absolute",
-      top: "13%",
+      top: "14%",
       left: "10%",
       bottom: 0,
       right: "10%",
-      "& h1": {
+      [theme.breakpoints.down("sm")]: {
+        width: "70%",
+        left: "15%",
+        right: "15%",
+      },
+      [theme.breakpoints.down("xs")]: {
+        width: "70%",
+        top: "25%",
+        left: "15%",
+        right: "15%",
+      },
+      "& h4": {
         color: "white",
         fontSize: 40,
         paddingTop: 30,
-      },
-      "& img": {
-        height: "100%",
-        width: "100%",
-        borderRadius: 25,
-        objectFit: "cover",
-        transform: "scale(1)",
-        "&::before": {
-          content: "",
-          width: 0,
-          height: 0,
-          background: "red",
+        [theme.breakpoints.down("md")]: {
+          fontSize: 25,
+          padding: 0,
+          paddingTop: 35,
+        },
+        [theme.breakpoints.down("xs")]: {
+          display: "none",
         },
       },
     },
+
     contentPoster: {
       opacity: 0.8,
+      padding: 20,
+      width: "100%",
+      "& > img": {
+        minHeight: 400,
+        maxHeight: 400,
+        width: "100%",
+        borderRadius: 15,
+        objectFit: "cover",
+        transform: "scale(1)",
+        [theme.breakpoints.down("lg")]: {
+          minHeight: 300,
+          maxHeight: 300,
+        },
+        [theme.breakpoints.down("sm")]: {
+          minHeight: 200,
+          maxHeight: 200,
+        },
+        [theme.breakpoints.down("xs")]: {
+          minHeight: 130,
+          maxHeight: 130,
+        },
+      },
       "&:hover": {
         opacity: 1,
         transform: "scale(1.1)",
@@ -69,9 +111,18 @@ const useStyle = makeStyles(() => {
     },
     imgBackDrop: {
       width: "100%",
-      height: "700px",
+      height: 700,
       objectFit: "cover",
       opacity: 0.4,
+      [theme.breakpoints.down("md")]: {
+        height: 500,
+      },
+      [theme.breakpoints.down("sm")]: {
+        height: 400,
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "auto",
+      },
     },
 
     trailer: {

@@ -1,14 +1,12 @@
 import { Container } from "@material-ui/core";
-import React, { useState } from "react";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
 import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import ContentTabMovie from "./ContentTabMovie/ContentTabMovie";
 import useStyle from "./style";
-import UpComing from "./UpComing/UpComing";
-import TopRated from "./TopRated/TopRated";
-import NowPlaying from "./NowPlaying/NowPlaying";
 
 const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
   const [value, setValue] = useState(0);
@@ -62,13 +60,13 @@ const Movies = ({ arrMovieTopRated, arrMovieNowPlaying, arrMovieUpComing }) => {
         <Tab label="Now Playing" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <TopRated arrMovieTopRated={arrMovieTopRated} />
+        <ContentTabMovie arrContentTabMovie={arrMovieTopRated} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <UpComing arrMovieUpComing={arrMovieUpComing} />
+        <ContentTabMovie arrContentTabMovie={arrMovieUpComing} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <NowPlaying arrMovieNowPlaying={arrMovieNowPlaying} />
+        <ContentTabMovie arrContentTabMovie={arrMovieNowPlaying} />
       </TabPanel>
     </Container>
   );

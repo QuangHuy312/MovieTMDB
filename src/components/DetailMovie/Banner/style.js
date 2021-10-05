@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     backdrop: (props) => ({
       height: "auto",
@@ -11,6 +11,15 @@ const useStyle = makeStyles(() => {
 
     content: {
       paddingTop: 100,
+      [theme.breakpoints.down("md")]: {
+        paddingTop: 70,
+      },
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: 50,
+      },
+      [theme.breakpoints.down("xs")]: {
+        paddingTop: 30,
+      },
     },
     poster: {
       width: "100%",
@@ -19,7 +28,7 @@ const useStyle = makeStyles(() => {
       backgroundSize: "cover",
       backgroundPosition: "center",
       borderRadius: 10,
-      "@media only screen and (max-width:500px)": {
+      [theme.breakpoints.down("sm")]: {
         minHeight: 200,
       },
     },
@@ -35,20 +44,20 @@ const useStyle = makeStyles(() => {
       "&:hover": {
         background: "#f9ab00",
       },
-      "@media only screen and (max-width:768px)": {
+      [theme.breakpoints.down("md")]: {
         display: "none",
       },
     },
     titleMovie: {
       fontWeight: 500,
       paddingBottom: 15,
-      "@media screen and (max-width:992px)": {
+      [theme.breakpoints.down("lg")]: {
         fontSize: 40,
       },
-      "@media screen and (max-width:768px)": {
+      [theme.breakpoints.down("md")]: {
         fontSize: 30,
       },
-      "@media screen and (max-width:500px)": {
+      [theme.breakpoints.down("xs")]: {
         fontSize: 20,
       },
     },
@@ -63,7 +72,7 @@ const useStyle = makeStyles(() => {
     textUserScore: {
       fontSize: 15,
       marginLeft: 10,
-      "@media screen and (max-width:500px)": {
+      [theme.breakpoints.down("sm")]: {
         fontSize: 10,
       },
     },
@@ -84,8 +93,7 @@ const useStyle = makeStyles(() => {
 
     desc: {
       fontSize: 15,
-      padding: "0 25px 0 0 ",
-      "@media screen and (max-width:500px)": {
+      [theme.breakpoints.down("sm")]: {
         fontSize: 10,
       },
     },
@@ -179,10 +187,11 @@ const useStyle = makeStyles(() => {
       "& div": {
         borderRadius: 15,
       },
-      "@media screen and (max-width:768px)": {
+
+      [theme.breakpoints.down("md")]: {
         height: "370px !important",
       },
-      "@media screen and (max-width:500px)": {
+      [theme.breakpoints.down("sm")]: {
         height: "300px !important",
       },
     },

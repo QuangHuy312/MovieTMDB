@@ -17,9 +17,19 @@ import NOT_POSTER from "../../../../assets/img_no_poster.jpg";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
 
-const List = ({ arrList, setPage, arrGenresList }) => {
-  const { content, media, card, title, rated, iconArrow, contentCard } =
-    useStyle();
+const DetailList = ({ arrList, setPage, arrGenresList }) => {
+  const {
+    content,
+    media,
+    card,
+    textContent,
+    title,
+    rated,
+    iconArrow,
+    contentCard,
+    genre,
+    pagination,
+  } = useStyle();
   const arrow = clsx(rated, iconArrow);
   const history = useHistory();
   return (
@@ -27,7 +37,7 @@ const List = ({ arrList, setPage, arrGenresList }) => {
       {arrList?.results?.length !== 0 ? (
         <div className={content}>
           <Container maxWidth="xl">
-            <Grid container>
+            <Grid container spacing={3}>
               {arrList?.results?.slice(0, 18)?.map((movie) => {
                 return (
                   <Grid item xs={6} sm={4} md={3} lg={2} key={movie.id}>
@@ -43,7 +53,6 @@ const List = ({ arrList, setPage, arrGenresList }) => {
                         />
                         <Typography
                           variant="h2"
-                          component="span"
                           className={arrow}
                           onClick={() => {
                             if (history.location.pathname === "/movies/list") {
@@ -57,19 +66,14 @@ const List = ({ arrList, setPage, arrGenresList }) => {
                         >
                           <ArrowRightAltIcon />
                         </Typography>
-                        <Typography
-                          variant="h1"
-                          component="div"
-                          className={rated}
-                        >
+                        <Typography variant="h1" className={rated}>
                           {movie.vote_average}
                         </Typography>
                       </div>
-                      <CardContent style={{ padding: 0, marginTop: 10 }}>
+                      <CardContent className={textContent}>
                         <Typography
                           variant="body2"
                           className={title}
-                          component="p"
                           onClick={() => {
                             if (history.location.pathname === "/movies/list") {
                               history.push(`/detailmovies/${movie.id}`);
@@ -81,39 +85,21 @@ const List = ({ arrList, setPage, arrGenresList }) => {
                           }}
                         >
                           {movie.title || movie.name}
-                          <Typography
-                            variant="body"
-                            style={{
-                              marginLeft: 10,
-                              color: "#f9ab00",
-                            }}
-                          >
+                          <Typography variant="span">
                             (
                             {movie?.release_date?.slice(0, 4) ||
                               movie?.first_air_date?.slice(0, 4)}
                             )
                           </Typography>
                         </Typography>
-                        <div
-                          style={{
-                            paddingTop: 10,
-                            color: "#f9ab00",
-                            display: "grid",
-                            gridTemplateColumns: "1fr 1.7fr",
-                          }}
-                        >
+                        <div className={genre}>
                           {movie?.genre_ids?.map((genre) => {
-                            return arrGenresList?.map((listGenre) => {
+                            return arrGenresList?.map((listGenre, index) => {
                               if (genre === listGenre.id) {
                                 return (
-                                  <span
-                                    style={{
-                                      fontSize: 12,
-                                      paddingBottom: 5,
-                                    }}
-                                  >
+                                  <Typography variant="body2" key={index}>
                                     {listGenre.name}
-                                  </span>
+                                  </Typography>
                                 );
                               }
                             });
@@ -124,19 +110,22 @@ const List = ({ arrList, setPage, arrGenresList }) => {
                   </Grid>
                 );
               })}
+
+              <Grid item xs={12}>
+                <div className={pagination}>
+                  <Pagination
+                    count={arrList?.total_pages}
+                    variant="outlined"
+                    shape="rounded"
+                    color="primary"
+                    onChange={(e) => {
+                      setPage(e.target.textContent);
+                    }}
+                  />
+                </div>
+              </Grid>
             </Grid>
           </Container>
-          <div style={{ width: "30%", margin: "0 auto", paddingBottom: 20 }}>
-            <Pagination
-              count={arrList?.total_pages}
-              variant="outlined"
-              shape="rounded"
-              color="primary"
-              onChange={(e) => {
-                setPage(e.target.textContent);
-              }}
-            />
-          </div>
         </div>
       ) : (
         <div
@@ -162,4 +151,4 @@ const List = ({ arrList, setPage, arrGenresList }) => {
   );
 };
 
-export default List;
+export default DetailList;

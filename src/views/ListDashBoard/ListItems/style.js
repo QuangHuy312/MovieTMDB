@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     content: {
       paddingTop: 40,
@@ -10,6 +10,27 @@ const useStyle = makeStyles(() => {
       textAlign: "center",
       "& h6": {
         fontWeight: "bold",
+      },
+      "& >i": {
+        fontSize: 30,
+        [theme.breakpoints.down("md")]: {
+          fontSize: 25,
+        },
+        [theme.breakpoints.down("sm")]: {
+          fontSize: 20,
+        },
+      },
+      "& >h6": {
+        fontSize: 25,
+        [theme.breakpoints.down("md")]: {
+          fontSize: 20,
+        },
+        [theme.breakpoints.down("sm")]: {
+          fontSize: 15,
+        },
+        [theme.breakpoints.down("xs")]: {
+          fontSize: 10,
+        },
       },
     },
 

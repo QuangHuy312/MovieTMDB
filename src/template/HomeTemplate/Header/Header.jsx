@@ -6,7 +6,6 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemText,
   Typography,
 } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
@@ -93,8 +92,8 @@ const Header = () => {
   const scrolled = clsx(content, scrollNav);
   return (
     <div className={root}>
-      <AppBar color="transparent" className={isScrolled ? content : scrolled}>
-        <Container className={navContent}>
+      <AppBar className={isScrolled ? content : scrolled}>
+        <Container maxWidth="xl" className={navContent}>
           <NavLink to="/">
             <img src={LOGO} alt="logo" className={logo} />
           </NavLink>

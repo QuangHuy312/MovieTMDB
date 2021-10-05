@@ -32,6 +32,9 @@ const Rating = ({ infoUser, sessionId }) => {
       content: {
         paddingTop: 20,
         paddingBottom: 20,
+        "& .MuiTabs-indicator	": {
+          background: "transparent",
+        },
         "& .MuiTab-root": {
           minWidth: 50,
           marginLeft: 30,

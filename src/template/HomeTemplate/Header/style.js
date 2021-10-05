@@ -13,6 +13,12 @@ const useStyle = makeStyles((theme) => ({
     zIndex: 99,
     transition: "background 500ms linear",
     boxShadow: "none",
+    [theme.breakpoints.down("sm")]: {
+      padding: "10px 0 20px 0",
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: "10px 0",
+    },
   },
 
   scrollNav: {
@@ -26,9 +32,19 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: "space-between",
     height: 50,
     marginTop: 10,
+    [theme.breakpoints.down("sm")]: {
+      height: 30,
+    },
   },
   logo: {
     width: 170,
+    [theme.breakpoints.down("sm")]: {
+      width: 150,
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: 100,
+      height: "auto",
+    },
   },
 
   listNavbar: {
@@ -83,9 +99,12 @@ const useStyle = makeStyles((theme) => ({
   },
 
   menuIcon: {
-    fontSize: 40,
     display: (props) =>
       props.isDeskTop || props.openDrawer ? "block" : "none",
+    "& >button": {
+      padding: 0,
+      margin: 0,
+    },
   },
   contentDrawer: {
     width: "100%",

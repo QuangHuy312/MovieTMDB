@@ -33,7 +33,7 @@ const SimilarMovie = ({ detailSimilar }) => {
         You may also like...
       </Typography>
 
-      <Container maxWidth="xxl" className={content}>
+      <Container maxWidth="xl" className={content}>
         <Grid container spacing={4}>
           {detailSimilar?.slice(0, 12)?.map((movieSimilar) => {
             return (

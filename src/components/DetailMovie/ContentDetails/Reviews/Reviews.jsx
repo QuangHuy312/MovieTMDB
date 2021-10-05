@@ -20,20 +20,19 @@ const Reviews = ({ reviews }) => {
               (e.target.src = `https://i.pravatar.cc/300?u=${reviews.id}`)
             }
           />
-          <div style={{ paddingLeft: 15 }}>
+          <div>
             <div>
               {comment ? (
-                <Typography variant="body2" className={textReviews}>
+                <Typography variant="span" className={textReviews}>
                   {reviews.content}
                 </Typography>
               ) : (
-                <Typography variant="body2" className={textReviews}>
+                <Typography variant="span" className={textReviews}>
                   {reviews.content.substr(0, 200)}
                 </Typography>
               )}
               <Typography
-                variant="body"
-                component="span"
+                variant="span"
                 onClick={() => {
                   setComment(!comment);
                 }}
@@ -43,7 +42,7 @@ const Reviews = ({ reviews }) => {
               </Typography>
             </div>
 
-            <Typography variant="body" className={createTime}>
+            <Typography variant="span" className={createTime}>
               {reviews.created_at} by {reviews.author}
             </Typography>
           </div>

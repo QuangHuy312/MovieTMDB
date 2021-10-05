@@ -55,7 +55,7 @@ const ListItems = ({ match, infoUser }) => {
   } = useStyle();
   const arrow = clsx(rated, iconArrow);
   return (
-    <Container className={content}>
+    <Container maxWidth="xl" className={content}>
       <div>
         <Grid container>
           <Grid item xs={4}>
@@ -89,7 +89,7 @@ const ListItems = ({ match, infoUser }) => {
 
       <div>
         <Grid container spacing={3} style={{ paddingTop: 30 }}>
-          {arrDetailsList?.items.length > 0 ? (
+          {arrDetailsList?.items?.length > 0 ? (
             <Fragment>
               {arrDetailsList?.items?.map((items, index) => {
                 return (

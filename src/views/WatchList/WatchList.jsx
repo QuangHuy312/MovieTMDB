@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Movies from "../../components/AdminComponent/Movies/Movies";
-import TVShow from "../../components/AdminComponent/TVShow/TVShow";
 import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
+import TVShow from "../../components/AdminComponent/TVShow/TVShow";
 import {
   getCreatedListAction,
   getWatchListMovieAction,
@@ -32,6 +32,9 @@ const WatchList = ({ infoUser, sessionId }) => {
     return {
       content: {
         padding: "20px 0 40px",
+        "& .MuiTabs-indicator	": {
+          background: "transparent",
+        },
         "& .MuiTab-root": {
           minWidth: 50,
           marginLeft: 30,

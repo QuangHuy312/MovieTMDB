@@ -2,13 +2,16 @@ import {
   Button,
   Container,
   Grid,
-  List,
-  ListItem,
   TextField,
   Typography,
+  useMediaQuery,
+  CardContent,
+  Card,
+  CardMedia,
 } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Autocomplete } from "@material-ui/lab";
+import { useTheme } from "@material-ui/styles";
 import { useConfirm } from "material-ui-confirm";
 import moment from "moment";
 import { useSnackbar } from "notistack";
@@ -27,6 +30,7 @@ import {
 } from "../../../../redux/action/DashBoardManagerAction";
 import { DETELE_LIST_SEARCH } from "../../../../redux/types/DashBoardManagerType";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
+import ContentNavList from "../ContentNavList/ContentNavList";
 import useStyle from "./style";
 
 const AddItems = ({ infoUser, match, sessionId }) => {
@@ -34,20 +38,29 @@ const AddItems = ({ infoUser, match, sessionId }) => {
     title,
     listName,
     content,
-    contentList,
-    active,
-    textList,
-    infoItem,
+    form,
+    contentRight,
+    contentMovieSearch,
+    titleMovieSearch,
+    card,
     date,
     poster,
-    contentItem,
     titleItem,
+    contentTitleAdded,
+    root,
+    overview,
+    circularRate,
+    overviewMobile,
+    titleMovieSearchMobile,
   } = useStyle();
   const [valueSearch, setValueSearch] = useState("");
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const confirm = useConfirm();
   const history = useHistory();
+  const theme = useTheme();
+  const isDeskTop = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const id = match.params.id;
   const { arrListSearch, arrDetailsList } = useSelector(
     (state) => state.DashBoardManagerReducer
@@ -64,7 +77,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
   }, [valueSearch, dispatch]);
   useEffect(() => {
     dispatch(getDetailsListAction(id));
-  }, []);
+  }, [dispatch, id]);
 
   const handleClickAddItem = (movieId) => {
     dispatch(
@@ -87,8 +100,8 @@ const AddItems = ({ infoUser, match, sessionId }) => {
       .catch(() => console.log("deletion canclled"));
   };
   return (
-    <Container className={content}>
-      <Grid container spacing={3}>
+    <Container maxWidth="xl" className={content}>
+      <Grid container spacing={isMobile ? 1 : 3}>
         <Grid item xs={3}>
           <Typography
             variant="h6"
@@ -104,42 +117,12 @@ const AddItems = ({ infoUser, match, sessionId }) => {
           </div>
 
           <div>
-            <List className={contentList}>
-              <ListItem>
-                <Typography
-                  variant="body2"
-                  className={textList}
-                  onClick={() =>
-                    history.push({ pathname: `/${infoUser.username}/list/new` })
-                  }
-                >
-                  Step 1 :Create New
-                </Typography>
-              </ListItem>
-              <ListItem className={active}>
-                <Typography variant="body2" className={textList}>
-                  Step 2 :Add/Edit Items
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <Typography
-                  variant="body2"
-                  className={textList}
-                  onClick={() =>
-                    history.push({
-                      pathname: `/${infoUser.username}/list/${id}/chooseimg`,
-                    })
-                  }
-                >
-                  Step 3 :Choose Images
-                </Typography>
-              </ListItem>
-            </List>
+            <ContentNavList id={id} infoUser={infoUser} />
           </div>
         </Grid>
 
-        <Grid xs={9} style={{ padding: "20px 40px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Grid xs={9} className={contentRight}>
+          <div>
             <Typography variant="h6">Add Item</Typography>
             <Button
               variant="contained"
@@ -158,7 +141,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
             id="combo-box-demo"
             options={arrListSearch?.length > 0 ? arrListSearch : []}
             getOptionLabel={(option) => option.title}
-            style={{ width: "100%", marginTop: 30 }}
+            className={form}
             inputValue={valueSearch}
             onInputChange={(e, value) => {
               setValueSearch(value);
@@ -166,58 +149,82 @@ const AddItems = ({ infoUser, match, sessionId }) => {
             renderOption={(option) => (
               <div
                 onClick={() => handleClickAddItem(option.id)}
-                className={contentItem}
+                className={root}
               >
-                <div>
-                  <img
-                    src={`${IMAGE_URL}${WIDTH_IMAGE}${option.poster_path}`}
-                    alt="poster"
-                    className={poster}
-                    onError={(e) => (e.target.src = NO_POSTER)}
-                  />
-                </div>
-                <div className={infoItem}>
-                  <div style={{ display: "flex" }}>
-                    <div
-                      style={{
-                        width: 60,
-                        height: 60,
-                        padding: "7px 10px 0",
+                <Card className={card}>
+                  {isMobile && (
+                    <Typography
+                      className={titleMovieSearchMobile}
+                      variant="body2"
+                      onClick={() => {
+                        history.push({
+                          pathname: `/detailmovies/${option.id}`,
+                        });
                       }}
                     >
-                      <CircularProgressbar
-                        value={option.vote_average * 10}
-                        text={`${option.vote_average * 10}%`}
-                        styles={buildStyles({
-                          strokeLinecap: "butt",
-                          textSize: "30px",
-                          pathTransitionDuration: 0.5,
-                          pathColor: `rgba(0, 255, 0, ${
-                            option.vote_average * 10
-                          })`,
-                          textColor: "black",
-                          trailColor: "#204529",
-                          backgroundColor: "#20c172",
-                        })}
-                      />
-                    </div>
-                    <div>
-                      <Typography className={titleItem} variant="body2">
-                        {option.title || option.name}
-                      </Typography>
-                      <Typography variant="body" className={date}>
-                        {moment(
-                          option.release_date || option.first_air_date
-                        ).format("LL")}
-                      </Typography>
-                    </div>
-                  </div>
-                  <div>
-                    <Typography variant="body2">
-                      {option.overview.slice(0, 400)}
+                      {option.title || option.name}
                     </Typography>
+                  )}
+                  <div className={contentMovieSearch}>
+                    <CardMedia
+                      image={
+                        option.poster_path
+                          ? `${IMAGE_URL}${WIDTH_IMAGE}${option.poster_path}`
+                          : NO_POSTER
+                      }
+                      className={poster}
+                    />
+                    <CardContent>
+                      <div className={root}>
+                        <div className={circularRate}>
+                          <CircularProgressbar
+                            value={option.vote_average * 10}
+                            text={`${option.vote_average * 10}%`}
+                            styles={buildStyles({
+                              strokeLinecap: "butt",
+                              textSize: "30px",
+                              pathTransitionDuration: 0.5,
+                              pathColor: `rgba(0, 255, 0, ${
+                                option.vote_average * 10
+                              })`,
+                              textColor: "black",
+                              trailColor: "#204529",
+                              backgroundColor: "#20c172",
+                            })}
+                          />
+                        </div>
+                        <div>
+                          <Typography
+                            className={titleMovieSearch}
+                            variant="body2"
+                            onClick={() => {
+                              history.push({
+                                pathname: `/detailmovies/${option.id}`,
+                              });
+                            }}
+                          >
+                            {option.title || option.name}
+                          </Typography>
+                          <Typography variant="body1" className={date}>
+                            {moment(option.release_date).format("LL")}
+                          </Typography>
+                        </div>
+                      </div>
+                      <div className={overview}>
+                        <Typography variant="body2">
+                          {option.overview.slice(0, 400)}
+                        </Typography>
+                      </div>
+                    </CardContent>
                   </div>
-                </div>
+                  {isDeskTop && (
+                    <div>
+                      <Typography variant="body2" className={overviewMobile}>
+                        {option.overview.slice(0, 250)}
+                      </Typography>
+                    </div>
+                  )}
+                </Card>
               </div>
             )}
             renderInput={(params) => (
@@ -238,23 +245,11 @@ const AddItems = ({ infoUser, match, sessionId }) => {
             <Fragment>
               {arrDetailsList?.items?.map((item, index) => {
                 return (
-                  <div
-                    key={item.id}
-                    style={{
-                      padding: "20px 0",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  <div key={item.id} className={contentTitleAdded}>
                     <div>
+                      <Typography variant="span">{index + 1}.</Typography>
                       <Typography
-                        variant="body"
-                        style={{ fontWeight: "bold", paddingRight: 10 }}
-                      >
-                        {index + 1}.
-                      </Typography>
-                      <Typography
-                        variant="body"
+                        variant="span"
                         className={titleItem}
                         onClick={() => {
                           if (item.media_type === "movie") {

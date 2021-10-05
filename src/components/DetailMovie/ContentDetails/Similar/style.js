@@ -4,6 +4,7 @@ const useStyle = makeStyles((theme) => {
     titleText: {
       textAlign: "center",
       paddingBottom: 20,
+      fontWeight: "bold",
       [theme.breakpoints.down("lg")]: {
         fontSize: 25,
       },
@@ -13,6 +14,10 @@ const useStyle = makeStyles((theme) => {
         paddingBottom: 0,
         paddingTop: 30,
         borderTop: "1px solid #5a4c4c",
+      },
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 20,
+        paddingLeft: 10,
       },
     },
     content: {

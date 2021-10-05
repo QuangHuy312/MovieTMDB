@@ -7,35 +7,50 @@ import {
 } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import clsx from "clsx";
+import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 import React from "react";
 import { useHistory } from "react-router";
 import Slider from "react-slick";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../utils/settings/config";
 import useStyle from "./style";
-import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 
 const TVShow = ({ arrTVShowTopRated }) => {
   const history = useHistory();
+  const {
+    content,
+    contentMedia,
+    card,
+    hoverContent,
+    hoverButton,
+    title,
+    btnViewAll,
+    slider,
+  } = useStyle();
   function SampleNextArrow(props) {
-    const { onClick } = props;
+    const { className, style, onClick } = props;
     return (
-      <div className={arrowContentNext} onClick={onClick}>
-        <ArrowForwardIosIcon className={arrowImage} />
-      </div>
+      <ArrowForwardIosIcon
+        className={className}
+        style={{ ...style, color: "#fff", display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <ArrowBackIosOutlinedIcon
+        className={className}
+        style={{ ...style, color: "#fff", display: "block" }}
+        onClick={onClick}
+      />
     );
   }
 
-  function SamplePrevArrow(props) {
-    const { onClick } = props;
-    return (
-      <div className={arrowContent} onClick={onClick}>
-        <ArrowBackIosOutlinedIcon className={arrowImage} />
-      </div>
-    );
-  }
   const settings = {
     infinite: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
     slidesToShow: 5,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
@@ -50,7 +65,7 @@ const TVShow = ({ arrTVShowTopRated }) => {
         },
       },
       {
-        breakpoint: 780,
+        breakpoint: 768,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -58,35 +73,22 @@ const TVShow = ({ arrTVShowTopRated }) => {
       },
     ],
   };
-  const {
-    content,
-    arrowImage,
-    contentMedia,
-    arrowContentPrev,
-    arrowContentNext,
-    card,
-    hoverContent,
-    hoverButton,
-    title,
-  } = useStyle();
-  const arrowContent = clsx(arrowContentPrev, arrowContentNext);
+
   return (
-    <Container maxWidth="xl" className={content} spacing={3}>
-      <Typography variant="h4" component="h1" className={title}>
-        TV SHOW
-      </Typography>
-      <div style={{ textAlign: "right" }}>
+    <Container maxWidth="xl" className={content}>
+      <div className={title}>
+        <Typography variant="h4">TV SHOW</Typography>
         <Button
           variant="contained"
           color="primary"
           endIcon={<SubdirectoryArrowRightOutlinedIcon />}
-          style={{ borderRadius: 10 }}
+          className={btnViewAll}
           onClick={() => history.push("/tvshow/list")}
         >
           View All
         </Button>
       </div>
-      <Slider {...settings} style={{ padding: 40 }}>
+      <Slider {...settings} className={slider}>
         {arrTVShowTopRated?.slice(0, 15)?.map((tvshow) => {
           return (
             <Card className={card}>

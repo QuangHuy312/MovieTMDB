@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Container,
   Grid,
   Typography,
 } from "@material-ui/core";
@@ -13,16 +14,24 @@ import clsx from "clsx";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 const Recommend = ({ detailRecommend }) => {
-  const { content, card, title, rated, iconArrow, contentCard, poster } =
-    useStyle();
+  const {
+    content,
+    card,
+    title,
+    rated,
+    iconArrow,
+    titleMovie,
+    contentCard,
+    poster,
+  } = useStyle();
   const history = useHistory();
   const arrow = clsx(rated, iconArrow);
   return (
-    <div className={content}>
-      <Typography variant="h4" style={{ paddingLeft: 50 }}>
+    <Container maxWidth="xxl" className={content}>
+      <Typography variant="h1" className={title}>
         We Recommended for you
       </Typography>
-      <Grid container style={{ paddingTop: 50 }}>
+      <Grid container>
         {detailRecommend?.slice(0, 6)?.map((recommend) => {
           return (
             <Grid item xs={6} md={4} lg={2}>
@@ -42,26 +51,20 @@ const Recommend = ({ detailRecommend }) => {
                   >
                     <ArrowRightAltIcon />
                   </Typography>
-                  <Typography variant="h1" component="div" className={rated}>
+                  <Typography variant="h1" className={rated}>
                     {Math.ceil(recommend.vote_average)}
                   </Typography>
                 </div>
                 <CardContent>
                   <Typography
                     variant="body2"
-                    className={title}
+                    className={titleMovie}
                     onClick={() =>
                       history.push({ pathname: `${recommend.id}` })
                     }
                   >
                     {recommend?.title || recommend?.name}
-                    <Typography
-                      variant="body"
-                      style={{
-                        marginLeft: 10,
-                        color: "#f9ab00",
-                      }}
-                    >
+                    <Typography variant="span">
                       (
                       {recommend?.release_date?.slice(0, 4) ||
                         recommend?.first_air_date?.slice(0, 4)}
@@ -74,7 +77,7 @@ const Recommend = ({ detailRecommend }) => {
           );
         })}
       </Grid>
-    </div>
+    </Container>
   );
 };
 

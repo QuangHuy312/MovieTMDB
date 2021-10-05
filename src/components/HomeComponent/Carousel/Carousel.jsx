@@ -8,11 +8,42 @@ import {
   WIDTH_IMAGE,
 } from "../../../utils/settings/config";
 import useStyle from "./style";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import { Typography } from "@material-ui/core";
 
 const Carousel = ({ arrMoviePopular }) => {
   const history = useHistory();
+  const {
+    contentCarousel,
+    slideCarousel,
+    contentPoster,
+    iconPlay,
+    imgBackDrop,
+  } = useStyle();
   const [nav1, setNav1] = React.useState(null);
   const [nav2, setNav2] = React.useState(null);
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <ArrowForwardIosIcon
+        className={className}
+        style={{ ...style, color: "#fff", display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <ArrowBackIosIcon
+        className={className}
+        style={{ ...style, color: "#fff", display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
+
   var settings = {
     autoplaySpeed: 2000,
     pauseOnHover: true,
@@ -20,6 +51,8 @@ const Carousel = ({ arrMoviePopular }) => {
     autoplay: true,
     swipeToSlide: true,
     focusOnSelect: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     responsive: [
       {
         breakpoint: 1024,
@@ -37,42 +70,28 @@ const Carousel = ({ arrMoviePopular }) => {
           initialSlide: 2,
         },
       },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
     ],
   };
 
-  const {
-    contentCarousel,
-    slideCarousel,
-    contentPoster,
-    iconPlay,
-    imgBackDrop,
-  } = useStyle();
   return (
     <Fragment>
       <div className={contentCarousel}>
         <Slider asNavFor={nav2} ref={(slider1) => setNav1(slider1)} fade={true}>
           {arrMoviePopular?.map((banner) => {
             return (
-              <div key={banner.id}>
+              <Fragment key={banner.id}>
                 <img
                   src={`${IMAGE_URL}/${WIDTH_BACKDROP}${banner.backdrop_path}`}
                   alt={banner.backdrop_path}
                   className={imgBackDrop}
                 />
-              </div>
+              </Fragment>
             );
           })}
         </Slider>
 
         <div className={slideCarousel}>
-          <h1>Popular Movie</h1>
+          <Typography variant="h4">Popular Movie</Typography>
           <Slider
             {...settings}
             asNavFor={nav1}
@@ -81,19 +100,17 @@ const Carousel = ({ arrMoviePopular }) => {
             {arrMoviePopular?.map((movie) => {
               return (
                 <Fragment key={movie.id}>
-                  <div style={{ padding: "30px" }}>
-                    <div className={contentPoster}>
-                      <img
-                        src={`${IMAGE_URL}/${WIDTH_IMAGE}${movie.poster_path}`}
-                        alt={movie.poster_path}
-                      />
-                      <ArrowRightAltIcon
-                        className={iconPlay}
-                        onClick={() => {
-                          history.push(`/detailmovies/${movie.id}`);
-                        }}
-                      />
-                    </div>
+                  <div className={contentPoster}>
+                    <img
+                      src={`${IMAGE_URL}/${WIDTH_IMAGE}${movie.poster_path}`}
+                      alt={movie.poster_path}
+                    />
+                    <ArrowRightAltIcon
+                      className={iconPlay}
+                      onClick={() => {
+                        history.push(`/detailmovies/${movie.id}`);
+                      }}
+                    />
                   </div>
                 </Fragment>
               );

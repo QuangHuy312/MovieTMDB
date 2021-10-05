@@ -1,20 +1,31 @@
 import { makeStyles } from "@material-ui/styles";
 
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
-    content: {
-      paddingTop: 50,
-      borderTop: "1px solid #5a4c4c",
-    },
     card: {
       backgroundColor: "transparent",
       overflow: "hidden",
       maxWidth: 350,
-      height: 370,
-      marginLeft: 30,
-      marginBottom: 35,
+      height: 350,
       boxShadow: "none",
       position: "relative",
+      [theme.breakpoints.down("lg")]: {
+        height: 380,
+      },
+
+      [theme.breakpoints.down("xs")]: {
+        height: 250,
+        "& .MuiCardContent-root": {
+          padding: 0,
+          paddingTop: 10,
+        },
+      },
+    },
+
+    viewAllIcon: {
+      textAlign: "right",
+      padding: 20,
+      borderRadius: 10,
     },
     contentCard: {
       overflow: "hidden",
@@ -47,6 +58,13 @@ const useStyle = makeStyles(() => {
         height: "100%",
         display: "none",
         backgroundColor: "rgba(0,0,0,0.7)",
+      },
+      [theme.breakpoints.down("lg")]: {
+        height: 320,
+      },
+
+      [theme.breakpoints.down("xs")]: {
+        height: 220,
       },
     },
     title: {

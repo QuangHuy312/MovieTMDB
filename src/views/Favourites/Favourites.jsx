@@ -31,6 +31,9 @@ const Favorites = ({ infoUser, sessionId }) => {
     return {
       content: {
         padding: "20px 0 40px",
+        "& .MuiTabs-indicator	": {
+          background: "transparent",
+        },
         "& .MuiTab-root": {
           minWidth: 50,
           marginLeft: 30,

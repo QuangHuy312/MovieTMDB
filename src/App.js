@@ -16,7 +16,6 @@ import ListDashBoard from "./views/ListDashBoard/ListDashBoard";
 import Login from "./views/Login/Login";
 import MovieList from "./views/MovieList/MovieList";
 import NotFound from "./views/NotFound/NotFound";
-import DashBoard from "./views/DashBoard/DashBoard";
 import Rating from "./views/Rating/Rating";
 import TVList from "./views/TVList/TVList.jsx";
 import CreateList from "./views/ListDashBoard/CreateList/CreateList";

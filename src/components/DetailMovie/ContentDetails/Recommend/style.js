@@ -1,25 +1,39 @@
 import { makeStyles } from "@material-ui/styles";
-const useStyle = makeStyles(() => {
+const useStyle = makeStyles((theme) => {
   return {
     content: {
       paddingTop: 40,
+      paddingBottom: 20,
       borderTop: "1px solid  #5a4c4c",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: 20,
+      },
+    },
+    title: {
+      fontSize: 30,
+      fontWeight: "bold",
+      paddingBottom: 25,
+      paddingLeft: 10,
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 20,
+      },
     },
     card: {
       backgroundColor: "transparent",
       overflow: "hidden",
       maxWidth: 350,
-      height: 530,
+      height: 400,
       marginBottom: 35,
       boxShadow: "none",
       position: "relative",
       marginLeft: 10,
       marginRight: 10,
-      "@media screen and (max-width:992px)": {
-        height: 440,
+
+      [theme.breakpoints.down("md")]: {
+        height: 400,
       },
-      "@media screen and (max-width:768px)": {
-        height: 380,
+      [theme.breakpoints.down("sm")]: {
+        height: 320,
       },
     },
 
@@ -27,11 +41,11 @@ const useStyle = makeStyles(() => {
       overflow: "hidden",
       "&:hover": {
         cursor: "pointer",
-        "& $media": {
+        "& $poster": {
           transition: "all 0.9s",
           transform: "scale(1.2)",
         },
-        "& $media:before": {
+        "& $poster:before": {
           display: "block",
         },
         "& $iconArrow": {
@@ -40,7 +54,7 @@ const useStyle = makeStyles(() => {
       },
     },
     poster: {
-      height: 390,
+      height: 350,
       borderRadius: 10,
       backgroundPosition: "center",
       backgroundSize: "cover",
@@ -55,28 +69,35 @@ const useStyle = makeStyles(() => {
         display: "none",
         backgroundColor: "rgba(0,0,0,0.7)",
       },
-      "@media screen and (max-width:1200px)": {
-        height: 300,
+
+      [theme.breakpoints.down("lg")]: {
+        height: 280,
       },
-      "@media screen and (max-width:992px)": {
-        height: 400,
+      [theme.breakpoints.down("md")]: {
+        height: 340,
       },
-      "@media screen and (max-width:768px)": {
-        height: 330,
+      [theme.breakpoints.down("sm")]: {
+        height: 260,
       },
     },
-    title: {
-      boder: "none",
-      color: "white",
+    titleMovie: {
+      color: "#fff",
       transition: "all 0.5s",
       "&:hover": {
         cursor: "pointer",
         color: "#f9ab00",
       },
+      "& >span": {
+        color: "#f9ab00",
+        marginLeft: 10,
+      },
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 12,
+      },
     },
 
     rated: {
-      color: "white",
+      color: "#fff",
       border: "2px solid #f9ab00",
       width: 30,
       height: 30,
@@ -103,7 +124,7 @@ const useStyle = makeStyles(() => {
       "&:hover": {
         transform: "scale(1.3)",
         border: "2px solid #f9ab00",
-        background: "white",
+        background: "#fff",
         color: "#f9ab00",
       },
     },
