@@ -12,22 +12,38 @@ import Slider from "@material-ui/core/Slider";
 import SubdirectoryArrowRightOutlinedIcon from "@material-ui/icons/SubdirectoryArrowRightOutlined";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import moment from "moment";
-import React, { Fragment, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getGenresTVShowListAction,
-  getTVShowListAction,
-  getTVShowListFilteredAction,
+  getGenresMovieListAction,
+  getMovieListAction,
+  getMovieListFilteredAction,
 } from "../../../../redux/action/MovieManagerAction";
-import List from "../DetailList/DetailList";
-import useStyle from "../MovieCatalog/style";
+import DetailList from "../DetailList/ItemsList";
+import useStyle from "./style";
+import queryString from "query-string";
+import { useHistory, useLocation } from "react-router";
 
-const TVShowCatalog = () => {
-  const [clickFilter, setClickFilter] = useState(false);
+const MovieCatalog = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const [page, setPage] = useState(1);
-  const { arrTVShowList, arrGenresTVShowList, arrTVShowListFilterd } =
-    useSelector((state) => state.MovieManagerReducer);
+
+  const { arrMovieList, arrGenresMovieList } = useSelector(
+    (state) => state.MovieManagerReducer
+  );
+  useEffect(() => {
+    dispatch(getMovieListAction(page));
+
+    dispatch(getGenresMovieListAction);
+  }, []);
 
   const [genre, setGenre] = React.useState("");
   const [country, setCountry] = React.useState("");
@@ -36,75 +52,90 @@ const TVShowCatalog = () => {
   const rateGte = rating?.join("").slice(0, 1);
   const rateLte = rating?.join("").slice(1, 3);
 
-  //Api yêu cầu gửi tên viết tắt , vd Japanese =ja ....
-  const language = country.slice(-2);
+  const [selectedFromDate, setSelectedFromDate] = useState("2017-05-29");
 
-  // Api yêu cầu gửi mã id của genre , check với mảng Genres tìm ra id
-  const findId = arrGenresTVShowList?.find((genreList) => {
-    if (genreList.name === genre) {
-      return genreList.id;
-    }
-  });
-  const genreId = findId?.id;
+  const [selectedToDate, setSelectedToDate] = useState("2021-05-29");
 
-  const newDate = new Date();
-  const [selectedFromDate, setSelectedFromDate] =
-    React.useState(" 12 / 09 / 2017");
+  const queryparams = useMemo(() => {
+    const params = queryString.parse(location.search);
+    return {
+      ...params,
+      page: Number.parseInt(params.page) || 1,
+      releaseDateGte: params.releaseDateGte || selectedFromDate,
+      releaseDateLte: params.releaseDateLte || selectedToDate,
+      rategte: params.rateGte || 5, //default 5-10
+      ratelte: params.rateLte || 10,
+      genre: Number.parseInt(params.genre) || 28, // mặc định Action là 28
+      language: params.language || "en",
+    };
+  }, [location.search]);
 
   const handleFromDateChange = (date) => {
-    setSelectedFromDate(date);
+    const formatDate = moment(date).format("YYYY-MM-DD");
+    setSelectedFromDate(formatDate);
+    const filters = { ...queryparams, releaseDateGte: formatDate };
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters),
+    });
   };
 
-  const [selectedToDate, setSelectedToDate] = React.useState(
-    moment(newDate).format("MM/DD/YYYY")
-  );
-  const fisrtAirDateGte = moment(selectedFromDate).format("YYYY-MM-DD");
-  const firstAirDateLte = moment(selectedToDate).format("YYYY-MM-DD");
-
-  useEffect(() => {
-    dispatch(getTVShowListAction(page));
-    dispatch(getGenresTVShowListAction);
-    if (clickFilter) {
-      dispatch(
-        getTVShowListFilteredAction(
-          page,
-          fisrtAirDateGte,
-          firstAirDateLte,
-          rateGte,
-          rateLte,
-          genreId,
-          language
-        )
-      );
-    }
-  }, [
-    page,
-    dispatch,
-    fisrtAirDateGte,
-    firstAirDateLte,
-    rateGte,
-    rateLte,
-    genreId,
-    language,
-    clickFilter,
-  ]);
   const handleToDateChange = (date) => {
-    setSelectedToDate(date);
+    const formatDate = moment(date).format("YYYY-MM-DD");
+    setSelectedToDate(formatDate);
+    const filters = { ...queryparams, releaseDateLte: formatDate };
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters),
+    });
   };
 
   const handleChangeRating = (event, newValue) => {
     setRating(newValue);
+    const filters = { ...queryparams, rategte: rateGte, ratelte: rateLte };
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters),
+    });
   };
   const handleChangeGenre = (event) => {
     setGenre(event.target.value);
+    const filters = {
+      ...queryparams,
+      genre: arrGenresMovieList?.find((genreList) => {
+        if (genreList.name === event.target.value) {
+          return genreList;
+        }
+      })?.id,
+    };
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters),
+    });
   };
   const handleChangeCountry = (event) => {
     setCountry(event.target.value);
-  };
-  const handleClickFilter = () => {
-    setClickFilter(true);
+    const filters = { ...queryparams, language: event.target.value.slice(-2) };
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters),
+    });
   };
 
+  const handleClickFilter = useCallback(() => {
+    if (queryparams) {
+      dispatch(getMovieListFilteredAction(queryparams));
+      history.push({
+        pathname: history.location.pathname,
+        search: queryString.stringify(queryparams),
+      });
+    }
+  }, [queryparams]);
+
+  useEffect(() => {
+    handleClickFilter();
+  }, [queryparams]);
+  console.log(queryparams);
   const {
     content,
     formControl,
@@ -140,12 +171,12 @@ const TVShowCatalog = () => {
                 }}
               >
                 <MenuItem value="Action">Action</MenuItem>
-                <MenuItem value="War & Politics">War & Politics</MenuItem>
+                <MenuItem value="Adventure">Adventure</MenuItem>
                 <MenuItem value="Drama">Drama</MenuItem>
-                <MenuItem value="Documentary">Documentary</MenuItem>
-                <MenuItem value="Kids">Kids</MenuItem>
-                <MenuItem value="Family">Family</MenuItem>
-                <MenuItem value="Talk">Talk</MenuItem>
+                <MenuItem value="Horror">Horror</MenuItem>
+                <MenuItem value="Mystery">Mystery</MenuItem>
+                <MenuItem value="Thriller">Thriller</MenuItem>
+                <MenuItem value="Romance">Romance</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -220,6 +251,7 @@ const TVShowCatalog = () => {
               />
             </div>
           </Grid>
+
           <Grid xs={6} md={4} lg={2}>
             <div className={contentDate}>
               <Typography variant="body2">To</Typography>
@@ -238,7 +270,6 @@ const TVShowCatalog = () => {
               />
             </div>
           </Grid>
-
           <Grid xs={12} md={4} lg={2}>
             <div className={btnFilter}>
               <Button
@@ -254,25 +285,30 @@ const TVShowCatalog = () => {
         </Grid>
       </Container>
 
-      {clickFilter ? (
+      <DetailList
+        arrList={arrMovieList}
+        setPage={setPage}
+        arrGenresList={arrGenresMovieList}
+      />
+      {/* {clickFilter ? (
         <Fragment>
-          <List
-            arrList={arrTVShowListFilterd}
+          <DetailList
+            arrList={arrMovieListFilterd}
             setPage={setPage}
-            arrGenresList={arrGenresTVShowList}
+            arrGenresList={arrGenresMovieList}
           />
         </Fragment>
       ) : (
         <Fragment>
-          <List
-            arrList={arrTVShowList}
+          <DetailList
+            arrList={arrMovieList}
             setPage={setPage}
-            arrGenresList={arrGenresTVShowList}
+            arrGenresList={arrGenresMovieList}
           />
         </Fragment>
-      )}
+      )} */}
     </Fragment>
   );
 };
 
-export default TVShowCatalog;
+export default MovieCatalog;

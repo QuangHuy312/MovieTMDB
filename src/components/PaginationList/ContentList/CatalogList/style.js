@@ -1,16 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles((theme) => {
   return {
-    content: {
-      paddingTop: 40,
-      paddingBottom: 20,
-      [theme.breakpoints.down("sm")]: {
-        paddingTop: 20,
-      },
-      "& .MuiMenu-paper": {
-        marginTop: 45,
-      },
-    },
     formControl: {
       minWidth: 100,
       color: "#fff",
@@ -40,12 +30,12 @@ const useStyle = makeStyles((theme) => {
       fontSize: 14,
       paddingLeft: 10,
     },
+    select: {
+      color: "#f9ab00",
+    },
     datePicker: {
       width: 150,
       margin: 0,
-    },
-    select: {
-      color: "#f9ab00",
     },
     btnFilter: {
       "& >button": {

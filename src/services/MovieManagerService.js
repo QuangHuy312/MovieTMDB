@@ -34,58 +34,48 @@ export class MovieManagerService extends baseService {
     );
   };
 
-  getMovieList = (page) => {
-    return this.get(`discover/movie?api_key=${API_KEY}&page=${page}`);
-  };
-
   getGenresMovieList = () => {
     return this.get(`genre/movie/list?api_key=${API_KEY}&language=en-US`);
   };
 
-  getMovieListFiltered = (
+  getMovieList = (
     page,
-    releaseDateGte = "",
-    releaseDateLte = "",
-    rategte = "",
-    ratelte = "",
-    genre = "",
-    language = ""
+    releaseDateGte,
+    releaseDateLte,
+    rategte,
+    ratelte,
+    genre,
+    language
   ) => {
     if (
+      page ||
       releaseDateGte ||
       releaseDateLte ||
       rategte ||
       ratelte ||
       genre ||
       language
-    ) {
+    )
       return this.get(
-        `discover/movie?api_key=${API_KEY}&language=en-US&sort_by=release_date.asc&page=${page}&release_date.gte=${releaseDateGte}&release_date.lte=${releaseDateLte}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
+        `discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}&release_date.gte=${releaseDateGte}&release_date.lte=${releaseDateLte}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
       );
-    }
-    return;
-  };
-
-  getTVShowList = (page) => {
-    return this.get(
-      `discover/tv?api_key=${API_KEY}&language=en-US&page=${page}`
-    );
   };
 
   getGenresTVShowList = () => {
     return this.get(`genre/tv/list?api_key=${API_KEY}&language=en-US`);
   };
 
-  getTVShowListFiltered = (
+  getTVShowList = (
     page,
-    fisrtAirDateGte = "",
-    firstAirDateLte = "",
-    rategte = "",
-    ratelte = "",
-    genre = "",
-    language = ""
+    fisrtAirDateGte,
+    firstAirDateLte,
+    rategte,
+    ratelte,
+    genre,
+    language
   ) => {
     if (
+      page ||
       fisrtAirDateGte ||
       firstAirDateLte ||
       rategte ||

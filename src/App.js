@@ -1,3 +1,4 @@
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,23 +9,22 @@ import {
 } from "./redux/action/UserManagerAction";
 import Admintemplate from "./template/AdminTemplate/Admintemplate";
 import { HomeTemplate } from "./template/HomeTemplate/HomeTemplate";
+import { theme } from "./utils/settings/config";
 import DetailMovie from "./views/DetailMovie/DetailMovie";
 import DetailTvShow from "./views/DetailTVShow/DetailTvShow";
+import Favourites from "./views/Favourites/Favourites";
 import Home from "./views/Home/Home";
-import ListItems from "./views/ListDashBoard/ListItems/ListItems";
+import AddItems from "./views/ListDashBoard/CreateList/AddItems/AddItems";
+import ChooseImage from "./views/ListDashBoard/CreateList/ChooseImage/ChooseImage";
+import CreateList from "./views/ListDashBoard/CreateList/CreateList";
 import ListDashBoard from "./views/ListDashBoard/ListDashBoard";
+import ListItems from "./views/ListDashBoard/ListItems/ListItems";
 import Login from "./views/Login/Login";
 import MovieList from "./views/MovieList/MovieList";
 import NotFound from "./views/NotFound/NotFound";
 import Rating from "./views/Rating/Rating";
 import TVList from "./views/TVList/TVList.jsx";
-import CreateList from "./views/ListDashBoard/CreateList/CreateList";
-import AddItems from "./views/ListDashBoard/CreateList/AddItems/AddItems";
-import Favourites from "./views/Favourites/Favourites";
 import WatchList from "./views/WatchList/WatchList";
-import ChooseImage from "./views/ListDashBoard/CreateList/ChooseImage/ChooseImage";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import { theme } from "./utils/settings/config";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,16 +38,12 @@ const App = () => {
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   const fetchData = async () => {
     try {
-      // const { data } = await axios({
-      //   url: `https://api.themoviedb.org/3/list/7108056?api_key=d6c392186e19bae2e1addaadb1677274&session_id=68eb9fbc047cdfa30d69c70d5a9bfbe17bfd8425        `,
-      //   method: "DELETE",
-      // });
-      // console.log(data);
-      // const newArr = data.results.filter(
-      //   (item) => item.media_type !== "person"
-      // );
-      // console.log(newArr);
-      // console.log(data);
+      const { data } = await axios({
+        url: "https://api.themoviedb.org/3/discover/movie?api_key=d6c392186e19bae2e1addaadb1677274&language=en-US&page=1&release_date.lte=2021-10-09&with_genres=28",
+        method: "GET",
+      });
+
+      console.log(data);
     } catch (error) {
       console.log(error.response);
     }
@@ -70,6 +66,7 @@ const App = () => {
             component={DetailTvShow}
           />
           <HomeTemplate path="/movies/list" exact component={MovieList} />
+
           <HomeTemplate path="/tvshow/list" exact component={TVList} />
           <Route path="/login" exact component={Login} />
 

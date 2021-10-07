@@ -6,11 +6,9 @@ import {
   GET_LIST_MOVIE_TOP_RATED,
   GET_LIST_MOVIE_UP_COMING,
   GET_MOVIE_LIST,
-  GET_MOVIE_LIST_FILTERED,
   GET_TRAILER_MOVIE_POPULAR,
   GET_TV_SHOW,
   GET_TV_SHOW_LIST,
-  GET_TV_SHOW_LIST_FILTERED,
 } from "../types/MovieManagerType";
 
 const initialState = {
@@ -60,10 +58,6 @@ export const MovieManagerReducer = (
       state.arrGenresMovieList = payload;
       return { ...state };
     }
-    case GET_MOVIE_LIST_FILTERED: {
-      state.arrMovieListFilterd = payload;
-      return { ...state };
-    }
 
     case GET_TV_SHOW: {
       state.arrTVShowTopRated = payload;
@@ -78,10 +72,6 @@ export const MovieManagerReducer = (
       return { ...state };
     }
 
-    case GET_TV_SHOW_LIST_FILTERED: {
-      state.arrTVShowListFilterd = payload;
-      return { ...state };
-    }
     default:
       return state;
   }

@@ -17,7 +17,7 @@ import NOT_POSTER from "../../../../assets/img_no_poster.jpg";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import useStyle from "./style";
 
-const DetailList = ({ arrList, setPage, arrGenresList }) => {
+const ItemsList = ({ arrList, page, handlePageChange, arrGenresList }) => {
   const {
     content,
     media,
@@ -32,6 +32,7 @@ const DetailList = ({ arrList, setPage, arrGenresList }) => {
   } = useStyle();
   const arrow = clsx(rated, iconArrow);
   const history = useHistory();
+
   return (
     <Fragment>
       {arrList?.results?.length !== 0 ? (
@@ -115,12 +116,11 @@ const DetailList = ({ arrList, setPage, arrGenresList }) => {
                 <div className={pagination}>
                   <Pagination
                     count={arrList?.total_pages}
+                    page={page}
                     variant="outlined"
                     shape="rounded"
                     color="primary"
-                    onChange={(e) => {
-                      setPage(e.target.textContent);
-                    }}
+                    onChange={handlePageChange}
                   />
                 </div>
               </Grid>
@@ -151,4 +151,4 @@ const DetailList = ({ arrList, setPage, arrGenresList }) => {
   );
 };
 
-export default DetailList;
+export default ItemsList;

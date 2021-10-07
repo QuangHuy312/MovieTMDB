@@ -10,7 +10,7 @@ export const HomeTemplate = (props) => {
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   return (
     <Route
       {...restProps}

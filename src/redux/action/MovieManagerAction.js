@@ -1,18 +1,16 @@
 import { movieManager } from "../../services/MovieManagerService";
 import { createAction } from "../action/createAction/createAction";
 import {
+  GET_GENRES_MOVIE_LIST,
+  GET_GENRES_TV_SHOW_LIST,
   GET_LIST_MOVIE_NOW_PLAYING,
   GET_LIST_MOVIE_POPULAR,
   GET_LIST_MOVIE_TOP_RATED,
   GET_LIST_MOVIE_UP_COMING,
+  GET_MOVIE_LIST,
   GET_TRAILER_MOVIE_POPULAR,
   GET_TV_SHOW,
-  GET_MOVIE_LIST,
-  GET_GENRES_MOVIE_LIST,
-  GET_MOVIE_LIST_FILTERED,
   GET_TV_SHOW_LIST,
-  GET_GENRES_TV_SHOW_LIST,
-  GET_TV_SHOW_LIST_FILTERED,
 } from "../types/MovieManagerType";
 
 export const getMoviePolularAction = (page) => {
@@ -81,29 +79,18 @@ export const getKeyTrailerAction = (id) => {
   };
 };
 
-export const getMovieListAction = (page) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await movieManager.getMovieList(page);
-      dispatch(createAction(GET_MOVIE_LIST, data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const getMovieListFilteredAction = (
+export const getMovieListAction = ({
   page,
   releaseDateGte = "",
   releaseDateLte = "",
   rategte = "",
   ratelte = "",
   genre = "",
-  language = ""
-) => {
+  language = "",
+}) => {
   return async (dispatch) => {
     try {
-      const { data } = await movieManager.getMovieListFiltered(
+      const { data } = await movieManager.getMovieList(
         page,
         releaseDateGte,
         releaseDateLte,
@@ -112,7 +99,8 @@ export const getMovieListFilteredAction = (
         genre,
         language
       );
-      dispatch(createAction(GET_MOVIE_LIST_FILTERED, data));
+
+      dispatch(createAction(GET_MOVIE_LIST, data));
     } catch (error) {
       console.log(error);
     }
@@ -137,29 +125,18 @@ export const getGenresTVShowListAction = async (dispatch) => {
   }
 };
 
-export const getTVShowListAction = (page) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await movieManager.getTVShowList(page);
-      dispatch(createAction(GET_TV_SHOW_LIST, data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const getTVShowListFilteredAction = (
+export const getTVShowListAction = ({
   page,
   fisrtAirDateGte = "",
   firstAirDateLte = "",
   rategte = "",
   ratelte = "",
   genre = "",
-  language = ""
-) => {
+  language = "",
+}) => {
   return async (dispatch) => {
     try {
-      const { data } = await movieManager.getTVShowListFiltered(
+      const { data } = await movieManager.getTVShowList(
         page,
         fisrtAirDateGte,
         firstAirDateLte,
@@ -168,7 +145,7 @@ export const getTVShowListFilteredAction = (
         genre,
         language
       );
-      dispatch(createAction(GET_TV_SHOW_LIST_FILTERED, data));
+      dispatch(createAction(GET_TV_SHOW_LIST, data));
     } catch (error) {
       console.log(error);
     }
