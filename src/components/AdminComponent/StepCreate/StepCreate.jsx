@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import useStyle from "./style";
 import clsx from "clsx";
 
-const ContentNavList = ({ infoUser, id }) => {
+const StepCreate = ({ infoUser, id }) => {
   const { contentList, active, textList, disabled } = useStyle();
   const disabledLink = clsx(textList, disabled);
   return (
@@ -43,4 +43,4 @@ const ContentNavList = ({ infoUser, id }) => {
   );
 };
 
-export default ContentNavList;
+export default StepCreate;

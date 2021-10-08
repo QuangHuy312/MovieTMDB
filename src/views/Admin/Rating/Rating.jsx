@@ -3,14 +3,14 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Movies from "../../components/AdminComponent/Movies/Movies";
-import TVShow from "../../components/AdminComponent/TVShow/TVShow";
-import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
+import Movies from "../../../components/AdminComponent/Movies/Movies";
+import TabsComponent from "../../../components/AdminComponent/TabsComponent/TabsComponent";
+import TVShow from "../../../components/AdminComponent/TVShow/TVShow";
 import {
   getCreatedListAction,
   getFavoriteMovieListAction,
   getFavoriteTVListAction,
-} from "../../redux/action/DashBoardManagerAction";
+} from "../../../redux/action/DashBoardManagerAction";
 
 const Rating = ({ infoUser, sessionId }) => {
   const {
@@ -30,8 +30,7 @@ const Rating = ({ infoUser, sessionId }) => {
   const useStyle = makeStyles(() => {
     return {
       content: {
-        paddingTop: 20,
-        paddingBottom: 20,
+        padding: "20px 0 40px",
         "& .MuiTabs-indicator	": {
           background: "transparent",
         },
@@ -85,7 +84,7 @@ const Rating = ({ infoUser, sessionId }) => {
   const classes = useStyle();
   return (
     <Container maxWidth="xl" className={classes.content}>
-      <div style={{ display: "flex" }}>
+      <Box display="flex">
         <Typography className={classes.title} variant="h6">
           My Ratings
         </Typography>
@@ -95,7 +94,7 @@ const Rating = ({ infoUser, sessionId }) => {
           setValue={setValue}
           value={value}
         />
-      </div>
+      </Box>
       <TabPanel value={value} index={0}>
         <Movies
           infoUser={infoUser}

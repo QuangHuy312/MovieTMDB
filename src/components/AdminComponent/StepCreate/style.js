@@ -5,6 +5,12 @@ const useStyle = makeStyles((theme) => {
       paddingTop: 15,
       "& .MuiListItem-gutters": {
         padding: "10px 0",
+        [theme.breakpoints.down("sm")]: {
+          padding: "5px 0",
+        },
+      },
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: 0,
       },
     },
 
@@ -19,10 +25,10 @@ const useStyle = makeStyles((theme) => {
 
       [theme.breakpoints.down("sm")]: {
         fontSize: 13,
+        padding: 0,
       },
       [theme.breakpoints.down("xs")]: {
         fontSize: 10,
-        padding: 0,
       },
     },
     active: {

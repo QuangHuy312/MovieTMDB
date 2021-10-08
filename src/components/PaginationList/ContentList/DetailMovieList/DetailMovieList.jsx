@@ -7,25 +7,29 @@ import ItemsList from "../ItemsList/ItemsList";
 import GenreMovie from "./GenreMovie/GenreMovie";
 import useStyle from "./style";
 
-const MovieList = ({ arrGenresMovieList, arrMovieList, queryparams, page }) => {
+const DetailMovieList = ({
+  arrGenresMovieList,
+  arrMovieList,
+  queryparams,
+  page,
+  loading,
+  setLoading,
+}) => {
   const history = useHistory();
   const [genre, setGenre] = React.useState("");
+  const [genreId, setGenreId] = React.useState("");
   const handleChangeGenre = (event) => {
     setGenre(event.target.value);
-    const filters = {
-      ...queryparams,
-      genre: arrGenresMovieList?.find((genreList) => {
-        if (genreList.name === event.target.value) {
-          return genreList;
-        }
-      })?.id,
-    };
-    history.push({
-      pathname: history.location.pathname,
-      search: queryString.stringify(filters),
-    });
+    const genreId = arrGenresMovieList?.find((genreList) => {
+      if (genreList.name === event.target.value) {
+        return genreList;
+      }
+    })?.id;
+
+    setGenreId(genreId);
   };
   const handlePageChange = (e, page) => {
+    setLoading(true);
     const filters = {
       ...queryparams,
       page: page,
@@ -43,7 +47,11 @@ const MovieList = ({ arrGenresMovieList, arrMovieList, queryparams, page }) => {
       <Container maxWidth="xl" className={content}>
         <Grid container>
           <GenreMovie genre={genre} handleChangeGenre={handleChangeGenre} />
-          <CatalogList queryparams={queryparams} />
+          <CatalogList
+            queryparams={queryparams}
+            genreId={genreId}
+            setLoading={setLoading}
+          />
         </Grid>
       </Container>
 
@@ -52,9 +60,10 @@ const MovieList = ({ arrGenresMovieList, arrMovieList, queryparams, page }) => {
         handlePageChange={handlePageChange}
         arrGenresList={arrGenresMovieList}
         page={page}
+        loading={loading}
       />
     </Fragment>
   );
 };
 
-export default MovieList;
+export default DetailMovieList;

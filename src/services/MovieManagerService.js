@@ -28,7 +28,7 @@ export class MovieManagerService extends baseService {
     return this.get(`movie/${id}/videos?api_key=${API_KEY}`);
   };
 
-  getTVShow = (page) => {
+  getTVShowTopRate = (page) => {
     return this.get(
       `tv/top_rated?api_key=${API_KEY}&language=vi-VN&page=${page}`
     );
@@ -67,8 +67,8 @@ export class MovieManagerService extends baseService {
 
   getTVShowList = (
     page,
-    fisrtAirDateGte,
-    firstAirDateLte,
+    releaseDateGte,
+    releaseDateLte,
     rategte,
     ratelte,
     genre,
@@ -76,15 +76,15 @@ export class MovieManagerService extends baseService {
   ) => {
     if (
       page ||
-      fisrtAirDateGte ||
-      firstAirDateLte ||
+      releaseDateGte ||
+      releaseDateLte ||
       rategte ||
       ratelte ||
       genre ||
       language
     ) {
       return this.get(
-        `discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&first_air_date.gte=${fisrtAirDateGte}&first_air_date.lte=${firstAirDateLte}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
+        `discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&first_air_date.gte=${releaseDateGte}&first_air_date.lte=${releaseDateLte}&vote_average.gte=${rategte}&vote_average.lte=${ratelte}&with_genres=${genre}&with_original_language=${language}`
       );
     }
     return;

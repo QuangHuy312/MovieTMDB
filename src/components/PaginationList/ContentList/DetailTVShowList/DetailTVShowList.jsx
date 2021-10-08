@@ -7,30 +7,28 @@ import ItemsList from "../ItemsList/ItemsList";
 import GenreTVShow from "./GenreTVShow/GenreTVShow";
 import useStyle from "./style";
 
-const MovieList = ({
+const DetailTVShowList = ({
   arrGenresTVShowList,
   arrTVShowList,
   queryparams,
   page,
+  setLoading,
+  loading,
 }) => {
   const history = useHistory();
   const [genre, setGenre] = React.useState("");
+  const [genreId, setGenreId] = React.useState("");
   const handleChangeGenre = (event) => {
     setGenre(event.target.value);
-    const filters = {
-      ...queryparams,
-      genre: arrGenresTVShowList?.find((genreList) => {
-        if (genreList.name === event.target.value) {
-          return genreList;
-        }
-      })?.id,
-    };
-    history.push({
-      pathname: history.location.pathname,
-      search: queryString.stringify(filters),
-    });
+    const genreId = arrGenresTVShowList?.find((genreList) => {
+      if (genreList.name === event.target.value) {
+        return genreList;
+      }
+    })?.id;
+    setGenreId(genreId);
   };
   const handlePageChange = (e, page) => {
+    setLoading(true);
     const filters = {
       ...queryparams,
       page: page,
@@ -48,7 +46,11 @@ const MovieList = ({
       <Container maxWidth="xl" className={content}>
         <Grid container>
           <GenreTVShow genre={genre} handleChangeGenre={handleChangeGenre} />
-          <CatalogList queryparams={queryparams} />
+          <CatalogList
+            queryparams={queryparams}
+            genreId={genreId}
+            setLoading={setLoading}
+          />
         </Grid>
       </Container>
 
@@ -57,9 +59,10 @@ const MovieList = ({
         handlePageChange={handlePageChange}
         arrGenresList={arrGenresTVShowList}
         page={page}
+        loading={loading}
       />
     </Fragment>
   );
 };
 
-export default MovieList;
+export default DetailTVShowList;

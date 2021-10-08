@@ -24,10 +24,10 @@ const useStyle = makeStyles((theme) => {
         transition: "all 0.4s",
         backgroundColor: "#f9ab00",
         "& $icons": {
-          color: "white",
+          color: "#fff",
         },
         "& $rating": {
-          color: "white",
+          color: "#fff",
         },
       },
       [theme.breakpoints.down("sm")]: {
@@ -47,7 +47,7 @@ const useStyle = makeStyles((theme) => {
       "&:hover": {
         backgroundColor: "#665c5c",
         "& $textIconAddList": {
-          color: "white",
+          color: "#fff",
         },
       },
     },
@@ -56,13 +56,13 @@ const useStyle = makeStyles((theme) => {
       "&:hover": {
         backgroundColor: "#f05d5d",
         "& $textIconRemove": {
-          color: "white",
+          color: "#fff",
         },
       },
     },
     bgRating: {
       background: "#01d277",
-      color: "white",
+      color: "#fff",
       position: "relative",
       textAlign: "center",
     },

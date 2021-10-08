@@ -71,7 +71,7 @@ const useStyle = makeStyles((theme) => {
       },
     },
     title: {
-      color: "white",
+      color: "#fff",
       transition: "all 0.5s",
       cursor: "pointer",
       "&:hover": {
@@ -87,7 +87,7 @@ const useStyle = makeStyles((theme) => {
     },
 
     rated: {
-      color: "white",
+      color: "#fff",
       border: "2px solid #f9ab00",
       width: 30,
       height: 30,
@@ -114,7 +114,7 @@ const useStyle = makeStyles((theme) => {
       "&:hover": {
         transform: "scale(1.3)",
         border: "2px solid #f9ab00",
-        background: "white",
+        background: "#fff",
         color: "#f9ab00",
       },
     },
@@ -144,6 +144,10 @@ const useStyle = makeStyles((theme) => {
           padding: 0,
         },
       },
+    },
+    bgSkeleton: {
+      backgroundColor: "#ccc",
+      opacity: 0.3,
     },
   };
 });

@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyle = makeStyles((theme) => {
   return {
     container: {
-      marginTop: 40,
-      height: 500,
+      height: 600,
       position: "relative",
       [theme.breakpoints.down("md")]: {
         height: 400,
@@ -24,9 +23,10 @@ const useStyle = makeStyles((theme) => {
       position: "absolute",
       inset: 0,
       zIndex: 3,
+      paddingTop: 30,
     },
     overlay: {
-      backgroundColor: "#000000",
+      backgroundImage: (props) => props.backgroundImage,
       opacity: 0.2,
       backgroundAttachment: "fixed",
       backgroundSize: "cover",
@@ -36,14 +36,17 @@ const useStyle = makeStyles((theme) => {
     },
     poster: {
       width: "100%",
-      height: 430,
+      height: 500,
       objectFit: "cover",
       borderRadius: 10,
+      [theme.breakpoints.down("md")]: {
+        height: 400,
+      },
       [theme.breakpoints.between("sm", "md")]: {
         height: 300,
       },
       [theme.breakpoints.down("xs")]: {
-        height: "auto",
+        height: 200,
       },
     },
     titleMovie: {
@@ -57,6 +60,7 @@ const useStyle = makeStyles((theme) => {
 
       [theme.breakpoints.down("xs")]: {
         fontSize: 15,
+        paddingBottom: 5,
       },
     },
     age: {

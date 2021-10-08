@@ -8,6 +8,9 @@ const useStyle = makeStyles(() => {
       alignItems: "center",
       minHeight: "70vh",
       flexDirection: "column",
+      "& > h6": {
+        padding: "30px 0",
+      },
     },
   };
 });

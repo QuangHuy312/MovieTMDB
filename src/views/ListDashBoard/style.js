@@ -11,6 +11,9 @@ const useStyle = makeStyles((theme) => {
     title: {
       display: "flex",
       justifyContent: "space-between",
+      "& >h4": {
+        fontWeight: "bold",
+      },
     },
     contentCard: {
       position: "relative",
@@ -52,6 +55,18 @@ const useStyle = makeStyles((theme) => {
       width: "100%",
       textAlign: "center",
       color: "#fff",
+      "& >p": {
+        cursor: "pointer",
+        fontSize: 30,
+      },
+      "& >h6": {
+        paddingTop: 10,
+        "& > span": {
+          color: "#f9ab00",
+          fontSize: 20,
+          marginLeft: 5,
+        },
+      },
     },
     iconDelete: {
       position: "absolute",

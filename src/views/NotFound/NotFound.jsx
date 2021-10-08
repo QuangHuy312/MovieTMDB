@@ -10,7 +10,7 @@ const NotFound = () => {
   return (
     <div className={content}>
       <Typography variant="h3">Bạn đi lạc à ?</Typography>
-      <Typography variant="h6" style={{ padding: "30px 0" }}>
+      <Typography variant="subtitle2">
         Rất tiếc chúng tôi không tìm thấy trang đó , vui lòng về Home để tìm
         kiếm
       </Typography>

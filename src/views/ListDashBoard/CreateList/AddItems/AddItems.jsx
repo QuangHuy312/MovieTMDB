@@ -1,13 +1,14 @@
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
+  CardMedia,
   Container,
   Grid,
   TextField,
   Typography,
   useMediaQuery,
-  CardContent,
-  Card,
-  CardMedia,
 } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Autocomplete } from "@material-ui/lab";
@@ -21,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import NO_ITEM from "../../../../assets/img_no_item.png";
 import NO_POSTER from "../../../../assets/img_no_poster.jpg";
+import StepCreate from "../../../../components/AdminComponent/StepCreate/StepCreate";
 import { createAction } from "../../../../redux/action/createAction/createAction";
 import {
   addMovieToListAction,
@@ -30,7 +32,6 @@ import {
 } from "../../../../redux/action/DashBoardManagerAction";
 import { DETELE_LIST_SEARCH } from "../../../../redux/types/DashBoardManagerType";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
-import ContentNavList from "../ContentNavList/ContentNavList";
 import useStyle from "./style";
 
 const AddItems = ({ infoUser, match, sessionId }) => {
@@ -42,12 +43,13 @@ const AddItems = ({ infoUser, match, sessionId }) => {
     contentRight,
     contentMovieSearch,
     titleMovieSearch,
+    root,
     card,
     date,
     poster,
     titleItem,
     contentTitleAdded,
-    root,
+    posterNoItem,
     overview,
     circularRate,
     overviewMobile,
@@ -104,7 +106,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
       <Grid container spacing={isMobile ? 1 : 3}>
         <Grid item xs={3}>
           <Typography
-            variant="h6"
+            variant="h3"
             onClick={() =>
               history.push({ pathname: `/${infoUser.username}/list/${id}` })
             }
@@ -117,7 +119,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
           </div>
 
           <div>
-            <ContentNavList id={id} infoUser={infoUser} />
+            <StepCreate id={id} infoUser={infoUser} />
           </div>
         </Grid>
 
@@ -147,7 +149,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
               setValueSearch(value);
             }}
             renderOption={(option) => (
-              <div
+              <Box
                 onClick={() => handleClickAddItem(option.id)}
                 className={root}
               >
@@ -175,7 +177,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                       className={poster}
                     />
                     <CardContent>
-                      <div className={root}>
+                      <Box className={root}>
                         <div className={circularRate}>
                           <CircularProgressbar
                             value={option.vote_average * 10}
@@ -209,7 +211,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                             {moment(option.release_date).format("LL")}
                           </Typography>
                         </div>
-                      </div>
+                      </Box>
                       <div className={overview}>
                         <Typography variant="body2">
                           {option.overview.slice(0, 400)}
@@ -225,7 +227,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                     </div>
                   )}
                 </Card>
-              </div>
+              </Box>
             )}
             renderInput={(params) => (
               <TextField
@@ -236,9 +238,9 @@ const AddItems = ({ infoUser, match, sessionId }) => {
             )}
             autoComplete
             noOptionsText={
-              <div style={{ textAlign: "center" }}>
-                <img src={NO_ITEM} alt="noitem" className={poster} />
-              </div>
+              <Box textAlign="center">
+                <img src={NO_ITEM} alt="noitem" className={posterNoItem} />
+              </Box>
             }
           />
           {arrDetailsList?.items?.length > 0 ? (
@@ -285,7 +287,7 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                   </div>
                 );
               })}
-              <div style={{ textAlign: "center" }}>
+              <Box textAlign="center">
                 <Button
                   variant="contained"
                   color="primary"
@@ -297,12 +299,10 @@ const AddItems = ({ infoUser, match, sessionId }) => {
                 >
                   DETAIL LIST
                 </Button>
-              </div>
+              </Box>
             </Fragment>
           ) : (
-            <Typography variant="body2" style={{ paddingTop: 25 }}>
-              There are no items added to this list.
-            </Typography>
+            <Box paddingTop="25px">There are no items added to this list.</Box>
           )}
         </Grid>
       </Grid>

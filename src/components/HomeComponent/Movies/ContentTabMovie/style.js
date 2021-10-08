@@ -26,9 +26,16 @@ const useStyle = makeStyles((theme) => {
       textAlign: "right",
       padding: 20,
       borderRadius: 10,
+      "& >button": {
+        borderRadius: 10,
+      },
     },
     contentCard: {
       overflow: "hidden",
+      "& >span": {
+        backgroundColor: "#999",
+        marginBottom: 10,
+      },
       "&:hover": {
         cursor: "pointer",
         "& $media": {
@@ -68,8 +75,8 @@ const useStyle = makeStyles((theme) => {
       },
     },
     title: {
-      boder: "none",
-      color: "white",
+      border: "none",
+      color: "#fff",
       transition: "all 0.5s",
       "&:hover": {
         cursor: "pointer",
@@ -78,7 +85,7 @@ const useStyle = makeStyles((theme) => {
     },
 
     rated: {
-      color: "white",
+      color: "#fff",
       border: "2px solid #f9ab00",
       width: 30,
       height: 30,
@@ -105,7 +112,7 @@ const useStyle = makeStyles((theme) => {
       "&:hover": {
         transform: "scale(1.3)",
         border: "2px solid #f9ab00",
-        background: "white",
+        background: "#fff",
         color: "#f9ab00",
       },
     },

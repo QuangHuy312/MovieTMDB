@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
 
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
@@ -10,8 +10,8 @@ const Reviews = ({ reviews }) => {
   const [comment, setComment] = useState(false);
   return (
     <Fragment>
-      <div className={content}>
-        <div style={{ display: "flex" }}>
+      <Box className={content}>
+        <Box display="flex">
           <img
             src={`${IMAGE_URL}${WIDTH_IMAGE}${reviews.author_details.avatar_path}`}
             alt="avatar"
@@ -20,8 +20,8 @@ const Reviews = ({ reviews }) => {
               (e.target.src = `https://i.pravatar.cc/300?u=${reviews.id}`)
             }
           />
-          <div>
-            <div>
+          <Box>
+            <Box>
               {comment ? (
                 <Typography variant="span" className={textReviews}>
                   {reviews.content}
@@ -40,19 +40,19 @@ const Reviews = ({ reviews }) => {
               >
                 {comment ? "Show Less" : "Read More"}
               </Typography>
-            </div>
+            </Box>
 
             <Typography variant="span" className={createTime}>
               {reviews.created_at} by {reviews.author}
             </Typography>
-          </div>
-        </div>
-        <div>
+          </Box>
+        </Box>
+        <Box>
           <Typography variant="h2" className={rating}>
             {reviews.author_details.rating || 8}
           </Typography>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </Fragment>
   );
 };

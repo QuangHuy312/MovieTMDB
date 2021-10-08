@@ -1,6 +1,10 @@
 import { dashBoardService } from "../../services/DashBoardManagerService";
 import {
   DETELE_LIST_SEARCH,
+  FETCH_REQUEST_CREATED_LIST,
+  FETCH_REQUEST_DETAIL_LIST,
+  FETCH_REQUEST_RATED_MOVIE_LIST,
+  FETCH_REQUEST_RATED_TVSHOW_LIST,
   GET_CREATED_LIST,
   GET_DETAILS_LIST,
   GET_LIST_FAVORITE_MOVIE,
@@ -10,6 +14,10 @@ import {
   GET_LIST_SEARCH,
   GET_WATCH_LIST_MOVIE,
   GET_WATCH_LIST_TV,
+  HIDE_REQUEST_CREATED_LIST,
+  HIDE_REQUEST_DETAIL_LIST,
+  HIDE_REQUEST_RATED_MOVIE_LIST,
+  HIDE_REQUEST_RATED_TVSHOW_LIST,
 } from "../types/DashBoardManagerType";
 import { createAction } from "./createAction/createAction";
 
@@ -17,6 +25,7 @@ import { createAction } from "./createAction/createAction";
 
 export const getRatedMovieListAction = (accountId, sessionId, page) => {
   return async (dispatch) => {
+    dispatch(createAction(FETCH_REQUEST_RATED_MOVIE_LIST));
     try {
       const { data } = await dashBoardService.getRatedMoviesList(
         accountId,
@@ -33,16 +42,19 @@ export const getRatedMovieListAction = (accountId, sessionId, page) => {
           );
           arrData.push(...data.results);
         }
-        dispatch(createAction(GET_LIST_RATED_MOVIE, arrData));
+        await dispatch(createAction(GET_LIST_RATED_MOVIE, arrData));
+        dispatch(createAction(HIDE_REQUEST_RATED_MOVIE_LIST));
       }
     } catch (error) {
       console.log(error);
+      dispatch(createAction(HIDE_REQUEST_RATED_MOVIE_LIST));
     }
   };
 };
 
 export const getRatedTVShowListAction = (accountId, sessionId, page) => {
   return async (dispatch) => {
+    dispatch(createAction(FETCH_REQUEST_RATED_TVSHOW_LIST));
     try {
       const { data } = await dashBoardService.getRatedTVList(
         accountId,
@@ -59,10 +71,12 @@ export const getRatedTVShowListAction = (accountId, sessionId, page) => {
           );
           arrData.push(...data.results);
         }
-        dispatch(createAction(GET_LIST_RATED_TV, arrData));
+        await dispatch(createAction(GET_LIST_RATED_TV, arrData));
+        dispatch(createAction(HIDE_REQUEST_RATED_TVSHOW_LIST));
       }
     } catch (error) {
       console.log(error);
+      dispatch(createAction(HIDE_REQUEST_RATED_TVSHOW_LIST));
     }
   };
 };
@@ -189,6 +203,7 @@ export const getCreatedListAction = (
   success
 ) => {
   return async (dispatch) => {
+    dispatch(createAction(FETCH_REQUEST_CREATED_LIST));
     try {
       const { data } = await dashBoardService.getCreatedList(
         accountId,
@@ -208,18 +223,23 @@ export const getCreatedListAction = (
       } else {
         dispatch(createAction(GET_CREATED_LIST, data.results));
       }
+      dispatch(createAction(HIDE_REQUEST_CREATED_LIST));
     } catch (error) {
+      dispatch(createAction(HIDE_REQUEST_CREATED_LIST));
       console.log(error);
     }
   };
 };
 export const getDetailsListAction = (listId) => {
   return async (dispatch) => {
+    dispatch(createAction(FETCH_REQUEST_DETAIL_LIST));
     try {
       const { data } = await dashBoardService.getDetailsList(listId);
-      dispatch(createAction(GET_DETAILS_LIST, data));
+      await dispatch(createAction(GET_DETAILS_LIST, data));
+      dispatch(createAction(HIDE_REQUEST_DETAIL_LIST));
     } catch (error) {
       console.log(error);
+      dispatch(createAction(HIDE_REQUEST_DETAIL_LIST));
     }
   };
 };

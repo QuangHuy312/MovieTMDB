@@ -25,6 +25,20 @@ const useStyle = makeStyles((theme) => {
         padding: 10,
       },
     },
+    listName: {
+      fontSize: 25,
+      fontWeight: "bold",
+      cursor: "pointer",
+      padding: 10,
+      color: "#f9ab00",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 17,
+      },
+      [theme.breakpoints.down("xs")]: {
+        fontSize: 10,
+      },
+    },
+
     title: {
       backgroundColor: "#01b4e4",
       borderTopLeftRadius: 10,
@@ -100,6 +114,9 @@ const useStyle = makeStyles((theme) => {
       transform: "translate(-50%,-50%)",
       display: "none",
       color: "#fff",
+      "& >p": {
+        paddingTop: 10,
+      },
     },
 
     activeSelect: {

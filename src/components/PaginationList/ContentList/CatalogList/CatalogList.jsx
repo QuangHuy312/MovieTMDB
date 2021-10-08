@@ -16,7 +16,7 @@ import React, { Fragment, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import useStyle from "./style";
 
-const CatalogList = ({ queryparams }) => {
+const CatalogList = ({ genreId, setLoading }) => {
   const history = useHistory();
   const location = useLocation();
   const [country, setCountry] = React.useState("");
@@ -47,8 +47,10 @@ const CatalogList = ({ queryparams }) => {
     setCountry(event.target.value);
   };
   const handleClickFilter = () => {
+    setLoading(true);
     const filters = {
-      language: country.slice(-2),
+      genre: genreId,
+      language: country.slice(-2) || "en",
       rategte: rateGte,
       ratelte: rateLte,
       releaseDateLte: selectedToDate,

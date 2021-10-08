@@ -27,7 +27,6 @@ const ContentTabMovie = ({ arrContentTabMovie }) => {
             variant="contained"
             color="primary"
             endIcon={<SubdirectoryArrowRightOutlinedIcon />}
-            style={{ borderRadius: 10 }}
             onClick={() => history.push("/movies/list")}
           >
             View All
@@ -44,7 +43,6 @@ const ContentTabMovie = ({ arrContentTabMovie }) => {
                   />
                   <Typography
                     variant="h2"
-                    component="span"
                     className={arrow}
                     onClick={() => history.push(`/detailmovies/${movie.id}`)}
                   >
@@ -58,7 +56,6 @@ const ContentTabMovie = ({ arrContentTabMovie }) => {
                   <Typography
                     variant="body2"
                     className={title}
-                    component="p"
                     onClick={() => history.push(`/detailmovies/${movie.id}`)}
                   >
                     {movie.title}

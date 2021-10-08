@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../../components/DetailMovie/Banner/Banner";
-import ContentDetails from "../../components/DetailMovie/ContentDetails/ContentDetails";
+import Banner from "../../../components/DetailMovie/Banner/Banner";
+import ContentDetails from "../../../components/DetailMovie/ContentDetails/ContentDetails";
 import {
   getFavoriteMovieListAction,
   getRatedMovieListAction,
   getWatchListMovieAction,
-} from "../../redux/action/DashBoardManagerAction";
+} from "../../../redux/action/DashBoardManagerAction";
 import {
   getDetailBannerMovieAction,
   getDetailCreditMovieAction,
@@ -14,7 +14,7 @@ import {
   getDetailRecommendMovieAction,
   getDetailReviewsMovieAction,
   getDetailSimilarMovieAction,
-} from "../../redux/action/MovieDetailManagerAction";
+} from "../../../redux/action/MovieDetailManagerAction";
 
 const DetailMovie = ({ match, infoUser, sessionId }) => {
   const id = match.params.id;

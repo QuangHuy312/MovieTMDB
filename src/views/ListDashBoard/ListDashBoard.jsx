@@ -64,9 +64,7 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
   return (
     <Container maxWidth="xl" className={content}>
       <div className={title}>
-        <Typography variant="h4" style={{ fontWeight: "bold" }}>
-          My lists
-        </Typography>
+        <Typography variant="h4">My lists</Typography>
         <Button
           variant="contained"
           color="primary"
@@ -94,11 +92,7 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
                 <CardContent className={contentText}>
                   <div className={textCard}>
                     <Typography
-                      variant="body"
-                      style={{
-                        cursor: "pointer",
-                        fontSize: 30,
-                      }}
+                      variant="body2"
                       onClick={() =>
                         history.push(`/${infoUser.username}/list/${list.id}`)
                       }
@@ -109,11 +103,9 @@ const ListDashBoard = ({ infoUser, sessionId }) => {
                     <Typography variant="h5">
                       {list.item_count} items
                     </Typography>
-                    <Typography variant="body2" style={{ paddingTop: 10 }}>
-                      Description:{" "}
-                      <Typography variant="body" style={{ color: "#f9ab00" }}>
-                        {list.description}
-                      </Typography>
+                    <Typography variant="subtitle2">
+                      Description:
+                      <Typography variant="span">{list.description}</Typography>
                     </Typography>
                   </div>
                   <div

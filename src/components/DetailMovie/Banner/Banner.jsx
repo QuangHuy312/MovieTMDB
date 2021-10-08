@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   CardMedia,
   Container,
@@ -85,11 +86,14 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
     titleData,
     textUserScore,
     age,
+    circularRating,
     releaseDate,
     buttonWatch,
+    bgIcons,
     poster,
     desc,
     trailer,
+    contentIcons,
     btnIcons,
     btnActiveIconsFavorite,
     btnActiveIconsRating,
@@ -243,7 +247,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
 
   return (
     <Fragment>
-      <div className={backdrop}>
+      <Box className={backdrop}>
         <CustomCard
           effectColor="#000" // required
           blur={6} // default blur value is 10px
@@ -253,7 +257,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
           }}
         >
           <Container maxWidth="xxl" style={{ position: "relative" }}>
-            <div className={content}>
+            <Box className={content}>
               <Typography variant="h4" className={titleMovie}>
                 <i> {title || name}</i>
               </Typography>
@@ -268,7 +272,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                     className={poster}
                     alt="poster"
                   />
-                  <div>
+                  <Box>
                     <Button
                       startIcon={<PlayArrowIcon />}
                       className={buttonWatch}
@@ -276,7 +280,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                     >
                       Watch Trailer
                     </Button>
-                  </div>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} md={8} xl={4}>
                   <Typography variant="body2">
@@ -290,13 +294,13 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                       <i> {release_date || first_air_date}</i>
                     </Typography>
                   </Typography>
-                  <div>
+                  <Box>
                     <Typography variant="body1" style={{ marginTop: 10 }}>
                       Cast:
                       {detailCredit?.cast
                         ?.slice(0, 4)
                         ?.map((cast, index, arr) => (
-                          <Fragment>
+                          <Fragment key={index}>
                             {index !== arr.length - 1 ? (
                               <Typography variant="span" className={titleData}>
                                 {cast.name + ","}
@@ -309,12 +313,12 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                           </Fragment>
                         ))}
                     </Typography>
-                  </div>
-                  <div style={{ paddingTop: "10px 0" }}>
+                  </Box>
+                  <Box style={{ paddingTop: "10px 0" }}>
                     <Typography variant="body2">
                       Genre:
                       {genres?.map((genre, index, arr) => (
-                        <Fragment>
+                        <Fragment key={index}>
                           {index !== arr.length - 1 ? (
                             <Typography
                               variant="body2"
@@ -335,22 +339,11 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                         </Fragment>
                       ))}
                     </Typography>
-                  </div>
+                  </Box>
                   <Grid item container spacing={2}>
                     <Grid item xs={4}>
-                      <div
-                        style={{
-                          display: "flex",
-                          padding: "15px 0",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: 60,
-                            height: 60,
-                          }}
-                        >
+                      <Box className={circularRating}>
+                        <Box>
                           <CircularProgressbar
                             value={vote_average * 10}
                             text={`${vote_average * 10}%`}
@@ -366,23 +359,22 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                               backgroundColor: "#20c172",
                             })}
                           />
-                        </div>
-                        <div>
+                        </Box>
+                        <Box>
                           <Typography className={textUserScore}>
                             User score
                           </Typography>
-                        </div>
-                      </div>
+                        </Box>
+                      </Box>
                     </Grid>
+
                     <Grid item xs={6} md={4}>
-                      <div style={{ display: "flex", marginTop: 25 }}>
-                        <div style={{ marginRight: 15 }}>
+                      <Box className={contentIcons}>
+                        <Box>
                           <Tooltip title="Add to watch list">
                             <Fab
                               size="small"
-                              style={{
-                                backgroundColor: "#032541",
-                              }}
+                              className={bgIcons}
                               onClick={handleAddToWatchList}
                             >
                               <PlaylistAddIcon
@@ -392,15 +384,13 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                               />
                             </Fab>
                           </Tooltip>
-                        </div>
+                        </Box>
 
-                        <div style={{ marginRight: 15 }}>
+                        <Box>
                           <Tooltip title="Mark as favourite">
                             <Fab
                               size="small"
-                              style={{
-                                backgroundColor: "#032541",
-                              }}
+                              className={bgIcons}
                               onClick={handleClickFavorite}
                             >
                               <FavoriteIcon
@@ -410,9 +400,9 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                               />
                             </Fab>
                           </Tooltip>
-                        </div>
+                        </Box>
 
-                        <div>
+                        <Box>
                           <PopupState
                             variant="popover"
                             popupId="demo-popup-popover"
@@ -422,7 +412,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                                 <Tooltip title="Send your rating">
                                   <Fab
                                     size="small"
-                                    style={{ backgroundColor: "#032541" }}
+                                    className={bgIcons}
                                     {...bindTrigger(popupState)}
                                   >
                                     <StarIcons
@@ -446,18 +436,16 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                                   }}
                                   style={{ marginTop: 15 }}
                                 >
-                                  <div className={contentRating}>
+                                  <Box className={contentRating}>
                                     <Tooltip title="Clear">
                                       <RemoveCircleOutline
                                         size="small"
-                                        style={{ cursor: "pointer" }}
                                         onClick={handleClearRating}
                                       />
                                     </Tooltip>
                                     <Typography
                                       variant="body2"
                                       component="span"
-                                      style={{ marginLeft: 10 }}
                                     >
                                       <Rating
                                         name="simple-controlled"
@@ -468,13 +456,13 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                                         }}
                                       />
                                     </Typography>
-                                  </div>
+                                  </Box>
                                 </Popover>
                               </Fragment>
                             )}
                           </PopupState>
-                        </div>
-                      </div>
+                        </Box>
+                      </Box>
                     </Grid>
                   </Grid>
 
@@ -486,7 +474,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                     {tagline}
                   </Typography>
 
-                  <div
+                  <Box
                     style={{
                       padding: "30px 0",
                       backgroundColor: "rgb(35 35 31 / 40%)",
@@ -498,14 +486,14 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                     <Scrollbars
                       style={{ width: "80%", height: 100, margin: "0 auto" }}
                       renderThumbVertical={({ style, ...props }) => (
-                        <div {...props} className={scrollBars} />
+                        <Box {...props} className={scrollBars} />
                       )}
                     >
                       <Typography variant="h6" className={desc}>
                         {overview}
                       </Typography>
                     </Scrollbars>
-                  </div>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} xl={6}>
                   <ReactPlayer
@@ -523,7 +511,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
                 >
-                  <div className={trailer}>
+                  <Box className={trailer}>
                     <ReactPlayer
                       playing
                       controls
@@ -531,13 +519,13 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                       height="100%"
                       url={`https://www.youtube.com/watch?v=${videos?.results[0]?.key}`}
                     />
-                  </div>
+                  </Box>
                 </Modal>
               </Grid>
-            </div>
+            </Box>
           </Container>
         </CustomCard>
-      </div>
+      </Box>
     </Fragment>
   );
 };

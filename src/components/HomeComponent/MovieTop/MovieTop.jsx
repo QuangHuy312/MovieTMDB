@@ -25,18 +25,15 @@ const MovieTop = ({ arrMoviePopular }) => {
     desc,
     titleRate,
     buttonWatchMobile,
-  } = useStyle();
+  } = useStyle({
+    backgroundImage: `url(${IMAGE_URL}${WIDTH_BACKDROP}${arrMoviePopular?.backdrop_path})`,
+  });
   return (
     <div className={container}>
-      <div
-        className={overlay}
-        style={{
-          backgroundImage: `url(${IMAGE_URL}${WIDTH_BACKDROP}${arrMoviePopular?.backdrop_path})`,
-        }}
-      ></div>
-      <Container maxWidth="xl" style={{ paddingTop: 40 }} className={content}>
-        <Grid container spacing={3}>
-          <Grid item xs={3} sm={4}>
+      <div className={overlay}></div>
+      <Container maxWidth="xl" className={content}>
+        <Grid container spacing={2}>
+          <Grid item xs={4} sm={4}>
             <img
               alt="poster"
               src={`${IMAGE_URL}${WIDTH_IMAGE}${arrMoviePopular?.poster_path}`}
@@ -53,7 +50,7 @@ const MovieTop = ({ arrMoviePopular }) => {
               Watch Now
             </Button>
           </Grid>
-          <Grid item xs={9} sm={8}>
+          <Grid item xs={8} sm={8}>
             <Typography variant="h3" className={titleMovie}>
               <i> {arrMoviePopular?.original_title}</i>
             </Typography>
@@ -71,6 +68,7 @@ const MovieTop = ({ arrMoviePopular }) => {
                   variant="span"
                   component="a"
                   className={genresMovie}
+                  key={genre.id}
                 >
                   {genre.name}
                 </Typography>

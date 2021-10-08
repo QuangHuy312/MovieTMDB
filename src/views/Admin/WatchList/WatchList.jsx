@@ -3,30 +3,31 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Movies from "../../components/AdminComponent/Movies/Movies";
-import TVShow from "../../components/AdminComponent/TVShow/TVShow";
-import TabsComponent from "../../components/AdminComponent/TabsComponent/TabsComponent";
+import Movies from "../../../components/AdminComponent/Movies/Movies";
+import TVShow from "../../../components/AdminComponent/TVShow/TVShow";
+import TabsComponent from "../../../components/AdminComponent/TabsComponent/TabsComponent";
 import {
   getCreatedListAction,
-  getFavoriteMovieListAction,
-  getFavoriteTVListAction,
-} from "../../redux/action/DashBoardManagerAction";
+  getWatchListMovieAction,
+  getWatchListTVAction,
+} from "../../../redux/action/DashBoardManagerAction";
 
-const Favorites = ({ infoUser, sessionId }) => {
+const WatchList = ({ infoUser, sessionId }) => {
   const {
+    arrWatchListMovie,
+    arrWatchListTV,
+    arrCreatedList,
+    arrListRatedTV,
+    arrListRatedMovie,
     arrListFavoriteMovie,
     arrListFavoriteTV,
-    arrCreatedList,
-    arrListRatedMovie,
-    arrListRatedTV,
   } = useSelector((state) => state.DashBoardManagerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
-    dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
+    dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
+    dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
     dispatch(getCreatedListAction(infoUser.id, sessionId));
-  }, [dispatch]);
-
+  }, []);
   const useStyle = makeStyles(() => {
     return {
       content: {
@@ -84,39 +85,39 @@ const Favorites = ({ infoUser, sessionId }) => {
   const classes = useStyle();
   return (
     <Container maxWidth="xl" className={classes.content}>
-      <div style={{ display: "flex" }}>
+      <Box display="flex">
         <Typography className={classes.title} variant="h6">
-          My Favorites
+          My Watchlist
         </Typography>
         <TabsComponent
-          arrListMovie={arrListFavoriteMovie}
-          arrListTV={arrListFavoriteTV}
+          arrListMovie={arrWatchListMovie}
+          arrListTV={arrWatchListTV}
           setValue={setValue}
           value={value}
         />
-      </div>
+      </Box>
       <TabPanel value={value} index={0}>
         <Movies
           infoUser={infoUser}
           sessionId={sessionId}
+          arrListMovie={arrWatchListMovie}
           arrCreatedList={arrCreatedList}
-          arrListMovie={arrListFavoriteMovie}
-          arrListFavoriteMovie={arrListFavoriteMovie}
           arrListRatedMovie={arrListRatedMovie}
+          arrListFavoriteMovie={arrListFavoriteMovie}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <TVShow
-          arrListTV={arrListFavoriteTV}
+          arrListTV={arrWatchListTV}
           infoUser={infoUser}
           sessionId={sessionId}
           arrCreatedList={arrCreatedList}
-          arrListFavoriteTV={arrListFavoriteTV}
           arrListRatedTV={arrListRatedTV}
+          arrListFavoriteTV={arrListFavoriteTV}
         />
       </TabPanel>
     </Container>
   );
 };
 
-export default Favorites;
+export default WatchList;

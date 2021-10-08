@@ -3,16 +3,17 @@ import React, { Fragment, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import {
-  getGenresTVShowListAction,
-  getTVShowListAction,
-} from "../../../src/redux/action/MovieManagerAction";
-import Banner from "../../components/PaginationList/Banner/Banner";
-import DetailTVShowList from "../../components/PaginationList/ContentList/DetailTVShowList/DetailTVShowList";
+  getGenresMovieListAction,
+  getMovieListAction,
+} from "../../../redux/action/MovieManagerAction";
+import Banner from "../../../components/PaginationList/Banner/Banner";
+import DetailMovieList from "../../../components/PaginationList/ContentList/DetailMovieList/DetailMovieList";
 
 const MovieList = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [page, setPage] = React.useState(1);
+  const [loading, setLoading] = React.useState(true);
   const queryparams = useMemo(() => {
     const params = queryString.parse(location.search);
     return {
@@ -20,23 +21,25 @@ const MovieList = () => {
       page: Number.parseInt(params.page) || 1,
     };
   }, [location.search]);
-  const { arrTVShowList, arrGenresTVShowList } = useSelector(
+  const { arrMovieList, arrGenresMovieList } = useSelector(
     (state) => state.MovieManagerReducer
   );
 
   useEffect(() => {
     setPage(queryparams.page);
-    dispatch(getTVShowListAction(queryparams));
-    dispatch(getGenresTVShowListAction);
-  }, [queryparams]);
+    dispatch(getMovieListAction(queryparams, setLoading));
+    dispatch(getGenresMovieListAction);
+  }, [queryparams, dispatch]);
   return (
     <Fragment>
       <Banner />
-      <DetailTVShowList
+      <DetailMovieList
         queryparams={queryparams}
-        arrGenresTVShowList={arrGenresTVShowList}
-        arrTVShowList={arrTVShowList}
+        arrGenresMovieList={arrGenresMovieList}
+        arrMovieList={arrMovieList}
         page={page}
+        loading={loading}
+        setLoading={setLoading}
       />
     </Fragment>
   );

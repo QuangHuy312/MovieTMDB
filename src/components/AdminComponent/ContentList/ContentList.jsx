@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardContent,
   CardMedia,
@@ -45,7 +46,7 @@ const ContentList = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Card className={card}>
-      <div className={content}>
+      <Box className={content}>
         <CardMedia
           image={
             contentList.poster_path
@@ -55,8 +56,8 @@ const ContentList = ({
           className={poster}
         />
         <CardContent>
-          <div className={root}>
-            <div className={circularRate}>
+          <Box className={root}>
+            <Box className={circularRate}>
               <CircularProgressbar
                 value={contentList.vote_average * 10}
                 text={`${contentList.vote_average * 10}%`}
@@ -72,8 +73,8 @@ const ContentList = ({
                   backgroundColor: "#20c172",
                 })}
               />
-            </div>
-            <div>
+            </Box>
+            <Box>
               <Typography
                 className={title}
                 variant="body2"
@@ -94,15 +95,15 @@ const ContentList = ({
               <Typography variant="body1" className={date}>
                 {moment(contentList.release_date).format("LL")}
               </Typography>
-            </div>
-          </div>
-          <div className={overview}>
+            </Box>
+          </Box>
+          <Box className={overview}>
             <Typography variant="body2">
               {contentList.overview.slice(0, 400)}
             </Typography>
-          </div>
+          </Box>
           {!isDeskTop && (
-            <div className={listIcons}>
+            <Box className={listIcons}>
               <IconList
                 contentList={contentList}
                 handleClickRating={handleClickRating}
@@ -115,19 +116,19 @@ const ContentList = ({
                 arrCreatedList={arrCreatedList}
                 media_type={media_type}
               />
-            </div>
+            </Box>
           )}
         </CardContent>
-      </div>
+      </Box>
       {isMobile && (
-        <div>
+        <Box>
           <Typography variant="body2">
             {contentList.overview.slice(0, 400)}
           </Typography>
-        </div>
+        </Box>
       )}
       {isDeskTop && (
-        <div className={listIcons}>
+        <Box className={listIcons}>
           <IconList
             contentList={contentList}
             handleClickRating={handleClickRating}
@@ -139,7 +140,7 @@ const ContentList = ({
             arrCreatedList={arrCreatedList}
             media_type={media_type}
           />
-        </div>
+        </Box>
       )}
     </Card>
   );

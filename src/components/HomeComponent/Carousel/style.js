@@ -43,7 +43,7 @@ const useStyle = makeStyles((theme) => {
         right: "15%",
       },
       "& h4": {
-        color: "white",
+        color: "#fff",
         fontSize: 40,
         paddingTop: 30,
         [theme.breakpoints.down("md")]: {
@@ -105,7 +105,7 @@ const useStyle = makeStyles((theme) => {
       "&:hover": {
         transform: "scale(1.3)",
         border: "2px solid #f9ab00",
-        background: "white",
+        background: "#fff",
         color: "#f9ab00",
       },
     },

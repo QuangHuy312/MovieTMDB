@@ -1,5 +1,10 @@
 import { userService } from "../../services/UserManagerService";
-import { GET_GUEST_SESSION, GET_INFO_USER_ID } from "../types/UserManagerType";
+import {
+  GET_GUEST_SESSION,
+  GET_INFO_USER_ID,
+  FETCH_USER_LOADING,
+  HIDE_USER_LOADING,
+} from "../types/UserManagerType";
 import { createAction } from "./createAction/createAction";
 import {
   getFavoriteMovieListAction,
@@ -55,11 +60,14 @@ export const fetchRequestToken = async () => {
 
 export const fetchSInfoUser = (token) => {
   return async (dispatch) => {
+    dispatch(createAction(FETCH_USER_LOADING));
     try {
       const { data } = await userService.fetchInfoUser(token);
-      dispatch(createAction(GET_INFO_USER_ID, data));
+      await dispatch(createAction(GET_INFO_USER_ID, data));
+      dispatch(createAction(HIDE_USER_LOADING));
     } catch (error) {
       console.log(error);
+      dispatch(createAction(HIDE_USER_LOADING));
     }
   };
 };

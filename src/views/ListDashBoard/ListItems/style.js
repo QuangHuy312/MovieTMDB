@@ -82,7 +82,7 @@ const useStyle = makeStyles((theme) => {
       },
     },
     title: {
-      boder: "none",
+      border: "none",
       color: "#000",
       transition: "all 0.5s",
       "&:hover": {

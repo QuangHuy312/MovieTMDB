@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
 
-const GenreMovie = ({ genre, handleChangeGenre }) => {
+const GenreTVShow = ({ genre, handleChangeGenre }) => {
   const classes = makeStyles(() => {
     return {
       formControl: {
@@ -31,12 +31,12 @@ const GenreMovie = ({ genre, handleChangeGenre }) => {
           style={{ color: "#f9ab00" }}
           renderValue={(selected) => {
             if (selected.length === 0) {
-              return <em>Action</em>;
+              return <em>Action & Adventure</em>;
             }
             return selected;
           }}
         >
-          <MenuItem value="Action">Action</MenuItem>
+          <MenuItem value="Action & Adventure">Action & Adventure</MenuItem>
           <MenuItem value="War & Politics">War & Politics</MenuItem>
           <MenuItem value="Drama">Drama</MenuItem>
           <MenuItem value="Documentary">Documentary</MenuItem>
@@ -49,4 +49,4 @@ const GenreMovie = ({ genre, handleChangeGenre }) => {
   );
 };
 
-export default GenreMovie;
+export default GenreTVShow;

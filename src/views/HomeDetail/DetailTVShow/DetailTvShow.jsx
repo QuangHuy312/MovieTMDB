@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../../components/DetailMovie/Banner/Banner";
-import ContentDetails from "../../components/DetailMovie/ContentDetails/ContentDetails";
+import Banner from "../../../components/DetailMovie/Banner/Banner";
+import ContentDetails from "../../../components/DetailMovie/ContentDetails/ContentDetails";
 import {
   getFavoriteTVListAction,
   getRatedTVShowListAction,
   getWatchListTVAction,
-} from "../../redux/action/DashBoardManagerAction";
+} from "../../../redux/action/DashBoardManagerAction";
 import {
   getDetailBannerTvShowAction,
   getDetailCreditTvShowAction,
@@ -14,7 +14,7 @@ import {
   getDetailRecommendTvShowAction,
   getDetailReviewsTvShowAction,
   getDetailSimilarTvShowAction,
-} from "../../redux/action/TvShowDetailManagerAction";
+} from "../../../redux/action/TvShowDetailManagerAction";
 
 const DetailTvShow = ({ match, infoUser, sessionId }) => {
   const id = match.params.id;

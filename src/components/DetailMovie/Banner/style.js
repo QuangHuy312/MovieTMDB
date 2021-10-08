@@ -69,11 +69,31 @@ const useStyle = makeStyles((theme) => {
       transition: "all 0.5s",
       "&:hover": { opacity: 1 },
     },
+    circularRating: {
+      display: "flex",
+      padding: "15px 0",
+      alignItems: "center",
+      justifyContent: "center",
+      "& > div": {
+        width: 60,
+        height: 60,
+      },
+      "& .CircularProgressbar-text": {
+        dominantBaseline: "middle",
+        textAnchor: "middle",
+      },
+    },
     textUserScore: {
       fontSize: 15,
       marginLeft: 10,
       [theme.breakpoints.down("sm")]: {
         fontSize: 10,
+      },
+    },
+    bgIcons: {
+      backgroundColor: "#032541",
+      "&:hover": {
+        backgroundColor: "#fff",
       },
     },
     voteCount: {
@@ -88,11 +108,12 @@ const useStyle = makeStyles((theme) => {
     releaseDate: {
       marginLeft: 20,
       color: "#f9ab00",
-      borderLeft: "1px solid white",
+      borderLeft: "1px solid #fff",
     },
 
     desc: {
       fontSize: 15,
+      marginRight: 20,
       [theme.breakpoints.down("sm")]: {
         fontSize: 10,
       },
@@ -106,6 +127,13 @@ const useStyle = makeStyles((theme) => {
       top: "50%",
       left: "50%",
       transform: "translate(-50%,-50%)",
+    },
+    contentIcons: {
+      display: "flex",
+      marginTop: 25,
+      "& >div": {
+        marginRight: 15,
+      },
     },
     btnIcons: {
       transition: "all 0.5s",
@@ -162,6 +190,10 @@ const useStyle = makeStyles((theme) => {
       "& .MuiRating-iconEmpty": {
         color: "#999",
       },
+      "& .MuiSvgIcon-root": {
+        cursor: "pointer",
+      },
+      "& >span": { marginLeft: 10 },
       "&:after": {
         content: "''",
         position: "absolute",

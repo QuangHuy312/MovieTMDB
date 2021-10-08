@@ -4,6 +4,7 @@ const useStyle = makeStyles((theme) => {
   return {
     content: {
       paddingTop: 40,
+      paddingBottom: 30,
       position: "relative",
       [theme.breakpoints.down("sm")]: {
         paddingTop: 20,

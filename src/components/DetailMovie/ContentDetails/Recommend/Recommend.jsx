@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardContent,
   CardMedia,
@@ -34,9 +35,9 @@ const Recommend = ({ detailRecommend }) => {
       <Grid container>
         {detailRecommend?.slice(0, 6)?.map((recommend) => {
           return (
-            <Grid item xs={6} md={4} lg={2}>
+            <Grid item xs={6} md={4} lg={2} key={recommend.id}>
               <Card className={card}>
-                <div className={contentCard}>
+                <Box className={contentCard}>
                   <CardMedia
                     image={`${IMAGE_URL}${WIDTH_IMAGE}${recommend.poster_path}`}
                     className={poster}
@@ -54,7 +55,7 @@ const Recommend = ({ detailRecommend }) => {
                   <Typography variant="h1" className={rated}>
                     {Math.ceil(recommend.vote_average)}
                   </Typography>
-                </div>
+                </Box>
                 <CardContent>
                   <Typography
                     variant="body2"

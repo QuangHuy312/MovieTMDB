@@ -4,13 +4,12 @@ import Carousel from "../../components/HomeComponent/Carousel/Carousel";
 import Movies from "../../components/HomeComponent/Movies/Movies";
 import MovieTop from "../../components/HomeComponent/MovieTop/MovieTop";
 import TVShow from "../../components/HomeComponent/TVShow/TVShow";
-// import TVShow from "../../components/HomeComponent/TVShow/TVShow";
 import {
   getMovieNowPlayingAction,
   getMoviePolularAction,
   getMovieTopRatedAction,
   getMovieUpComingAction,
-  getTVShowAction,
+  getTVShowTopRateAction,
 } from "../../redux/action/MovieManagerAction";
 
 const Home = () => {
@@ -20,7 +19,7 @@ const Home = () => {
     dispatch(getMovieTopRatedAction(1));
     dispatch(getMovieNowPlayingAction(1));
     dispatch(getMovieUpComingAction(1));
-    dispatch(getTVShowAction(1));
+    dispatch(getTVShowTopRateAction(1));
   }, [dispatch]);
 
   const {

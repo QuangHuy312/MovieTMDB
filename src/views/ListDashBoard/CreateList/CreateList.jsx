@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import * as yup from "yup";
 import { createNewListAction } from "../../../redux/action/DashBoardManagerAction";
-import ContentNavList from "./ContentNavList/ContentNavList";
+import StepCreate from "./../../../components/AdminComponent/StepCreate/StepCreate";
 import useStyle from "./style";
 
 let schema = yup.object().shape({
@@ -59,7 +59,7 @@ const CreateList = ({ infoUser, sessionId }) => {
           </div>
 
           <div>
-            <ContentNavList infoUser={infoUser} />
+            <StepCreate infoUser={infoUser} />
           </div>
         </Grid>
         <Grid item xs={9}>

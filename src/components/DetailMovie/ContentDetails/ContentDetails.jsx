@@ -62,17 +62,11 @@ const ContentDetails = ({
               onChange={handleChange}
               aria-label="simple tabs example"
             >
-              <Tab label="Photos" {...a11yProps(0)} />
+              <Tab label="Reviews" {...a11yProps(0)} />
               <Tab label="Credit" {...a11yProps(1)} />
-              <Tab label="Reviews" {...a11yProps(2)} />
+              <Tab label="Photos" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-              <Photos detailPhotos={detailPhotos} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <Credit detailCredit={detailCredit} />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
               {detailReviews?.length > 0 ? (
                 <Fragment>
                   {detailReviews?.map((reviews, index) => (
@@ -82,6 +76,12 @@ const ContentDetails = ({
               ) : (
                 <div> No Review</div>
               )}
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Credit detailCredit={detailCredit} />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <Photos detailPhotos={detailPhotos} />
             </TabPanel>
           </Grid>
           <Grid item xs={12} lg={4}>

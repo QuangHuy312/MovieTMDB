@@ -18,11 +18,26 @@ const useStyle = makeStyles((theme) => {
           fontSize: 10,
         },
       },
+
       [theme.breakpoints.down("sm")]: {
         padding: "30px 20px",
       },
       [theme.breakpoints.down("xs")]: {
         padding: 10,
+      },
+    },
+    listName: {
+      fontSize: 25,
+      fontWeight: "bold",
+      cursor: "pointer",
+      padding: "10px 0",
+      color: "#f9ab00",
+
+      [theme.breakpoints.down("sm")]: {
+        fontSize: 17,
+      },
+      [theme.breakpoints.down("xs")]: {
+        fontSize: 10,
       },
     },
     title: {
@@ -100,10 +115,6 @@ const useStyle = makeStyles((theme) => {
       },
     },
 
-    contentMovie: {
-      display: "flex",
-      marginBottom: 10,
-    },
     infoItem: {
       padding: "10px 15px",
       width: "100%",
@@ -218,6 +229,7 @@ const useStyle = makeStyles((theme) => {
       },
       [theme.breakpoints.down("xs")]: {
         fontSize: 9,
+        width: 50,
       },
     },
     rating: {
@@ -232,6 +244,9 @@ const useStyle = makeStyles((theme) => {
     },
     overviewMobile: {
       fontSize: 12,
+    },
+    posterNoItem: {
+      height: 200,
     },
   };
 });

@@ -113,7 +113,7 @@ const useStyle = makeStyles((theme) => {
 
     iconArrow: {
       border: "3px solid #fff",
-      top: "30%",
+      top: "40%",
       left: "45%",
       width: 40,
       height: 40,

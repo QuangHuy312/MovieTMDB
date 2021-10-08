@@ -12,6 +12,7 @@ const useStyle = makeStyles((theme) => {
       justifyContent: "space-between",
       border: "1px solid #262424",
       padding: 15,
+      marginTop: 10,
     },
     createTime: {
       color: "#a67c7c",
@@ -21,7 +22,7 @@ const useStyle = makeStyles((theme) => {
       },
     },
     rating: {
-      color: "white",
+      color: "#fff",
       border: "2px solid #f9ab00",
       width: 30,
       height: 30,

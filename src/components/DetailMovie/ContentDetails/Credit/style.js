@@ -13,10 +13,6 @@ const useStyle = makeStyles((theme) => {
         marginRight: 10,
       },
     },
-    profile: {
-      display: "flex",
-      alignItems: "center",
-    },
     name: {
       fontSize: 15,
       [theme.breakpoints.down("sm")]: {

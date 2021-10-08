@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardMedia,
   Container,
@@ -15,7 +16,7 @@ import {
   getDetailsListAction,
 } from "../../../../redux/action/DashBoardManagerAction";
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
-import ContentNavList from "../ContentNavList/ContentNavList";
+import StepCreate from "../../../../components/AdminComponent/StepCreate/StepCreate";
 import useStyle from "./style";
 
 const ChooseImage = ({ infoUser, match, sessionId }) => {
@@ -40,6 +41,7 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
   };
   const {
     content,
+    listName,
     title,
     titleMovie,
     backdrop,
@@ -52,13 +54,15 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
     <Container maxWidth="xl" className={content}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <Typography variant="h6">{arrDetailsList?.name}</Typography>
+          <Typography variant="h3" className={listName}>
+            {arrDetailsList?.name}
+          </Typography>
           <div className={title}>
             <Typography variant="h5">Edit</Typography>
           </div>
 
           <div>
-            <ContentNavList id={id} infoUser={infoUser} />
+            <StepCreate id={id} infoUser={infoUser} />
           </div>
         </Grid>
         <Grid item xs={9}>
@@ -90,19 +94,13 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
                             >
                               {item.backdrop_path === backdropList ? (
                                 <div className={activeChooseImage}>
-                                  <Typography
-                                    variant="body2"
-                                    style={{ paddingTop: 10 }}
-                                  >
+                                  <Typography variant="body2">
                                     SELECTED
                                   </Typography>
                                 </div>
                               ) : (
                                 <div className={textCard}>
-                                  <Typography
-                                    variant="body2"
-                                    style={{ paddingTop: 10 }}
-                                  >
+                                  <Typography variant="body2">
                                     SELECT THIS IMAGE
                                   </Typography>
                                 </div>
@@ -116,9 +114,9 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
                 })}
               </Fragment>
             ) : (
-              <Typography variant="body2" style={{ paddingTop: 25 }}>
+              <Box paddingTop="25px">
                 There are no items added to this list.
-              </Typography>
+              </Box>
             )}
           </Grid>
         </Grid>
