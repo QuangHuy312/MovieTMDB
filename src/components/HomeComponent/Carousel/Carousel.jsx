@@ -47,7 +47,7 @@ const Carousel = ({ arrMoviePopular }) => {
   var settings = {
     autoplaySpeed: 2000,
     pauseOnHover: true,
-    slidesToShow: 4,
+    slidesToShow: 3.5,
     autoplay: true,
     swipeToSlide: true,
     focusOnSelect: true,

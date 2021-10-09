@@ -223,13 +223,19 @@ const useStyle = makeStyles((theme) => {
     date: {
       color: "#aa8181",
       fontSize: 13,
-      width: 100,
+      width: 150,
+
+      [theme.breakpoints.down("md")]: {
+        fontSize: 12,
+
+        width: 100,
+      },
       [theme.breakpoints.down("sm")]: {
         fontSize: 12,
+        width: 50,
       },
       [theme.breakpoints.down("xs")]: {
         fontSize: 9,
-        width: 50,
       },
     },
     rating: {

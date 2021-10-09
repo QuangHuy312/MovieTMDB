@@ -1,5 +1,5 @@
 import {
-  Box,
+  div,
   FormControl,
   InputLabel,
   List,
@@ -99,12 +99,12 @@ const IconList = ({
         <PopupState variant="popover" popupId="demo-popup-popover">
           {(popupState) => (
             <Fragment>
-              <Box
-                display="flex"
+              <div
+                className={root}
                 onClick={() => setShowRating(!showRating)}
                 {...bindTrigger(popupState)}
               >
-                <Box className={rated}>
+                <div className={rated}>
                   {contentList?.rating ? (
                     <Typography variant="body2" className={ratedPoint}>
                       {contentList?.rating}
@@ -117,11 +117,11 @@ const IconList = ({
                       }}
                     />
                   )}
-                </Box>
+                </div>
                 <Typography variant="body2" className={textIcon}>
                   Your Rating
                 </Typography>
-              </Box>
+              </div>
 
               <Popover
                 {...bindPopover(popupState)}
@@ -135,7 +135,7 @@ const IconList = ({
                 }}
                 style={{ marginTop: 15 }}
               >
-                <Box className={contentRating}>
+                <div className={contentRating}>
                   <Tooltip title="Clear">
                     <RemoveCircleOutline
                       size="small"
@@ -157,16 +157,16 @@ const IconList = ({
                       }}
                     />
                   </Typography>
-                </Box>
+                </div>
               </Popover>
             </Fragment>
           )}
         </PopupState>
       </ListItem>
       <ListItem>
-        <Box display="flex">
+        <div className={root}>
           {contentList?.favorite ? (
-            <Box
+            <div
               className={contentActiveFavorite}
               onClick={() =>
                 handleClickRemoveFavorite(media_type, contentList?.id)
@@ -181,9 +181,9 @@ const IconList = ({
               >
                 <AiTwotoneHeart className={textActiveIconFavorite} />
               </Typography>
-            </Box>
+            </div>
           ) : (
-            <Box className={contentIconFavorite}>
+            <div className={contentIconFavorite}>
               <Typography
                 variant="body2"
                 style={{
@@ -196,32 +196,32 @@ const IconList = ({
               >
                 <AiTwotoneHeart className={textIconFavorite} />
               </Typography>
-            </Box>
+            </div>
           )}
 
           <Typography variant="body2" className={textIcon}>
             Favorite
           </Typography>
-        </Box>
+        </div>
       </ListItem>
       <ListItem>
         <PopupState variant="popover" popupId="demo-popup-popover">
           {(popupState) => (
             <Fragment>
-              <Box
+              <div
                 className={root}
                 onClick={() => setAddList(!addList)}
                 {...bindTrigger(popupState)}
               >
-                <Box className={contentIconAddList}>
+                <div className={contentIconAddList}>
                   <Typography variant="body2">
                     <ListIcon className={textIconAddList} />
                   </Typography>
-                </Box>
+                </div>
                 <Typography variant="body2" className={textIcon}>
                   Add to List
                 </Typography>
-              </Box>
+              </div>
 
               <Popover
                 {...bindPopover(popupState)}
@@ -235,7 +235,7 @@ const IconList = ({
                 }}
                 style={{ marginTop: 15 }}
               >
-                <Box className={contentAddList}>
+                <div className={contentAddList}>
                   <Typography
                     variant="span"
                     onClick={() =>
@@ -286,7 +286,7 @@ const IconList = ({
                           })}
                         </Fragment>
                       ) : (
-                        <Box style={{ marginTop: 10, textAlign: "center" }}>
+                        <div style={{ marginTop: 10, textAlign: "center" }}>
                           <Typography
                             variant="body1"
                             style={{ textAlign: "center" }}
@@ -296,32 +296,32 @@ const IconList = ({
                           <Typography variant="body2">
                             No List , please click Create List
                           </Typography>
-                        </Box>
+                        </div>
                       )}
                     </Select>
                   </FormControl>
-                </Box>
+                </div>
               </Popover>
             </Fragment>
           )}
         </PopupState>
       </ListItem>
       <ListItem>
-        <Box
+        <div
           className={root}
           onClick={() => {
             handleRemove(media_type, contentList?.id);
           }}
         >
-          <Box className={contentIconRemove}>
+          <div className={contentIconRemove}>
             <Typography variant="body2">
               <ClearIcon className={textIconRemove} />
             </Typography>
-          </Box>
+          </div>
           <Typography variant="body2" className={textIcon}>
             Remove
           </Typography>
-        </Box>
+        </div>
       </ListItem>
     </List>
   );
