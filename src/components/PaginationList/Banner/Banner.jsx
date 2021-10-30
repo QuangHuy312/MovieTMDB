@@ -3,9 +3,10 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import useStyle from "./style";
+import BACK_DROP from "../../../assets/backdrop_login.jpg";
 
 const Banner = () => {
-  const { banner, iconHome, content, textRight } = useStyle();
+  const { banner, iconHome, content, textRight } = useStyle({ BACK_DROP });
   return (
     <div className={banner}>
       <Container maxWidth="xl" className={content}>

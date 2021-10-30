@@ -105,7 +105,12 @@ const ItemsList = ({
                                 }
                               }}
                             >
-                              {movie?.title || movie?.name}
+                              {movie?.title?.slice(0, 50) ||
+                                movie?.name?.slice(0, 50)}
+                              {movie?.title?.length > 50 ||
+                              movie?.name?.length > 50
+                                ? "..."
+                                : null}
                               <Typography variant="span">
                                 (
                                 {movie?.release_date?.slice(0, 4) ||
@@ -114,7 +119,7 @@ const ItemsList = ({
                               </Typography>
                             </Typography>
                             <div className={genre}>
-                              {movie?.genre_ids?.map((genre) => {
+                              {movie?.genre_ids?.slice(0, 4)?.map((genre) => {
                                 return arrGenresList?.map(
                                   (listGenre, index) => {
                                     if (genre === listGenre.id) {

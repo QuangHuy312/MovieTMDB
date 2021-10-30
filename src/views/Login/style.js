@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles(() => {
   return {
     backdrop: {
-      backgroundImage:
-        "url(http://image.tmdb.org/t/p/w1280/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg)",
+      backgroundImage: props => `url(${props.BACK_DROP})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       height: "100vh",

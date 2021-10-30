@@ -74,6 +74,7 @@ const useStyle = makeStyles((theme) => {
       color: "#fff",
       transition: "all 0.5s",
       cursor: "pointer",
+      textOverflow: "ellipsis",
       "&:hover": {
         color: "#f9ab00",
       },

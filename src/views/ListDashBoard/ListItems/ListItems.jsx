@@ -139,7 +139,11 @@ const ListItems = ({ match, infoUser }) => {
                             }
                           }}
                         >
-                          {items.title || items.name}
+                          {items?.title?.slice(0, 50) ||
+                            items?.name?.slice(0, 50)}
+                          {items?.title?.length > 50 || items?.name?.length > 50
+                            ? "..."
+                            : null}
                         </Typography>
                       </CardContent>
                     </Card>

@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 const useStyle = makeStyles((theme) => {
   return {
     banner: {
-      backgroundImage:
-        "url(https://dmitryvolkov.me/demo/hotflix2.1/main/img/section/section.jpg)",
+      backgroundImage: props => `url(${props.BACK_DROP})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       height: 300,

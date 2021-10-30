@@ -93,7 +93,7 @@ const useStyle = makeStyles((theme) => {
     bgIcons: {
       backgroundColor: "#032541",
       "&:hover": {
-        backgroundColor: "#fff",
+        backgroundColor: "rgb(255,255,255,0.4)",
       },
     },
     voteCount: {

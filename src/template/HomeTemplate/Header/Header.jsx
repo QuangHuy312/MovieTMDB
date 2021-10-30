@@ -36,7 +36,7 @@ const Header = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   useEffect(() => {
-    const handleScroll = (e) => {
+    const handleScroll = () => {
       setIsScrolled(window.scrollY > 250);
     };
     window.addEventListener("scroll", handleScroll);

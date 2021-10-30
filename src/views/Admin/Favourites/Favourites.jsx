@@ -53,6 +53,7 @@ const Favorites = ({ infoUser, sessionId }) => {
       title: {
         fontWeight: "bold",
         fontSize: 25,
+        paddingLeft: 20,
       },
     };
   });

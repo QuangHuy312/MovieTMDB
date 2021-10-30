@@ -22,7 +22,6 @@ export const getDetailBannerMovieAction = (id) => {
     dispatch(createAction(FETCH_REQUEST_DETAIL_BANNER_MOVIE));
     try {
       const { data } = await detailManager.getBannerMovie(id);
-      console.log(data);
       await dispatch(createAction(GET_DETAIL_BANNER_MOVIE, data));
       dispatch(createAction(HIDE_REQUEST_DETAIL_BANNER_MOVIE));
     } catch (error) {
@@ -85,7 +84,6 @@ export const getDetailRecommendMovieAction = (id) => {
 export const getDetailReviewsMovieAction = (id) => {
   return async (dispatch) => {
     dispatch(createAction(FETCH_REQUEST_DETAIL_REVIEWS_MOVIE));
-
     try {
       const { data } = await detailManager.getReviewsMovie(id);
       await dispatch(createAction(GET_REVIEWS_MOVIE, data.results));

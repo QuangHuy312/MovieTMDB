@@ -15,6 +15,7 @@ import { useHistory } from "react-router";
 import * as yup from "yup";
 import { UserManagerAction } from "../../redux/action/UserManagerAction";
 import useStyle from "./style";
+import BACK_DROP from "../../assets/backdrop_login.jpg";
 
 let schema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -34,7 +35,7 @@ const Login = () => {
     btnLogin,
     textSignUp,
     btnGoBack,
-  } = useStyle();
+  } = useStyle({ BACK_DROP });
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -54,7 +55,7 @@ const Login = () => {
   };
   const { values, handleChange, isValid, errors, handleBlur, touched } =
     useFormik({
-      initialValues: { username: "", password: "" },
+      initialValues: { username: "quanghuyfly1997", password: "Huy03120252" },
       validationSchema: schema,
       validateOnMount: true,
     });
