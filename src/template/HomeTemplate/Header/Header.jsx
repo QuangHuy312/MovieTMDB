@@ -70,6 +70,7 @@ const Header = () => {
     setOpenDrawer(false);
     setAnchorEl(null);
     localStorage.removeItem("sessionId");
+    history.push("/");
   };
   const {
     root,
