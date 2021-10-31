@@ -26,7 +26,7 @@ const Admintemplate = (props) => {
   }, [dispatch, id, sessionId]);
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, [RouteComponent]);
   return (
     <Route
       {...restProps}

@@ -35,6 +35,7 @@ const Banner = ({ infoUser, arrListRatedTV, arrListRatedMovie }) => {
     userName,
     text,
     contentWrapper,
+    circular,
   } = useStyle({
     backgroundImage: `url(${banner})`,
   });
@@ -79,12 +80,7 @@ const Banner = ({ infoUser, arrListRatedTV, arrListRatedMovie }) => {
                   lg={4}
                   style={{ display: "flex", borderRight: "2px solid #fff" }}
                 >
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                    }}
-                  >
+                  <div className={circular}>
                     <CircularProgressbar
                       value={percentageMovie}
                       text={`${percentageMovie}%`}
@@ -112,12 +108,7 @@ const Banner = ({ infoUser, arrListRatedTV, arrListRatedMovie }) => {
                   lg={4}
                   style={{ display: "flex", paddingLeft: 20 }}
                 >
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                    }}
-                  >
+                  <div className={circular}>
                     <CircularProgressbar
                       value={percentageTV}
                       text={`${percentageTV}%`}

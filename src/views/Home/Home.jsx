@@ -20,6 +20,7 @@ const Home = () => {
     dispatch(getMovieNowPlayingAction(1));
     dispatch(getMovieUpComingAction(1));
     dispatch(getTVShowTopRateAction(1));
+    window.scrollTo(0, 0);
   }, [dispatch]);
 
   const {

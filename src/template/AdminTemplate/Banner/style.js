@@ -19,6 +19,10 @@ const useStyle = makeStyles((theme) => {
         width: 80,
       },
     },
+    circular: {
+      width: 60,
+      height: 60,
+    },
     avatar: {
       width: "100%",
       borderRadius: "50%",

@@ -60,7 +60,9 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
             variant="h3"
             className={listName}
             onClick={() =>
-              history.push(`${infoUser.username}/list/${arrDetailsList.id}`)
+              history.push({
+                pathname: `/${infoUser.username}/list/${id}`,
+              })
             }
           >
             {arrDetailsList?.name}

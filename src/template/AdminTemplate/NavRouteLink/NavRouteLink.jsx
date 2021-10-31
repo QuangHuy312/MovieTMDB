@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import useStyle from "./style";
 
 const NavRouteLink = () => {
-  const { listNavbar, navLink, isActive } = useStyle();
+  const { navLink, isActive } = useStyle();
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
   return (
     <Container>

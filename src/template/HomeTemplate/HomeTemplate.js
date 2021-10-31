@@ -8,9 +8,7 @@ const HomeTemplate = (props) => {
   const { component: RouteComponent, ...restProps } = props;
   const sessionId = localStorage.getItem("sessionId");
   const { infoUser } = useSelector((state) => state.UserManagerReducer);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
+
   return (
     <Route
       {...restProps}

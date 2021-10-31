@@ -30,6 +30,7 @@ const DetailMovie = ({ match, infoUser, sessionId }) => {
     dispatch(getRatedMovieListAction(infoUser?.id, sessionId, 1));
     dispatch(getFavoriteMovieListAction(infoUser?.id, sessionId, 1));
     dispatch(getWatchListMovieAction(infoUser?.id, sessionId, 1));
+    window.scrollTo(0, 0);
   }, [id, dispatch]);
 
   const {

@@ -30,6 +30,7 @@ const DetailTvShow = ({ match, infoUser, sessionId }) => {
     dispatch(getRatedTVShowListAction(infoUser.id, sessionId, 1));
     dispatch(getFavoriteTVListAction(infoUser.id, sessionId, 1));
     dispatch(getWatchListTVAction(infoUser.id, sessionId, 1));
+    window.scrollTo(0, 0);
   }, [id, dispatch]);
 
   const {
