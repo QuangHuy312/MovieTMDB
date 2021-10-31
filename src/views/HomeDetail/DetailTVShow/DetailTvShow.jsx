@@ -46,17 +46,19 @@ const DetailTvShow = ({ match, infoUser, sessionId }) => {
   );
 
   const idxFavorites = arrListFavoriteTV?.findIndex(
-    (item) => item.id === detailBannerTVShow.id
+    (item) => item?.id === detailBannerTVShow.id
   );
   const idxRated = arrListRatedTV?.findIndex(
-    (item) => item.id === detailBannerTVShow.id
+    (item) => item?.id === detailBannerTVShow.id
   );
 
   const idxWatchList = arrWatchListTV?.findIndex(
-    (item) => item.id === detailBannerTVShow.id
+    (item) => item?.id === detailBannerTVShow.id
   );
   if (idxFavorites > -1) {
     detailBannerTVShow.favorite = true;
+  } else {
+    detailBannerTVShow.favorite = false;
   }
   if (idxRated > -1) {
     detailBannerTVShow.rating = arrListRatedTV[idxRated].rating;
@@ -64,6 +66,8 @@ const DetailTvShow = ({ match, infoUser, sessionId }) => {
 
   if (idxWatchList > -1) {
     detailBannerTVShow.watchlist = true;
+  } else {
+    detailBannerTVShow.watchlist = false;
   }
 
   return (

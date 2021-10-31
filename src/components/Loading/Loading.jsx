@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
 import useStyle from "./style";
 
 const Loading = () => {
   const { dotsLoading, content } = useStyle();
+  const history = useHistory();
   const { isLazy } = useSelector((state) => state.LazyReducer);
   const {
     userLoading,
@@ -12,7 +14,7 @@ const Loading = () => {
     arrTVShowTopRatedLoading,
 
     arrDetailBannerMovieLoading,
-    arrDetailPhotosMoviLoading,
+    arrDetailReviewsMovieLoading,
     arrDetailSimilarMovieLoading,
     arrDetailRecommendMovieLoading,
 
@@ -36,7 +38,7 @@ const Loading = () => {
 
   const DetailMovie =
     arrDetailBannerMovieLoading ||
-    arrDetailPhotosMoviLoading ||
+    arrDetailReviewsMovieLoading ||
     arrDetailSimilarMovieLoading ||
     arrDetailRecommendMovieLoading;
   const DetailTvShow =
@@ -52,15 +54,13 @@ const Loading = () => {
     arrMovieRatedListLoading;
   const playLoading =
     isLazy ||
-    // ListLoading ||
     HomePageLoading ||
     DetailMovie ||
     DetailTvShow ||
     DashBoardLoading;
-
   return (
     <Fragment>
-      {playLoading ? (
+      {playLoading && (
         <div className={content}>
           <div className={dotsLoading}>
             <span></span>
@@ -68,8 +68,6 @@ const Loading = () => {
             <span></span>
           </div>
         </div>
-      ) : (
-        ""
       )}
     </Fragment>
   );

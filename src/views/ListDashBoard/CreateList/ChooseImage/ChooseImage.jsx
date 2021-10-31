@@ -18,6 +18,7 @@ import {
 import { IMAGE_URL, WIDTH_IMAGE } from "../../../../utils/settings/config";
 import StepCreate from "../../../../components/AdminComponent/StepCreate/StepCreate";
 import useStyle from "./style";
+import { useHistory } from "react-router";
 
 const ChooseImage = ({ infoUser, match, sessionId }) => {
   const id = match.params.id;
@@ -31,6 +32,7 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
     dispatch(getDetailsListAction(id));
   }, [dispatch, id]);
   const backdropList = localStorage.getItem(id);
+  const history = useHistory();
 
   const handleClickChooseImage = (backdrop) => {
     dispatch(
@@ -54,7 +56,13 @@ const ChooseImage = ({ infoUser, match, sessionId }) => {
     <Container maxWidth="xl" className={content}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <Typography variant="h3" className={listName}>
+          <Typography
+            variant="h3"
+            className={listName}
+            onClick={() =>
+              history.push(`${infoUser.username}/list/${arrDetailsList.id}`)
+            }
+          >
             {arrDetailsList?.name}
           </Typography>
           <div className={title}>

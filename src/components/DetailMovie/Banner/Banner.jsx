@@ -19,7 +19,6 @@ import { Rating } from "@material-ui/lab";
 import { CustomCard } from "@tsamantanis/react-glassmorphism";
 import "@tsamantanis/react-glassmorphism/dist/index.css";
 import clsx from "clsx";
-import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useState } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
@@ -53,9 +52,17 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
   );
 
   const [open, setOpen] = useState(false);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openPopup = Boolean(anchorEl);
   const sessionId = localStorage.getItem("sessionId");
   const { enqueueSnackbar } = useSnackbar();
+  const handleShowPopupRating = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePopupRating = () => {
+    setAnchorEl(null);
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -145,6 +152,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
     }
   };
   const handleClearRating = () => {
+    setAnchorEl(null);
     if (pathname === `/detailmovies/${movieId}`) {
       dispatch(
         deleteRatingMovieAction(
@@ -174,6 +182,7 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
     }
   };
   const handleClickRating = (valRating) => {
+    setAnchorEl(null);
     if (!sessionId) {
       history.push("/login");
     }
@@ -208,7 +217,6 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
       );
     }
   };
-
   const handleClickFavorite = () => {
     if (!sessionId) {
       history.push("/login");
@@ -371,7 +379,13 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                     <Grid item xs={6} md={4}>
                       <Box className={contentIcons}>
                         <Box>
-                          <Tooltip title="Add to watch list">
+                          <Tooltip
+                            title={
+                              watchlist
+                                ? "Delete to watch list"
+                                : "Add to watch list"
+                            }
+                          >
                             <Fab
                               size="small"
                               className={bgIcons}
@@ -387,7 +401,13 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                         </Box>
 
                         <Box>
-                          <Tooltip title="Mark as favourite">
+                          <Tooltip
+                            title={
+                              favorite
+                                ? "Delete to favourite"
+                                : "Add to favourite"
+                            }
+                          >
                             <Fab
                               size="small"
                               className={bgIcons}
@@ -403,64 +423,53 @@ const Banner = ({ detailBanner, movieId, media_type, detailCredit }) => {
                         </Box>
 
                         <Box>
-                          <PopupState
-                            variant="popover"
-                            popupId="demo-popup-popover"
+                          <Tooltip
+                            title={
+                              rating ? "Delete your rating" : "Send your rating"
+                            }
                           >
-                            {(popupState) => (
-                              <Fragment>
-                                <Tooltip title="Send your rating">
-                                  <Fab
-                                    size="small"
-                                    className={bgIcons}
-                                    {...bindTrigger(popupState)}
-                                  >
-                                    <StarIcons
-                                      className={
-                                        rating ? bgActiveRating : btnIcons
-                                      }
-                                      fontSize="large"
-                                    />
-                                  </Fab>
-                                </Tooltip>
+                            <Fab size="small" className={bgIcons}>
+                              <StarIcons
+                                className={rating ? bgActiveRating : btnIcons}
+                                fontSize="large"
+                                onClick={handleShowPopupRating}
+                              />
+                            </Fab>
+                          </Tooltip>
 
-                                <Popover
-                                  {...bindPopover(popupState)}
-                                  anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "center",
+                          <Popover
+                            open={openPopup}
+                            anchorEl={anchorEl}
+                            onClose={handleClosePopupRating}
+                            anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "center",
+                            }}
+                            transformOrigin={{
+                              vertical: "top",
+                              horizontal: "center",
+                            }}
+                            style={{ marginTop: 20 }}
+                          >
+                            <Box className={contentRating}>
+                              <Tooltip title="Clear">
+                                <RemoveCircleOutline
+                                  size="small"
+                                  onClick={handleClearRating}
+                                />
+                              </Tooltip>
+                              <Typography variant="body2" component="span">
+                                <Rating
+                                  name="simple-controlled"
+                                  value={rating / 2}
+                                  precision={0.5}
+                                  onChange={(event, newValue) => {
+                                    handleClickRating(newValue * 2);
                                   }}
-                                  transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "center",
-                                  }}
-                                  style={{ marginTop: 15 }}
-                                >
-                                  <Box className={contentRating}>
-                                    <Tooltip title="Clear">
-                                      <RemoveCircleOutline
-                                        size="small"
-                                        onClick={handleClearRating}
-                                      />
-                                    </Tooltip>
-                                    <Typography
-                                      variant="body2"
-                                      component="span"
-                                    >
-                                      <Rating
-                                        name="simple-controlled"
-                                        value={rating / 2}
-                                        precision={0.5}
-                                        onChange={(event, newValue) => {
-                                          handleClickRating(newValue * 2);
-                                        }}
-                                      />
-                                    </Typography>
-                                  </Box>
-                                </Popover>
-                              </Fragment>
-                            )}
-                          </PopupState>
+                                />
+                              </Typography>
+                            </Box>
+                          </Popover>
                         </Box>
                       </Box>
                     </Grid>

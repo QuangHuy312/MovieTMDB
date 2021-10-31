@@ -21,6 +21,9 @@ import {
 } from "../types/DashBoardManagerType";
 import { createAction } from "./createAction/createAction";
 
+// Vì api trả về danh sách phân trang nhưng mình muốn lấy tổng số rated và favorite
+// để render ra giao diện của trang List , và chạy circle rating theo tổng số điểm trung bình đánh giá
+
 // Rated list action
 
 export const getRatedMovieListAction = (accountId, sessionId, page) => {
@@ -42,9 +45,10 @@ export const getRatedMovieListAction = (accountId, sessionId, page) => {
           );
           arrData.push(...data.results);
         }
-        await dispatch(createAction(GET_LIST_RATED_MOVIE, arrData));
+        dispatch(createAction(GET_LIST_RATED_MOVIE, arrData));
         dispatch(createAction(HIDE_REQUEST_RATED_MOVIE_LIST));
       }
+      dispatch(createAction(GET_LIST_RATED_MOVIE, data?.results));
     } catch (error) {
       console.log(error);
       dispatch(createAction(HIDE_REQUEST_RATED_MOVIE_LIST));
@@ -71,9 +75,10 @@ export const getRatedTVShowListAction = (accountId, sessionId, page) => {
           );
           arrData.push(...data.results);
         }
-        await dispatch(createAction(GET_LIST_RATED_TV, arrData));
+        dispatch(createAction(GET_LIST_RATED_TV, arrData));
         dispatch(createAction(HIDE_REQUEST_RATED_TVSHOW_LIST));
       }
+      dispatch(createAction(GET_LIST_RATED_TV, data?.results));
     } catch (error) {
       console.log(error);
       dispatch(createAction(HIDE_REQUEST_RATED_TVSHOW_LIST));
@@ -104,6 +109,7 @@ export const getFavoriteMovieListAction = (accountId, sessionId, page) => {
 
         dispatch(createAction(GET_LIST_FAVORITE_MOVIE, arrData));
       }
+      dispatch(createAction(GET_LIST_FAVORITE_MOVIE, data?.results));
     } catch (error) {
       console.log(error);
     }
@@ -118,6 +124,7 @@ export const getFavoriteTVListAction = (accountId, sessionId, page) => {
         sessionId,
         page
       );
+
       let arrData = [];
       if (data.total_pages > 0) {
         for (let i = 1; i <= data.total_pages; i++) {
@@ -128,9 +135,9 @@ export const getFavoriteTVListAction = (accountId, sessionId, page) => {
           );
           arrData.push(...data.results);
         }
-
         dispatch(createAction(GET_LIST_FAVORITE_TV, arrData));
       }
+      dispatch(createAction(GET_LIST_FAVORITE_TV, data?.results));
     } catch (error) {
       console.log(error);
     }
@@ -160,6 +167,7 @@ export const getWatchListMovieAction = (accountId, sessionId, page) => {
 
         dispatch(createAction(GET_WATCH_LIST_MOVIE, arrData));
       }
+      dispatch(createAction(GET_WATCH_LIST_MOVIE, data.results));
     } catch (error) {
       console.log(error);
     }
@@ -187,6 +195,7 @@ export const getWatchListTVAction = (accountId, sessionId, page) => {
 
         dispatch(createAction(GET_WATCH_LIST_TV, arrData));
       }
+      dispatch(createAction(GET_WATCH_LIST_TV, data?.results));
     } catch (error) {
       console.log(error);
     }

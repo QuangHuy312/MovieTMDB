@@ -27,10 +27,11 @@ const DetailMovie = ({ match, infoUser, sessionId }) => {
     dispatch(getDetailReviewsMovieAction(id));
     dispatch(getDetailRecommendMovieAction(id));
 
-    dispatch(getRatedMovieListAction(infoUser.id, sessionId, 1));
-    dispatch(getFavoriteMovieListAction(infoUser.id, sessionId, 1));
-    dispatch(getWatchListMovieAction(infoUser.id, sessionId, 1));
+    dispatch(getRatedMovieListAction(infoUser?.id, sessionId, 1));
+    dispatch(getFavoriteMovieListAction(infoUser?.id, sessionId, 1));
+    dispatch(getWatchListMovieAction(infoUser?.id, sessionId, 1));
   }, [id, dispatch]);
+
   const {
     detailPhotosMovie,
     detailCreditMovie,
@@ -44,17 +45,19 @@ const DetailMovie = ({ match, infoUser, sessionId }) => {
     useSelector((state) => state.DashBoardManagerReducer);
 
   const idxFavorites = arrListFavoriteMovie?.findIndex(
-    (item) => item.id === detailBannerMovie.id
+    (item) => item?.id === detailBannerMovie.id
   );
   const idxRated = arrListRatedMovie?.findIndex(
-    (item) => item.id === detailBannerMovie.id
+    (item) => item?.id === detailBannerMovie.id
   );
 
   const idxWatchList = arrWatchListMovie?.findIndex(
-    (item) => item.id === detailBannerMovie.id
+    (item) => item?.id === detailBannerMovie.id
   );
   if (idxFavorites > -1) {
     detailBannerMovie.favorite = true;
+  } else {
+    detailBannerMovie.favorite = false;
   }
   if (idxRated > -1) {
     detailBannerMovie.rating = arrListRatedMovie[idxRated].rating;
@@ -62,6 +65,8 @@ const DetailMovie = ({ match, infoUser, sessionId }) => {
 
   if (idxWatchList > -1) {
     detailBannerMovie.watchlist = true;
+  } else {
+    detailBannerMovie.watchlist = false;
   }
 
   return (

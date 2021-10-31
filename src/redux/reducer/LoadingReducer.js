@@ -50,7 +50,7 @@ const initialState = {
   arrTVShowListLoading: false,
 
   arrDetailBannerMovieLoading: false,
-  arrDetailREVIEWSMoviLoading: false,
+  arrDetailReviewsMovieLoading: false,
   arrDetailSimilarMovieLoading: false,
   arrDetailRecommendMovieLoading: false,
 
@@ -126,11 +126,11 @@ export const LoadingReducer = (state = initialState, { type }) => {
     }
 
     case FETCH_REQUEST_DETAIL_REVIEWS_MOVIE: {
-      state.arrDetailREVIEWSMoviLoading = true;
+      state.arrDetailReviewsMovieLoading = true;
       return { ...state };
     }
     case HIDE_REQUEST_DETAIL_REVIEWS_MOVIE: {
-      state.arrDetailREVIEWSMoviLoading = false;
+      state.arrDetailReviewsMovieLoading = false;
       return { ...state };
     }
 
